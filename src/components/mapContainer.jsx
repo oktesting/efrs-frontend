@@ -27,10 +27,11 @@ export class MapContainer extends Component {
     showingInfoWindow: false
   };
 
-  onMarkerClick = (props, marker) =>
+  onMarkerClick = (props, marker, e) =>
     this.setState({
       activeMarker: marker,
       selectedPlace: props,
+
       showingInfoWindow: true
     });
 
@@ -52,7 +53,6 @@ export class MapContainer extends Component {
 
   //duccm4
   getDataFromTheFistEvent(firesList) {
-    console.log(firesList);
     this.setState({ fires: firesList });
   }
   getDataFromRealtimeEvent(newFire) {
@@ -65,22 +65,31 @@ export class MapContainer extends Component {
     this.eventSource.close();
   }
 
-//   getPhotosFromAFire() {
-//     this.state.selectedPlace.evidences.map(item =>)
-//   }
+  //   getPhotosFromAFire() {
+  //     this.state.selectedPlace.evidences.map(item =>)
+  //   }
 
   renderFires() {
-    console.log(this.state.fires);
     this.state.fires.map(item => (
       <Marker
+        name={item._id}
         key={item._id}
+        onClick={this.onMarkerClick}
         position={{
           lat: item.latitude,
           lng: item.longtitude
         }}
+        evidences={item.evidences}
       ></Marker>
     ));
   }
+  displayEvidence = file => {
+    return file.mimetype === "video/mp4" ? (
+      <video src={file.location}></video>
+    ) : (
+      <img src={file.location}></img>
+    );
+  };
 
   render() {
     if (!this.props.loaded) return <div>Loading...</div>;
@@ -98,24 +107,18 @@ export class MapContainer extends Component {
       >
         {this.state.fires.map(item => (
           <Marker
-            name={"FPT University"}
+            name={item._id}
             key={item._id}
             onClick={this.onMarkerClick}
             position={{
               lat: item.latitude,
               lng: item.longtitude
             }}
+            evidences={item.evidences}
             // photos={}
           ></Marker>
         ))}
-        {/* <Marker
-          name={"FPT University"}
-          onClick={this.onMarkerClick}
-          position={{
-            lat: 21.013412,
-            lng: 105.527138
-          }}
-        ></Marker> */}
+
         <InfoWindow
           marker={this.state.activeMarker}
           onClose={this.onInfoWindowClose}
@@ -123,35 +126,19 @@ export class MapContainer extends Component {
         >
           <div id="infoWindow">
             <h1>{this.state.selectedPlace.name}</h1>
-            <div>
-              <h3>Photos</h3>
-              {/* const images = this.state.selectedPlace.evidences.map((item, i) =>
-              <img>
-                style={{ width: "200px", height: "200px" }}
-                src="" alt="fire"
-              </img> */}
-              );
-              <img
-                style={{ width: "200px", height: "200px" }}
-                src="https://efrs.s3.amazonaws.com/evidences/5dc28160e8a69c203002383b/5e48ef75aa7c592b0c9055f5/High+Resolution+Wallpaper+2560X1440+wallpaper+++1012597.jpg?fbclid=IwAR3BCR-6bxiqP7l3dPGjTf2Wjb_XhgHcKKYZXgP8vFxKFkvtTAjXSiDhRYI"
-                alt="fire"
-              />
-            </div>
-            <div>
-              <h3>Videos</h3>
-              <video
-                width="320"
-                height="240"
-                src="https://efrs.s3.amazonaws.com/evidences/5dc28160e8a69c203002383b/5e48d095ab78d90ff4e2c843/1581830293876_demo.mp4"
-                controls
-              ></video>
-              <iframe
-                width="200"
-                height="200"
-                title="Fire video"
-                src="https://efrs.s3.amazonaws.com/…/5e48…/1581830293876_demo.mp4"
-              ></iframe>
-            </div>
+            {this.state.selectedPlace.evidences ? (
+              this.state.selectedPlace.evidences.map(item => (
+                <div key={item}>
+                  {item.mimetype === "video/mp4" ? (
+                    <video src={item.location}></video>
+                  ) : (
+                    <img src={item.location}></img>
+                  )}
+                </div>
+              ))
+            ) : (
+              <div>alo</div>
+            )}
           </div>
         </InfoWindow>
       </Map>

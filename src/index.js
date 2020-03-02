@@ -3,21 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { Route, BrowserRouter as Router} from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
-import LoginForm from './components/loginForm';
-import mapContainer from './components/mapContainer';
-import registerForm from './components/registerForm';
+import "bootstrap/dist/css/bootstrap.css";
+import "font-awesome/css/font-awesome.css";
+import App from './App';
 
-const routing = (
-    <Router>
-        <div>
-            <Route path="/login" component={LoginForm}></Route>
-            <Route path="/map" component={mapContainer}></Route>
-            <Route path="/signup" component={registerForm}></Route>
-        </div>
-    </Router>
-);
-
-ReactDOM.render(routing, document.getElementById('root'));
+ReactDOM.render(<Router><App/></Router>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
