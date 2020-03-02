@@ -1,7 +1,6 @@
 import http from "./httpService";
-// import logger from "./logService";
 
-const apiEndpoint = "/users";
+const apiEndpoint = "/accounts";
 
 const register = user => {
   return http.post(apiEndpoint, {

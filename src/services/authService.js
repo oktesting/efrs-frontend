@@ -1,6 +1,5 @@
 import http from "./httpService";
 import jwtDecode from "jwt-decode";
-// import logger from "./logService";
 
 const apiEndpoint = "/auth";
 const tokenKey = "token";

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import NavBar from "./components/navBar.jsx";
 import auth from "./services/authService";
 import LoginForm from "./components/loginForm";
@@ -26,12 +26,12 @@ class App extends Component {
         <main className="container">
           <Switch>
             <Route path="/map" component={mapContainer}></Route>
-            <Route path="/logout" component={Logout} />
-            <Route path="/login" component={LoginForm} />
-            <Route path="/register" component={registerForm} />
+            <Route path="/signout" component={Logout} />
+            <Route path="/signin" component={LoginForm} />
+            <Route path="/signup" component={registerForm} />
             <Route path="/not-found" component={NotFound} />
             <Redirect from="/" exact to="/movies" />
-            <Redirect to="/not-found" />
+            <Redirect to="/map" />
           </Switch>
         </main>
       </React.Fragment>
