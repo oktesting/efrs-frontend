@@ -24,10 +24,10 @@ const NavBar = ({ user }) => {
           {!user && (
             <React.Fragment>
               <NavLink className="nav-item nav-link" to="/signin">
-                Login
+                Sign In
               </NavLink>
               <NavLink className="nav-item nav-link" to="/signup">
-                Register
+                Sign Up
               </NavLink>
             </React.Fragment>
           )}
@@ -37,7 +37,7 @@ const NavBar = ({ user }) => {
                 {user.name}
               </NavLink>
               <NavLink className="nav-item nav-link pull-right" to="/signout">
-                Logout
+                Sign out
               </NavLink>
             </React.Fragment>
           )}
