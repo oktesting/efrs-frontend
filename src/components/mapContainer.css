@@ -1,0 +1,15 @@
+.infoImg {
+  width: 20vw;
+  height: auto;
+}
+.infoWindow {
+  width: 40vw;
+  height: 40vw;
+}
+.infoVideo {
+  width: 30vw;
+  height: auto;
+}
+span.displayInline {
+  display: inline-block;
+}

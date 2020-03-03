@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
+import Moment from "react-moment";
+import "./mapContainer.css";
 
 const mapStyles = {
   width: "100vw",
@@ -115,7 +117,15 @@ export class MapContainer extends Component {
               lng: item.longtitude
             }}
             evidences={item.evidences}
-            // photos={}
+            videos={item.evidences.filter(
+              evidence => evidence.mimetype === "video/mp4"
+            )}
+            imgs={item.evidences.filter(
+              evidence => evidence.mimetype !== "video/mp4"
+            )}
+            status={item.status}
+            createAt={item.createAt}
+            //icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
           ></Marker>
         ))}
 
@@ -124,21 +134,40 @@ export class MapContainer extends Component {
           onClose={this.onInfoWindowClose}
           visible={this.state.showingInfoWindow}
         >
-          <div id="infoWindow">
+          <div className="infoWindow">
             <h1>{this.state.selectedPlace.name}</h1>
-            {this.state.selectedPlace.evidences ? (
-              this.state.selectedPlace.evidences.map(item => (
-                <div key={item}>
-                  {item.mimetype === "video/mp4" ? (
-                    <video src={item.location}></video>
-                  ) : (
-                    <img src={item.location}></img>
-                  )}
-                </div>
-              ))
-            ) : (
-              <div>alo</div>
-            )}
+            <div>Status: {this.state.selectedPlace.status}</div>
+            <div>
+              Create at: <Moment date={this.state.selectedPlace.createAt} />
+            </div>
+            <h2>Photo</h2>
+            <div>
+              {this.state.selectedPlace.evidences ? (
+                this.state.selectedPlace.imgs.map(item => (
+                  <span className="displayInline" key={item}>
+                    <img className="infoImg" src={item.location}></img>
+                  </span>
+                ))
+              ) : (
+                <div>alo</div>
+              )}
+            </div>
+            <h2>Video</h2>
+            <div>
+              {this.state.selectedPlace.evidences ? (
+                this.state.selectedPlace.videos.map(item => (
+                  <span className="displayInline" key={item}>
+                    <video
+                      className="infoVideo"
+                      src={item.location}
+                      controls
+                    ></video>
+                  </span>
+                ))
+              ) : (
+                <div>alo</div>
+              )}
+            </div>
           </div>
         </InfoWindow>
       </Map>
