@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
 import Moment from "react-moment";
-import "./mapContainer.css";
-import image from "../images/1.jpg";
+import Blue from "../media/blue.png";
+import Red from "../media/red.png";
+import Yellow from "../media/yellow.png";
+import "../css/mapContainer.css";
+import mapStyle from "./mapStyle.json";
 
-const mapStyles = {
-  width: "100vw",
-  height: "100vh"
+const defaultMapOptions = {
+  styles: mapStyle
 };
 
 export class MapContainer extends Component {
@@ -68,10 +70,6 @@ export class MapContainer extends Component {
     this.eventSource.close();
   }
 
-  //   getPhotosFromAFire() {
-  //     this.state.selectedPlace.evidences.map(item =>)
-  //   }
-
   renderFires() {
     this.state.fires.map(item => (
       <Marker
@@ -86,6 +84,7 @@ export class MapContainer extends Component {
       ></Marker>
     ));
   }
+
   displayEvidence = file => {
     return file.mimetype === "video/mp4" ? (
       <video src={file.location}></video>
@@ -102,11 +101,12 @@ export class MapContainer extends Component {
         google={this.props.google}
         onClick={this.onMapClicked}
         zoom={15}
-        style={mapStyles}
+        id="mapStyles"
         initialCenter={{
           lat: 21.013412,
           lng: 105.527138
         }}
+        style={defaultMapOptions}
       >
         {this.state.fires.map(item => (
           <Marker
@@ -117,7 +117,6 @@ export class MapContainer extends Component {
               lat: item.latitude,
               lng: item.longtitude
             }}
-            evidences={item.evidences}
             videos={item.evidences.filter(
               evidence => evidence.mimetype === "video/mp4"
             )}
@@ -126,7 +125,13 @@ export class MapContainer extends Component {
             )}
             status={item.status}
             createAt={item.createAt}
-            icon={image}
+            icon={
+              item.status === "pending"
+                ? Red
+                : item.status === "processing"
+                ? Yellow
+                : Blue
+            }
           ></Marker>
         ))}
 
@@ -143,7 +148,7 @@ export class MapContainer extends Component {
             </div>
             <h2>Photo</h2>
             <div>
-              {this.state.selectedPlace.evidences ? (
+              {this.state.selectedPlace.imgs ? (
                 this.state.selectedPlace.imgs.map(item => (
                   <span className="displayInline" key={item}>
                     <img className="infoImg" src={item.location}></img>
@@ -155,7 +160,7 @@ export class MapContainer extends Component {
             </div>
             <h2>Video</h2>
             <div>
-              {this.state.selectedPlace.evidences ? (
+              {this.state.selectedPlace.videos ? (
                 this.state.selectedPlace.videos.map(item => (
                   <span className="displayInline" key={item}>
                     <video
