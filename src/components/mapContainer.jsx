@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
 import Moment from "react-moment";
 import "./mapContainer.css";
+import image from "../images/1.jpg";
 
 const mapStyles = {
   width: "100vw",
@@ -125,7 +126,7 @@ export class MapContainer extends Component {
             )}
             status={item.status}
             createAt={item.createAt}
-            //icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+            icon={image}
           ></Marker>
         ))}
 
