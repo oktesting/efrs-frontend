@@ -1,15 +1,10 @@
 import React, { Component } from "react";
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
 import Moment from "react-moment";
-import Blue from "../media/blue.png";
-import Red from "../media/red.png";
-import Yellow from "../media/yellow.png";
-import "../css/mapContainer.css";
-import mapStyle from "./mapStyle.json";
-
-const defaultMapOptions = {
-  styles: mapStyle
-};
+import BlueMarker from "../media/blue.png";
+import RedMarker from "../media/red.png";
+import YellowMarker from "../media/yellow.png";
+import "../index.css";
 
 export class MapContainer extends Component {
   constructor(props) {
@@ -106,7 +101,6 @@ export class MapContainer extends Component {
           lat: 21.013412,
           lng: 105.527138
         }}
-        style={defaultMapOptions}
       >
         {this.state.fires.map(item => (
           <Marker
@@ -117,6 +111,8 @@ export class MapContainer extends Component {
               lat: item.latitude,
               lng: item.longtitude
             }}
+            fullname={item.user.fullname}
+            phone={item.user.phone}
             videos={item.evidences.filter(
               evidence => evidence.mimetype === "video/mp4"
             )}
@@ -124,13 +120,13 @@ export class MapContainer extends Component {
               evidence => evidence.mimetype !== "video/mp4"
             )}
             status={item.status}
-            createAt={item.createAt}
+            createAt={item.createdAt}
             icon={
               item.status === "pending"
-                ? Red
+                ? RedMarker
                 : item.status === "processing"
-                ? Yellow
-                : Blue
+                ? YellowMarker
+                : BlueMarker
             }
           ></Marker>
         ))}
@@ -142,9 +138,13 @@ export class MapContainer extends Component {
         >
           <div className="infoWindow">
             <h1>{this.state.selectedPlace.name}</h1>
-            <div>Status: {this.state.selectedPlace.status}</div>
             <div>
+              <h2>User infomation</h2>
+              Name: {this.state.selectedPlace.fullname} <br />
+              Phone: {this.state.selectedPlace.phone} <br />
+              Status: {this.state.selectedPlace.status} <br />
               Create at: <Moment date={this.state.selectedPlace.createAt} />
+              <br />
             </div>
             <h2>Photo</h2>
             <div>
@@ -155,7 +155,7 @@ export class MapContainer extends Component {
                   </span>
                 ))
               ) : (
-                <div>alo</div>
+                <div />
               )}
             </div>
             <h2>Video</h2>
@@ -171,7 +171,7 @@ export class MapContainer extends Component {
                   </span>
                 ))
               ) : (
-                <div>alo</div>
+                <div />
               )}
             </div>
           </div>
