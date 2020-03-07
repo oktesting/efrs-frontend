@@ -23,7 +23,7 @@ class App extends Component {
       <React.Fragment>
         <ToastContainer />
         <NavBar user={user} />
-        <main className="container">
+        <main>
           <Switch>
             <Route path="/map" component={mapContainer}></Route>
             <Route path="/signout" component={Logout} />
