@@ -1,103 +1,42 @@
 import React, { Component } from "react";
-import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
+import NavBar from "./components/navBar.jsx";
+import auth from "./services/authService";
+import LoginForm from "./components/loginForm";
+import mapContainer from "./components/mapContainer";
+import registerForm from "./components/registerForm";
+import NotFound from "./components/notFound";
+import Logout from "./components/logout";
+import { Switch, Route, Redirect } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
-const mapStyles = {
-  width: "100%",
-  height: "100%"
-};
-
-export class MapContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      //duccm4
-      fires: []
-    };
-    //duccm4
-    this.eventSource = new EventSource("http://localhost:3900/api/alert");
-  }
+class App extends Component {
+  state = {};
 
   componentDidMount() {
-    //duccm4
-    this.eventSource.addEventListener("realtimeEvent", e => {
-      this.getDataFromRealtimeEvent(JSON.parse(e.data));
-    });
-    this.eventSource.addEventListener("firstEvent", e => {
-      this.getDataFromTheFistEvent(JSON.parse(e.data));
-    });
-  }
-
-  //duccm4
-  getDataFromTheFistEvent(firesList) {
-    this.setState({ fires: firesList });
-  }
-  getDataFromRealtimeEvent(newFire) {
-    let updatedFires = [...this.state.fires];
-    updatedFires.push(newFire);
-    this.setState({ fires: updatedFires });
-  }
-
-  stopUpdates() {
-    this.eventSource.close();
-  }
-
-  renderFires() {
-    this.state.fires.map(item => (
-      <Marker
-        key={item._id}
-        position={{
-          lat: item.latitude,
-          lng: item.longtitude
-        }}
-        onClick={() => {
-          console.log("clicked");
-        }}
-      ></Marker>
-    ));
+    const user = auth.getCurrentUser();
+    this.setState({ user });
   }
 
   render() {
+    const { user } = this.state;
     return (
-      <Map
-        google={this.props.google}
-        zoom={15}
-        style={mapStyles}
-        initialCenter={{
-          lat: 21.013412,
-          lng: 105.527138
-        }}
-      >
-        {this.state.fires.map(item => (
-          <Marker
-            key={item._id}
-            position={{
-              lat: item.latitude,
-              lng: item.longtitude
-            }}
-            onClick={() => {
-              console.log("clicked");
-            }}
-          ></Marker>
-        ))}
-
-        {/* <Marker
-          position={{
-            lat: 21.009886,
-            lng: 105.535104
-          }}
-          onClick={() => {
-            console.log("clicked");
-          }}
-        >
-          <InfoWindow>
-            <div>point detail</div>
-          </InfoWindow>
-        </Marker> */}
-      </Map>
+      <React.Fragment>
+        <ToastContainer />
+        <NavBar user={user} />
+        <main>
+          <Switch>
+            <Route path="/map" component={mapContainer}></Route>
+            <Route path="/signout" component={Logout} />
+            <Route path="/signin" component={LoginForm} />
+            <Route path="/signup" component={registerForm} />
+            <Route path="/not-found" component={NotFound} />
+            <Redirect from="/" exact to="/map" />
+            <Redirect to="/map" />
+          </Switch>
+        </main>
+      </React.Fragment>
     );
   }
 }
 
-export default GoogleApiWrapper({
-  apiKey: "AIzaSyDaVnsRo6JaVv_a8XMwB1gAYeMIESGD9p4"
-})(MapContainer);
+export default App;
