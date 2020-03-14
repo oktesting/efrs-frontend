@@ -13,7 +13,7 @@ code {
 }
 
 .infoImg {
-  width: 20vw;
+  width: 17vw;
   height: auto;
 }
 .infoWindow {
@@ -21,8 +21,8 @@ code {
   height: 80vh;
 }
 .infoVideo {
-  width: 30vw;
-  height: auto;
+  width: 40vw;
+  height: 70vh;
 }
 span.displayInline {
   display: inline-block;

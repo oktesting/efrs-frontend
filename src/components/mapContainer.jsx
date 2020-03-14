@@ -1,12 +1,7 @@
 import React, { Component } from "react";
-import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
-import Moment from "react-moment";
-import BlueMarker from "../media/blue.png";
-import RedMarker from "../media/red.png";
-import YellowMarker from "../media/yellow.png";
-import "../index.css";
+import WrappedMap from "./wrappedMap";
 
-export class MapContainer extends Component {
+class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,20 +22,6 @@ export class MapContainer extends Component {
     showingInfoWindow: false
   };
 
-  onMarkerClick = (props, marker, e) =>
-    this.setState({
-      activeMarker: marker,
-      selectedPlace: props,
-
-      showingInfoWindow: true
-    });
-
-  onInfoWindowClose = () =>
-    this.setState({
-      activeMarker: null,
-      showingInfoWindow: false
-    });
-
   componentDidMount() {
     //duccm4
     this.eventSource.addEventListener("realtimeEvent", e => {
@@ -57,7 +38,9 @@ export class MapContainer extends Component {
   }
   getDataFromRealtimeEvent(newFire) {
     let updatedFires = [...this.state.fires];
-    updatedFires.push(newFire);
+    const id = updatedFires.findIndex(fire => fire._id === newFire._id);
+    if (id === -1) updatedFires.push(newFire);
+    else updatedFires[id] = newFire;
     this.setState({ fires: updatedFires });
   }
 
@@ -65,122 +48,21 @@ export class MapContainer extends Component {
     this.eventSource.close();
   }
 
-  renderFires() {
-    this.state.fires.map(item => (
-      <Marker
-        name={item._id}
-        key={item._id}
-        onClick={this.onMarkerClick}
-        position={{
-          lat: item.latitude,
-          lng: item.longtitude
-        }}
-        evidences={item.evidences}
-      ></Marker>
-    ));
-  }
-
-  displayEvidence = file => {
-    return file.mimetype === "video/mp4" ? (
-      <video src={file.location}></video>
-    ) : (
-      <img src={file.location}></img>
-    );
-  };
-
   render() {
-    if (!this.props.loaded) return <div>Loading...</div>;
-
     return (
-      <Map
-        google={this.props.google}
-        onClick={this.onMapClicked}
-        zoom={15}
-        id="mapStyles"
-        initialCenter={{
-          lat: 21.013412,
-          lng: 105.527138
-        }}
-      >
-        {this.state.fires.map(item => (
-          <Marker
-            name={item._id}
-            key={item._id}
-            onClick={this.onMarkerClick}
-            position={{
-              lat: item.latitude,
-              lng: item.longtitude
-            }}
-            fullname={item.user.fullname}
-            phone={item.user.phone}
-            videos={item.evidences.filter(
-              evidence => evidence.mimetype === "video/mp4"
-            )}
-            imgs={item.evidences.filter(
-              evidence => evidence.mimetype !== "video/mp4"
-            )}
-            status={item.status}
-            createAt={item.createdAt}
-            icon={
-              item.status === "pending"
-                ? RedMarker
-                : item.status === "processing"
-                ? YellowMarker
-                : BlueMarker
-            }
-          ></Marker>
-        ))}
-
-        <InfoWindow
-          marker={this.state.activeMarker}
-          onClose={this.onInfoWindowClose}
-          visible={this.state.showingInfoWindow}
-        >
-          <div className="infoWindow">
-            <h1>{this.state.selectedPlace.name}</h1>
-            <div>
-              <h2>User infomation</h2>
-              Name: {this.state.selectedPlace.fullname} <br />
-              Phone: {this.state.selectedPlace.phone} <br />
-              Status: {this.state.selectedPlace.status} <br />
-              Create at: <Moment date={this.state.selectedPlace.createAt} />
-              <br />
-            </div>
-            <h2>Photo</h2>
-            <div>
-              {this.state.selectedPlace.imgs ? (
-                this.state.selectedPlace.imgs.map(item => (
-                  <span className="displayInline" key={item}>
-                    <img className="infoImg" src={item.location}></img>
-                  </span>
-                ))
-              ) : (
-                <div />
-              )}
-            </div>
-            <h2>Video</h2>
-            <div>
-              {this.state.selectedPlace.videos ? (
-                this.state.selectedPlace.videos.map(item => (
-                  <span className="displayInline" key={item}>
-                    <video
-                      className="infoVideo"
-                      src={item.location}
-                      controls
-                    ></video>
-                  </span>
-                ))
-              ) : (
-                <div />
-              )}
-            </div>
-          </div>
-        </InfoWindow>
-      </Map>
+      <div>
+        <WrappedMap
+          googleMapURL={
+            "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyDaVnsRo6JaVv_a8XMwB1gAYeMIESGD9p4"
+          }
+          loadingElement={<div style={{ height: `100vw` }} />}
+          containerElement={<div style={{ height: `100vh` }} />}
+          mapElement={<div style={{ height: `100%` }} />}
+          fires={this.state.fires}
+        ></WrappedMap>
+      </div>
     );
   }
 }
 
-export default GoogleApiWrapper({
-  apiKey: "AIzaSyDaVnsRo6JaVv_a8XMwB1gAYeMIESGD9p4"
-})(MapContainer);
+export default MapContainer;
