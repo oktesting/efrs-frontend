@@ -24,10 +24,18 @@ class RegisterForm extends Form {
   };
   doSubmit = async () => {
     try {
-      const { headers } = await userService.register(this.state.data);
-      auth.loginWithJwt(headers["x-auth-token"]);
+      //bảo người dùng đi verify bằng mail
+      const { data } = await userService.register(this.state.data);
+      // const errors = { ...this.state.errors };
+      // errors.email = "please verify your email";
+      // this.setState({ errors });
+
+      if (data) {
+        window.location = "/signin";
+      }
+      // auth.loginWithJwt(headers["x-auth-token"]);
       //cause the full reload page => read the jwt => display info of user properly
-      window.location = "/";
+      // window.location = "/";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
