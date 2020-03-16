@@ -4,6 +4,7 @@ import auth from "./services/authService";
 import LoginForm from "./components/loginForm";
 import mapContainer from "./components/mapContainer";
 import registerForm from "./components/registerForm";
+import ProfileForm from "./components/profileForm";
 import NotFound from "./components/notFound";
 import Logout from "./components/logout";
 import { Switch, Route, Redirect } from "react-router-dom";
@@ -30,6 +31,7 @@ class App extends Component {
             <Route path="/signin" component={LoginForm} />
             <Route path="/signup" component={registerForm} />
             <Route path="/not-found" component={NotFound} />
+            <Route path="/profile" component={ProfileForm} />
             <Redirect from="/" exact to="/map" />
             <Redirect to="/map" />
           </Switch>

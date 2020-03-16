@@ -46,8 +46,8 @@ class LoginForm extends Form {
     if (auth.getCurrentUser()) return <Redirect to="/" />;
     return (
       <React.Fragment>
-        <h1>Login</h1>
-        <form onSubmit={this.handleSubmit}>
+        <h1 className="container">Login</h1>
+        <form onSubmit={this.handleSubmit} className="container">
           {this.renderInput("username", "Username", "text")}
           {this.renderInput("password", "Password", "password")}
           {this.renderButton("Login")}
