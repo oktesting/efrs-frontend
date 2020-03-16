@@ -13,7 +13,7 @@ class MapContainer extends Component {
     };
 
     //duccm4
-    this.eventSource = new EventSource("http://localhost:3900/api/alert");
+    this.eventSource = new EventSource("http://localhost:3900/api/fires");
   }
 
   state = {
