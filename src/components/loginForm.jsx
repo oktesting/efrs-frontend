@@ -7,16 +7,17 @@ import { Redirect } from "react-router-dom";
 class LoginForm extends Form {
   state = {
     data: {
-      username: "",
+      email: "",
       password: ""
     },
     errors: {}
   };
 
   schema = {
-    username: Joi.string()
+    email: Joi.string()
+      .email()
       .required()
-      .label("Username"),
+      .label("Email Address"),
     password: Joi.string()
       .required()
       .min(5)
@@ -26,7 +27,7 @@ class LoginForm extends Form {
   doSubmit = async () => {
     //call the server
     try {
-      const { username: email, password } = this.state.data;
+      const { email, password } = this.state.data;
       await auth.login(email, password);
       //get the previous page before redirected to /login
       const { state } = this.props.location;
@@ -35,7 +36,7 @@ class LoginForm extends Form {
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
-        errors.username = ex.response.data;
+        errors.email = ex.response.data;
         this.setState({ errors });
       }
     }
@@ -46,9 +47,9 @@ class LoginForm extends Form {
     if (auth.getCurrentUser()) return <Redirect to="/" />;
     return (
       <React.Fragment>
-        <h1>Login</h1>
+        <h1>Sign In</h1>
         <form onSubmit={this.handleSubmit}>
-          {this.renderInput("username", "Username", "text")}
+          {this.renderInput("email", "Email Address", "text")}
           {this.renderInput("password", "Password", "password")}
           {this.renderButton("Login")}
         </form>

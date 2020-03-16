@@ -8,6 +8,7 @@ import NotFound from "./components/notFound";
 import Logout from "./components/logout";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 class App extends Component {
   state = {};
