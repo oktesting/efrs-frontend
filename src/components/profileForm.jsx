@@ -10,7 +10,8 @@ class ProfileForm extends Form {
     data: {
       fullname: "",
       phone: "",
-      genderId: ""
+      genderId: "",
+      fireStationId: ""
     },
     genders: [
       {
@@ -24,27 +25,32 @@ class ProfileForm extends Form {
     ],
     fireStations: [
       {
-        name: "Đội Phòng cháy chữa cháy và Cứu nạn cứu hộ quận Hoàn Kiếm",
+        _id: 1,
+        address: "Đội Phòng cháy chữa cháy và Cứu nạn cứu hộ quận Hoàn Kiếm",
         lat: 21.028254,
         lng: 105.868407
       },
       {
-        name: "Phòng Cảnh Sát Phòng Cháy Và Chữa Cháy Số 3",
+        _id: 2,
+        address: "Phòng Cảnh Sát Phòng Cháy Và Chữa Cháy Số 3",
         lat: 21.044959,
         lng: 105.792497
       },
       {
-        name: "Đội Cảnh sát PCCC&CNCH Quận Hoàn Kiếm",
+        _id: 3,
+        address: "Đội Cảnh sát PCCC&CNCH Quận Hoàn Kiếm",
         lat: 21.025866,
         lng: 105.860093
       },
       {
-        name: "Cục Cảnh sát phòng cháy, chữa cháy và cứu nạn, cứu hộ",
+        _id: 4,
+        address: "Cục Cảnh sát phòng cháy, chữa cháy và cứu nạn, cứu hộ",
         lat: 21.026296,
         lng: 105.854101
       },
       {
-        name: "Cảnh Sát Phòng Cháy",
+        _id: 5,
+        address: "Cảnh Sát Phòng Cháy",
         lat: 21.022533,
         lng: 105.85705
       }
@@ -56,7 +62,7 @@ class ProfileForm extends Form {
   }
   schema = {
     isActivated: Joi.boolean(),
-    location: join.string(),
+    location: Joi.string(),
     fullname: Joi.string()
       .required()
       .label("Full Name"),
@@ -67,7 +73,10 @@ class ProfileForm extends Form {
       .label("Phone"),
     genderId: Joi.string()
       .required()
-      .label("Gender")
+      .label("Gender"),
+    fireStationId: Joi.string()
+      .required()
+      .label("Fire Station")
   };
 
   doSubmit = async () => {
@@ -97,7 +106,13 @@ class ProfileForm extends Form {
         <form onSubmit={this.handleSubmit} className="container">
           {this.renderInput("fullname", "Full Name", "text")}
           {this.renderInput("phone", "Phone", "text")}
-          {this.renderSelect("genderId", "Gender", this.state.genders)}
+          {this.renderSelect("genderId", "Gender", this.state.genders, "name")}
+          {this.renderSelect(
+            "fireStationId",
+            "Fire Station",
+            this.state.fireStations,
+            "address"
+          )}
           {this.renderButton("Save")}
         </form>
       </React.Fragment>
