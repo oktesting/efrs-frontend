@@ -6,21 +6,21 @@ import auth from "../services/authService";
 
 class RegisterForm extends Form {
   state = {
-    data: { username: "", password: "", name: "" },
+    data: { email: "", password: "", name: "" },
     errors: {}
   };
   schema = {
-    username: Joi.string()
+    email: Joi.string()
       .email()
       .required()
-      .label("Username"),
+      .label("Email Address"),
     password: Joi.string()
       .min(5)
       .required()
       .label("Password"),
     name: Joi.string()
       .required()
-      .label("Name")
+      .label("Profile Name")
   };
   doSubmit = async () => {
     try {
@@ -31,7 +31,7 @@ class RegisterForm extends Form {
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
-        errors.username = ex.response.data;
+        errors.email = ex.response.data;
         this.setState({ errors });
       }
     }
@@ -39,11 +39,11 @@ class RegisterForm extends Form {
   render() {
     return (
       <React.Fragment>
-        <h1 className="container">Register</h1>
+        <h1 className="container">Sign Up</h1>
         <form onSubmit={this.handleSubmit} className="container">
-          {this.renderInput("username", "Username", "text")}
+          {this.renderInput("email", "Email Address", "text")}
           {this.renderInput("password", "Password", "password")}
-          {this.renderInput("name", "Name", "text")}
+          {this.renderInput("name", "Profile Name", "text")}
           {this.renderButton("Register")}
         </form>
       </React.Fragment>

@@ -76,14 +76,7 @@ class ProfileForm extends Form {
       .label("Gender"),
     fireStationId: Joi.string()
       .required()
-      .label("Fire Station"),
-    isFireStation: Joi.boolean(),
-    province: Joi.string()
-      .required()
-      .label("Province"),
-    district: Joi.string()
-      .required()
-      .label("District")
+      .label("Fire Station")
   };
 
   doSubmit = async () => {
