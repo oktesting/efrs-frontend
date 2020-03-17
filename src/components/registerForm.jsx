@@ -1,8 +1,9 @@
 import React from "react";
 import Form from "./common/form";
 import Joi from "joi-browser";
-import * as userService from "../services/accountsService";
+import { register } from "../services/accountsService";
 import auth from "../services/authService";
+import { toast } from "react-toastify";
 
 class RegisterForm extends Form {
   state = {
@@ -22,20 +23,25 @@ class RegisterForm extends Form {
       .required()
       .label("Profile Name")
   };
+
   doSubmit = async () => {
     try {
       //bảo người dùng đi verify bằng mail
-      const { data } = await userService.register(this.state.data);
-      // const errors = { ...this.state.errors };
-      // errors.email = "please verify your email";
-      // this.setState({ errors });
-
+      const { data } = await register(this.state.data);
       if (data) {
-        window.location = "/signin";
+        toast(
+          <div>
+            <h5>
+              Your account is created. Please check your email inbox to verify.
+            </h5>
+          </div>,
+          {
+            type: toast.TYPE.INFO,
+            onClose: () => (window.location = "/signin"),
+            onClick: () => (window.location = "/signin")
+          }
+        );
       }
-      // auth.loginWithJwt(headers["x-auth-token"]);
-      //cause the full reload page => read the jwt => display info of user properly
-      // window.location = "/";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
