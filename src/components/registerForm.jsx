@@ -1,8 +1,10 @@
 import React from "react";
 import Form from "./common/form";
 import Joi from "joi-browser";
-import * as userService from "../services/accountsService";
+import { register } from "../services/accountsService";
 import auth from "../services/authService";
+import logo_pccc from "../media/logo_pccc.svg";
+import { toast } from "react-toastify";
 
 class RegisterForm extends Form {
   state = {
@@ -22,12 +24,25 @@ class RegisterForm extends Form {
       .required()
       .label("Profile Name")
   };
+
   doSubmit = async () => {
     try {
-      const { headers } = await userService.register(this.state.data);
-      auth.loginWithJwt(headers["x-auth-token"]);
-      //cause the full reload page => read the jwt => display info of user properly
-      window.location = "/";
+      //bảo người dùng đi verify bằng mail
+      const { data } = await register(this.state.data);
+      if (data) {
+        toast(
+          <div>
+            <h5>
+              Your account is created. Please check your email inbox to verify.
+            </h5>
+          </div>,
+          {
+            type: toast.TYPE.INFO,
+            onClose: () => (window.location = "/signin"),
+            onClick: () => (window.location = "/signin")
+          }
+        );
+      }
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
@@ -39,13 +54,18 @@ class RegisterForm extends Form {
   render() {
     return (
       <React.Fragment>
-        <h1 className="container">Sign Up</h1>
-        <form onSubmit={this.handleSubmit} className="container">
-          {this.renderInput("email", "Email Address", "text")}
-          {this.renderInput("password", "Password", "password")}
-          {this.renderInput("name", "Profile Name", "text")}
-          {this.renderButton("Register")}
-        </form>
+        <div className="form-signin">
+          <div className="text-center">
+            <img className="logo" src={logo_pccc} alt="efrs-logo" />
+          </div>
+          <h3 className="font-weight-normal text-center mb-4">Sign Up</h3>
+          <form onSubmit={this.handleSubmit}>
+            {this.renderInput("email", "Email Address", "text")}
+            {this.renderInput("password", "Password", "password")}
+            {this.renderInput("name", "Profile Name", "text")}
+            {this.renderButton("Register")}
+          </form>
+        </div>
       </React.Fragment>
     );
   }

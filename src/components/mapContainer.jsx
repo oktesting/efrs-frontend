@@ -1,26 +1,20 @@
 import React, { Component } from "react";
 import WrappedMap from "./wrappedMap";
+import { toast } from "react-toastify";
 
 class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
       //duccm4
-      fires: [],
-      activeMarker: {},
-      selectedPlace: {},
-      showingInfoWindow: false
+      fires: []
     };
 
     //duccm4
     this.eventSource = new EventSource("http://localhost:3900/api/fires");
   }
 
-  state = {
-    activeMarker: {},
-    selectedPlace: {},
-    showingInfoWindow: false
-  };
+  state = {};
 
   componentDidMount() {
     //duccm4
@@ -31,7 +25,9 @@ class MapContainer extends Component {
       this.getDataFromTheFistEvent(JSON.parse(e.data));
     });
   }
-
+  componentWillUnmount() {
+    this.stopUpdates();
+  }
   //duccm4
   getDataFromTheFistEvent(firesList) {
     this.setState({ fires: firesList });
@@ -42,6 +38,17 @@ class MapContainer extends Component {
     if (id === -1) updatedFires.push(newFire);
     else updatedFires[id] = newFire;
     this.setState({ fires: updatedFires });
+    toast(
+      <div>
+        <i class="fa fa-exclamation-triangle" /> Received new fire.
+      </div>,
+      {
+        type: toast.TYPE.WARNING,
+        hideProgressBar: true,
+        newestOnTop: true,
+        autoClose: false
+      }
+    );
   }
 
   stopUpdates() {

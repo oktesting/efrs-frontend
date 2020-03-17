@@ -17,8 +17,8 @@ const NavBar = ({ user }) => {
       </button>
       <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div className="navbar-nav">
-          <NavLink className="nav-item nav-link" to="/map">
-            Google Map
+          <NavLink className="nav-item nav-link" to="/homepage">
+            EFRS
           </NavLink>
           {!user && (
             <React.Fragment>
@@ -32,6 +32,11 @@ const NavBar = ({ user }) => {
           )}
           {user && (
             <React.Fragment>
+              {user.supervisor && (
+                <NavLink className="nav-item nav-link" to="/map">
+                  Google Map
+                </NavLink>
+              )}
               <NavLink className="nav-item nav-link pull-right" to="/profile">
                 {user.name}
               </NavLink>

@@ -52,7 +52,7 @@ class Form extends Component {
         // if validate() return null => falsy
         // otherwise => truthy
         disabled={this.validate()}
-        className="btn btn-primary"
+        className="btn btn-lg btn-primary btn-block"
       >
         {label}
       </button>
@@ -78,6 +78,7 @@ class Form extends Component {
         name={name}
         label={label}
         value={data[name]}
+        field={field}
         options={options}
         error={errors[name]}
         onChange={this.handleChange}

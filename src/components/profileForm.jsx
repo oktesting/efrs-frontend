@@ -3,95 +3,124 @@ import Form from "./common/form";
 import Joi from "joi-browser";
 import auth from "../services/authService";
 import { Redirect } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { getAllFireStation } from "../services/locationService";
+import {
+  createSupervisor,
+  getSupervisor,
+  editSupervisor
+} from "../services/supervisorService";
+import { toast } from "react-toastify";
 
 class ProfileForm extends Form {
   state = {
     data: {
       fullname: "",
       phone: "",
-      genderId: "",
-      fireStationId: ""
+      gender: "",
+      location: ""
     },
     genders: [
       {
-        _id: 1,
+        _id: "male",
         name: "Male"
       },
       {
-        _id: 2,
+        _id: "female",
         name: "Female"
       }
     ],
-    fireStations: [
-      {
-        _id: 1,
-        address: "Đội Phòng cháy chữa cháy và Cứu nạn cứu hộ quận Hoàn Kiếm",
-        lat: 21.028254,
-        lng: 105.868407
-      },
-      {
-        _id: 2,
-        address: "Phòng Cảnh Sát Phòng Cháy Và Chữa Cháy Số 3",
-        lat: 21.044959,
-        lng: 105.792497
-      },
-      {
-        _id: 3,
-        address: "Đội Cảnh sát PCCC&CNCH Quận Hoàn Kiếm",
-        lat: 21.025866,
-        lng: 105.860093
-      },
-      {
-        _id: 4,
-        address: "Cục Cảnh sát phòng cháy, chữa cháy và cứu nạn, cứu hộ",
-        lat: 21.026296,
-        lng: 105.854101
-      },
-      {
-        _id: 5,
-        address: "Cảnh Sát Phòng Cháy",
-        lat: 21.022533,
-        lng: 105.85705
-      }
-    ],
-    errors: {}
+    fireStations: [],
+    errors: {},
+    user: {}
   };
-  componentDidMount() {
+
+  async populateFireStation() {
     // gọi tới server để kéo về mảng fire stations
+    const { data: fireStations } = await getAllFireStation();
+    this.setState({ fireStations });
+  }
+  async populatingSupervisor() {
+    try {
+      const { user } = this.state;
+      //create new super case
+      if (!user.supervisor) return;
+      //edit super case
+      const { data: supervisor } = await getSupervisor();
+      this.setState({ data: this.mapToViewModel(supervisor) });
+    } catch (error) {
+      if (error.response && error.response.status === 404)
+        return this.props.history.replace("/not-found");
+    }
+  }
+  mapToViewModel(supervisor) {
+    return {
+      _id: supervisor._id,
+      isActivated: supervisor.isActivated,
+      fullname: supervisor.fullname,
+      phone: supervisor.phone,
+      gender: supervisor.gender,
+      location: supervisor.location,
+      avatar: supervisor.avatar
+    };
+  }
+  async componentDidMount() {
+    this.setState({ user: auth.getCurrentUser() });
+    await this.populateFireStation();
+    await this.populatingSupervisor();
   }
   schema = {
+    _id: Joi.string(),
     isActivated: Joi.boolean(),
-    location: Joi.string(),
+    location: Joi.string()
+      .required()
+      .label("Fire Station"),
     fullname: Joi.string()
       .required()
       .label("Full Name"),
     phone: Joi.string()
-      .required()
       .min(10)
       .max(11)
+      .required()
       .label("Phone"),
-    genderId: Joi.string()
+    gender: Joi.string()
       .required()
       .label("Gender"),
-    fireStationId: Joi.string()
-      .required()
-      .label("Fire Station")
+    avatar: Joi.string()
   };
 
   doSubmit = async () => {
     //call the server
     try {
-      const { username: email, password } = this.state.data;
-      await auth.login(email, password);
-      //get the previous page before redirected to /login
-      const { state } = this.props.location;
-      //cause the full reload page => read the jwt => display info of user properly
-      window.location = state ? state.from.pathname : "/";
+      const { user } = this.state;
+      //create new super case
+      if (!user.supervisor) {
+        await createSupervisor(this.state.data);
+        toast("Your profile is created. Please sign in again.", {
+          type: toast.TYPE.SUCCESS,
+          onClose: () => {
+            return this.props.history.replace("/signout");
+          },
+          onClick: () => {
+            return this.props.history.replace("/signout");
+          }
+        });
+      }
+      //edit super case
+      await editSupervisor(this.state.data);
+      toast("Your profile is modified.", {
+        type: toast.TYPE.SUCCESS,
+        onClose: () => {
+          return this.props.history.replace("/");
+        },
+        onClick: () => {
+          return this.props.history.replace("/");
+        }
+      });
     } catch (ex) {
-      if (ex.response && ex.response.status === 400) {
+      const { status } = ex.response;
+      if (ex.response && (status === 401 || status === 400 || status === 404)) {
         const errors = { ...this.state.errors };
-        errors.username = ex.response.data;
+        errors.fullname = ex.response.data;
         this.setState({ errors });
       }
     }
@@ -99,22 +128,24 @@ class ProfileForm extends Form {
 
   render() {
     //in case of user already logged in => redirect them to homepage
-    if (auth.getCurrentUser()) return <Redirect to="/" />;
+
     return (
       <React.Fragment>
-        <h1 className="container">Profile</h1>
-        <form onSubmit={this.handleSubmit} className="container">
-          {this.renderInput("fullname", "Full Name", "text")}
-          {this.renderInput("phone", "Phone", "text")}
-          {this.renderSelect("genderId", "Gender", this.state.genders, "name")}
-          {this.renderSelect(
-            "fireStationId",
-            "Fire Station",
-            this.state.fireStations,
-            "address"
-          )}
-          {this.renderButton("Save")}
-        </form>
+        <div className="form-signin">
+          <h3 className="font-weight-normal text-center mb-4">Profile</h3>
+          <form onSubmit={this.handleSubmit}>
+            {this.renderInput("fullname", "Full Name", "text")}
+            {this.renderInput("phone", "Phone", "text")}
+            {this.renderSelect("gender", "Gender", this.state.genders, "name")}
+            {this.renderSelect(
+              "location",
+              "Fire Station",
+              this.state.fireStations,
+              "address"
+            )}
+            {this.renderButton("Save")}
+          </form>
+        </div>
       </React.Fragment>
     );
   }
