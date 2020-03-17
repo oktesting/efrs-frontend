@@ -3,7 +3,13 @@ import Form from "./common/form";
 import Joi from "joi-browser";
 import auth from "../services/authService";
 import { Redirect } from "react-router-dom";
-import locations from "../services/locationService";
+import { getAllFireStation } from "../services/locationService";
+import {
+  createSupervisor,
+  getSupervisor,
+  editSupervisor
+} from "../services/supervisorService";
+import { toast } from "react-toastify";
 
 class ProfileForm extends Form {
   state = {
@@ -24,26 +30,28 @@ class ProfileForm extends Form {
       }
     ],
     fireStations: [],
-    errors: {}
+    errors: {},
+    user: {}
   };
 
   async populateFireStation() {
     // gọi tới server để kéo về mảng fire stations
-    const { data: fireStations } = await locations.getAllFireStation();
+    const { data: fireStations } = await getAllFireStation();
     this.setState({ fireStations });
   }
-  // async populatingSupervisor() {
-  //   try {
-  //     const supervisorId = this.props.match.params.id;
-  //     if (supervisorId === "new") return;
-
-  //     // const { data: supervisor } = await getSupervisor(supervisorId);
-  //     this.setState({ data: this.mapToViewModel(supervisor) });
-  //   } catch (error) {
-  //     if (error.response && error.response.status === 404)
-  //       return this.props.history.replace("/not-found");
-  //   }
-  // }
+  async populatingSupervisor() {
+    try {
+      const { user } = this.state;
+      //create new super case
+      if (!user.supervisor) return;
+      //edit super case
+      const { data: supervisor } = await getSupervisor();
+      this.setState({ data: this.mapToViewModel(supervisor) });
+    } catch (error) {
+      if (error.response && error.response.status === 404)
+        return this.props.history.replace("/not-found");
+    }
+  }
   mapToViewModel(supervisor) {
     return {
       _id: supervisor._id,
@@ -56,8 +64,9 @@ class ProfileForm extends Form {
     };
   }
   async componentDidMount() {
+    this.setState({ user: auth.getCurrentUser() });
     await this.populateFireStation();
-    // await this.populatingSupervisor();
+    await this.populatingSupervisor();
   }
   schema = {
     _id: Joi.string(),
@@ -82,24 +91,44 @@ class ProfileForm extends Form {
   doSubmit = async () => {
     //call the server
     try {
-      // const { username: email, password } = this.state.data;
-      // await auth.login(email, password);
-      // //get the previous page before redirected to /login
-      // const { state } = this.props.location;
-      // //cause the full reload page => read the jwt => display info of user properly
-      // window.location = state ? state.from.pathname : "/";
+      const { user } = this.state;
+      //create new super case
+      if (!user.supervisor) {
+        await createSupervisor(this.state.data);
+        toast("Your profile is created. Please sign in again.", {
+          type: toast.TYPE.SUCCESS,
+          onClose: () => {
+            return this.props.history.replace("/signout");
+          },
+          onClick: () => {
+            return this.props.history.replace("/signout");
+          }
+        });
+      }
+      //edit super case
+      await editSupervisor(this.state.data);
+      toast("Your profile is modified.", {
+        type: toast.TYPE.SUCCESS,
+        onClose: () => {
+          return this.props.history.replace("/");
+        },
+        onClick: () => {
+          return this.props.history.replace("/");
+        }
+      });
     } catch (ex) {
-      // if (ex.response && ex.response.status === 400) {
-      //   const errors = { ...this.state.errors };
-      //   errors.username = ex.response.data;
-      //   this.setState({ errors });
-      // }
+      const { status } = ex.response;
+      if (ex.response && (status === 401 || status === 400 || status === 404)) {
+        const errors = { ...this.state.errors };
+        errors.fullname = ex.response.data;
+        this.setState({ errors });
+      }
     }
   };
 
   render() {
     //in case of user already logged in => redirect them to homepage
-    if (auth.getCurrentUser()) return <Redirect to="/" />;
+
     return (
       <React.Fragment>
         <div className="form-signin">

@@ -21,7 +21,6 @@ class LoginForm extends Form {
       .label("Email Address"),
     password: Joi.string()
       .required()
-      .min(5)
       .label("Password")
   };
 
@@ -30,12 +29,17 @@ class LoginForm extends Form {
     try {
       const { email, password } = this.state.data;
       await auth.login(email, password);
-      //get the previous page before redirected to /login
-      const { state } = this.props.location;
-      //cause the full reload page => read the jwt => display info of user properly
-      window.location = state ? state.from.pathname : "/";
+      const acc = auth.getCurrentUser();
+      if (acc && !acc["supervisor"]) this.props.history.replace("profile");
+      else {
+        //get the previous page before redirected to /login
+        const { state } = this.props.location;
+        //cause the full reload page => read the jwt => display info of user properly
+        window.location = state ? state.from.pathname : "/";
+      }
     } catch (ex) {
-      if (ex.response && ex.response.status === 400) {
+      const { status } = ex.response;
+      if (ex.response && (status === 400 || status === 401 || status === 404)) {
         const errors = { ...this.state.errors };
         errors.email = ex.response.data;
         this.setState({ errors });
@@ -50,7 +54,7 @@ class LoginForm extends Form {
       <React.Fragment>
         <div className="form-signin">
           <div className="text-center">
-            <img className="logo" src={logo_pccc} />
+            <img className="logo" src={logo_pccc} alt="efrs-logo" />
           </div>
           <h3 className="font-weight-normal text-center mb-4">Sign In</h3>
           <form onSubmit={this.handleSubmit}>

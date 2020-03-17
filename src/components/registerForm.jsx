@@ -56,7 +56,7 @@ class RegisterForm extends Form {
       <React.Fragment>
         <div className="form-signin">
           <div className="text-center">
-            <img className="logo" src={logo_pccc} />
+            <img className="logo" src={logo_pccc} alt="efrs-logo" />
           </div>
           <h3 className="font-weight-normal text-center mb-4">Sign Up</h3>
           <form onSubmit={this.handleSubmit}>
