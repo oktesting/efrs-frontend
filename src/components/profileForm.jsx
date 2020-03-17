@@ -23,44 +23,41 @@ class ProfileForm extends Form {
         name: "Female"
       }
     ],
-    fireStations: [
-      {
-        _id: 1,
-        address: "Đội Phòng cháy chữa cháy và Cứu nạn cứu hộ quận Hoàn Kiếm",
-        lat: 21.028254,
-        lng: 105.868407
-      },
-      {
-        _id: 2,
-        address: "Phòng Cảnh Sát Phòng Cháy Và Chữa Cháy Số 3",
-        lat: 21.044959,
-        lng: 105.792497
-      },
-      {
-        _id: 3,
-        address: "Đội Cảnh sát PCCC&CNCH Quận Hoàn Kiếm",
-        lat: 21.025866,
-        lng: 105.860093
-      },
-      {
-        _id: 4,
-        address: "Cục Cảnh sát phòng cháy, chữa cháy và cứu nạn, cứu hộ",
-        lat: 21.026296,
-        lng: 105.854101
-      },
-      {
-        _id: 5,
-        address: "Cảnh Sát Phòng Cháy",
-        lat: 21.022533,
-        lng: 105.85705
-      }
-    ],
+    fireStations: [],
     errors: {}
   };
-  async componentDidMount() {
+
+  async populateFireStation() {
     // gọi tới server để kéo về mảng fire stations
     const { data: fireStations } = await locations.getAllFireStation();
     this.setState({ fireStations });
+  }
+  // async populatingSupervisor() {
+  //   try {
+  //     const supervisorId = this.props.match.params.id;
+  //     if (supervisorId === "new") return;
+
+  //     // const { data: supervisor } = await getSupervisor(supervisorId);
+  //     this.setState({ data: this.mapToViewModel(supervisor) });
+  //   } catch (error) {
+  //     if (error.response && error.response.status === 404)
+  //       return this.props.history.replace("/not-found");
+  //   }
+  // }
+  mapToViewModel(supervisor) {
+    return {
+      _id: supervisor._id,
+      isActivated: supervisor.isActivated,
+      fullname: supervisor.fullname,
+      phone: supervisor.phone,
+      gender: supervisor.gender,
+      location: supervisor.location,
+      avatar: supervisor.avatar
+    };
+  }
+  async componentDidMount() {
+    await this.populateFireStation();
+    // await this.populatingSupervisor();
   }
   schema = {
     _id: Joi.string(),
