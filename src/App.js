@@ -10,6 +10,7 @@ import ProfileForm from "./components/profileForm";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ProtectedRoute from "./components/common/protectedRoute";
 
 class App extends Component {
   state = {};
@@ -27,14 +28,14 @@ class App extends Component {
         <NavBar user={user} />
         <main>
           <Switch>
-            <Route path="/map" component={mapContainer} />
-            <Route path="/signout" component={Logout} />
-            <Route path="/signin" component={LoginForm} />
-            <Route path="/signup" component={registerForm} />
-            <Route path="/profile" component={ProfileForm} />
+            <Route path="/signin" exact component={LoginForm} />
+            <Route path="/signup" exact component={registerForm} />
+            <Route path="/signout" exact component={Logout} />
+            <ProtectedRoute path="/map" exact component={mapContainer} />
+            <ProtectedRoute path="/profile" exact component={ProfileForm} />
             <Route path="/not-found" component={NotFound} />
             <Redirect from="/" exact to="/map" />
-            <Redirect to="/map" />
+            <Redirect to="/not-found" />
           </Switch>
         </main>
       </React.Fragment>

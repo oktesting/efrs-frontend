@@ -3,6 +3,7 @@ import AwesomeSlider from "react-awesome-slider";
 import AwesomeSliderStyles from "react-awesome-slider/src/styles";
 import "@github/time-elements";
 import { InfoWindow } from "react-google-maps";
+import Popup from "reactjs-popup";
 
 const CustomInfoWindow = ({
   onCloseInfoWindow,
@@ -19,31 +20,33 @@ const CustomInfoWindow = ({
       }}
     >
       <div className="infoWindow">
-        <button
-          className="btn btn-danger btn-sm mr-1"
-          onClick={() => {
-            alert("alo");
-          }}
+        <Popup
+          trigger={
+            <button className="btn btn-primary btn-sm mr-1">Actions</button>
+          }
+          modal
+          closeOnDocumentClick
         >
-          Change Status Processing
-        </button>
-        <button
-          className="btn btn-danger btn-sm mr-1"
-          onClick={() => {
-            alert("alo");
-          }}
-        >
-          Group
-        </button>
-        <button
-          className="btn btn-danger btn-sm mr-1"
-          onClick={() => {
-            alert("alo");
-          }}
-        >
-          Delete
-        </button>
-
+          <div>
+            Pick action&nbsp;&nbsp;
+            <button
+              className="btn btn-danger btn-sm mr-1"
+              onClick={() => {
+                alert("alo");
+              }}
+            >
+              Group
+            </button>
+            <button
+              className="btn btn-danger btn-sm mr-1"
+              onClick={() => {
+                alert("alo");
+              }}
+            >
+              Delete
+            </button>
+          </div>
+        </Popup>
         <h3>User infomation</h3>
         <div
           className="alert alert-danger row"
