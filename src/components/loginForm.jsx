@@ -3,6 +3,7 @@ import Form from "./common/form";
 import Joi from "joi-browser";
 import auth from "../services/authService";
 import { Redirect } from "react-router-dom";
+import logo_pccc from "../media/logo_pccc.svg";
 
 class LoginForm extends Form {
   state = {
@@ -47,12 +48,17 @@ class LoginForm extends Form {
     if (auth.getCurrentUser()) return <Redirect to="/" />;
     return (
       <React.Fragment>
-        <h1>Sign In</h1>
-        <form onSubmit={this.handleSubmit}>
-          {this.renderInput("email", "Email Address", "text")}
-          {this.renderInput("password", "Password", "password")}
-          {this.renderButton("Login")}
-        </form>
+        <div className="form-signin">
+          <div className="text-center">
+            <img className="logo" src={logo_pccc} />
+          </div>
+          <h3 className="font-weight-normal text-center mb-4">Sign In</h3>
+          <form onSubmit={this.handleSubmit}>
+            {this.renderInput("email", "Email Address", "text")}
+            {this.renderInput("password", "Password", "password")}
+            {this.renderButton("Login")}
+          </form>
+        </div>
       </React.Fragment>
     );
   }

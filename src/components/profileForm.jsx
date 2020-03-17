@@ -102,19 +102,21 @@ class ProfileForm extends Form {
     if (auth.getCurrentUser()) return <Redirect to="/" />;
     return (
       <React.Fragment>
-        <h1>Profile</h1>
-        <form onSubmit={this.handleSubmit}>
-          {this.renderInput("fullname", "Full Name", "text")}
-          {this.renderInput("phone", "Phone", "text")}
-          {this.renderSelect("gender", "Gender", this.state.genders, "name")}
-          {this.renderSelect(
-            "location",
-            "Fire Station",
-            this.state.fireStations,
-            "address"
-          )}
-          {this.renderButton("Save")}
-        </form>
+        <div className="form-signin">
+          <h3 className="font-weight-normal text-center mb-4">Profile</h3>
+          <form onSubmit={this.handleSubmit}>
+            {this.renderInput("fullname", "Full Name", "text")}
+            {this.renderInput("phone", "Phone", "text")}
+            {this.renderSelect("gender", "Gender", this.state.genders, "name")}
+            {this.renderSelect(
+              "location",
+              "Fire Station",
+              this.state.fireStations,
+              "address"
+            )}
+            {this.renderButton("Save")}
+          </form>
+        </div>
       </React.Fragment>
     );
   }
