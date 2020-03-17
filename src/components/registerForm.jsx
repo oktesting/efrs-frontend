@@ -3,6 +3,7 @@ import Form from "./common/form";
 import Joi from "joi-browser";
 import * as userService from "../services/accountsService";
 import auth from "../services/authService";
+import logo_pccc from "../media/logo_pccc.svg";
 
 class RegisterForm extends Form {
   state = {
@@ -47,13 +48,18 @@ class RegisterForm extends Form {
   render() {
     return (
       <React.Fragment>
-        <h1>Sign Up</h1>
-        <form onSubmit={this.handleSubmit}>
-          {this.renderInput("email", "Email Address", "text")}
-          {this.renderInput("password", "Password", "password")}
-          {this.renderInput("name", "Profile Name", "text")}
-          {this.renderButton("Register")}
-        </form>
+        <div className="form-signin">
+          <div className="text-center">
+            <img className="logo" src={logo_pccc} />
+          </div>
+          <h3 className="font-weight-normal text-center mb-4">Sign Up</h3>
+          <form onSubmit={this.handleSubmit}>
+            {this.renderInput("email", "Email Address", "text")}
+            {this.renderInput("password", "Password", "password")}
+            {this.renderInput("name", "Profile Name", "text")}
+            {this.renderButton("Register")}
+          </form>
+        </div>
       </React.Fragment>
     );
   }
