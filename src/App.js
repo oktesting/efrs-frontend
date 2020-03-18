@@ -11,6 +11,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProtectedRoute from "./components/common/protectedRoute";
+import Homepage from "./components/homepage.jsx";
 
 class App extends Component {
   state = {};
@@ -31,6 +32,7 @@ class App extends Component {
             <Route path="/signin" exact component={LoginForm} />
             <Route path="/signup" exact component={registerForm} />
             <Route path="/signout" exact component={Logout} />
+            <Route path="/homepage" exact component={Homepage} />
             <ProtectedRoute path="/map" exact component={mapContainer} />
             <ProtectedRoute path="/profile" exact component={ProfileForm} />
             <Route path="/not-found" component={NotFound} />

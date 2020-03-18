@@ -105,7 +105,12 @@ span.displayInline {
   width: 10vw;
   height: auto;
 }
-
+.homepage {
+  margin-top: 7px;
+  overflow: hidden;
+  height: 92vh;
+  /* width: 70vw;
+  margin-left: 15vw; */
 .image-preview {
   width: 200px;
   height: 200px;
@@ -119,7 +124,6 @@ span.displayInline {
   font-weight: bold;
   color: #cccccc;
 }
-
 .image-preview__image {
   display: none;
   width: 100%;
