@@ -105,3 +105,10 @@ span.displayInline {
   width: 10vw;
   height: auto;
 }
+.homepage {
+  margin-top: 7px;
+  overflow: hidden;
+  height: 92vh;
+  /* width: 70vw;
+  margin-left: 15vw; */
+}
