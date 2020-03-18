@@ -105,3 +105,22 @@ span.displayInline {
   width: 10vw;
   height: auto;
 }
+
+.image-preview {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #dddddd;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  /* Default text*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #cccccc;
+}
+
+.image-preview__image {
+  display: none;
+  width: 100%;
+}

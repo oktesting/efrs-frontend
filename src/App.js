@@ -34,6 +34,7 @@ class App extends Component {
             <ProtectedRoute path="/map" exact component={mapContainer} />
             <ProtectedRoute path="/profile" exact component={ProfileForm} />
             <Route path="/not-found" component={NotFound} />
+            <Route path="/profile" component={ProfileForm} />
             <Redirect from="/" exact to="/map" />
             <Redirect to="/not-found" />
           </Switch>
