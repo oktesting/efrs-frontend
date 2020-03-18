@@ -30,7 +30,7 @@ class LoginForm extends Form {
       const { email, password } = this.state.data;
       await auth.login(email, password);
       const acc = auth.getCurrentUser();
-      if (acc && !acc["supervisor"]) this.props.history.replace("profile");
+      if (acc && !acc["supervisor"]) window.location = "/profile";
       else {
         //get the previous page before redirected to /login
         const { state } = this.props.location;

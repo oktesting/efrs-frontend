@@ -4,7 +4,6 @@ import auth from "./services/authService";
 import LoginForm from "./components/loginForm";
 import mapContainer from "./components/mapContainer";
 import registerForm from "./components/registerForm";
-import ProfileForm from "./components/profileForm";
 import NotFound from "./components/notFound";
 import Logout from "./components/logout";
 import ProfileForm from "./components/profileForm";
