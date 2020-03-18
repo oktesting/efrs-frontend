@@ -38,11 +38,13 @@ class LoginForm extends Form {
         window.location = state ? state.from.pathname : "/";
       }
     } catch (ex) {
-      const { status } = ex.response;
-      if (ex.response && (status === 400 || status === 401 || status === 404)) {
-        const errors = { ...this.state.errors };
-        errors.email = ex.response.data;
-        this.setState({ errors });
+      if (ex.response) {
+        const { status } = ex.response;
+        if (status === 401 || status === 400 || status === 404) {
+          const errors = { ...this.state.errors };
+          errors.email = ex.response.data;
+          this.setState({ errors });
+        }
       }
     }
   };

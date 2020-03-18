@@ -29,15 +29,15 @@ class App extends Component {
         <NavBar user={user} />
         <main>
           <Switch>
+            <Route path="/homepage" exact component={Homepage} />
             <Route path="/signin" exact component={LoginForm} />
             <Route path="/signup" exact component={registerForm} />
             <Route path="/signout" exact component={Logout} />
-            <Route path="/homepage" exact component={Homepage} />
             <ProtectedRoute path="/map" exact component={mapContainer} />
             <ProtectedRoute path="/profile" exact component={ProfileForm} />
             <Route path="/not-found" component={NotFound} />
-            <Route path="/profile" component={ProfileForm} />
-            <Redirect from="/" exact to="/map" />
+            <Route path="/profile" exact component={ProfileForm} />
+            <Redirect from="/" exact to="/homepage" />
             <Redirect to="/not-found" />
           </Switch>
         </main>

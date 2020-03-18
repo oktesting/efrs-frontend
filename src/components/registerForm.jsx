@@ -2,7 +2,6 @@ import React from "react";
 import Form from "./common/form";
 import Joi from "joi-browser";
 import { register } from "../services/accountsService";
-import auth from "../services/authService";
 import logo_pccc from "../media/logo_pccc.svg";
 import { toast } from "react-toastify";
 
