@@ -2,7 +2,6 @@ import React from "react";
 import Form from "./common/form";
 import Joi from "joi-browser";
 import auth from "../services/authService";
-import { Redirect } from "react-router-dom";
 import { getAllFireStation } from "../services/locationService";
 import {
   createSupervisor,
@@ -10,7 +9,6 @@ import {
   editSupervisor
 } from "../services/supervisorService";
 import { toast } from "react-toastify";
-import ImageCrop from "../components/avatar";
 
 class ProfileForm extends Form {
   state = {
@@ -119,11 +117,13 @@ class ProfileForm extends Form {
         }
       });
     } catch (ex) {
-      const { status } = ex.response;
-      if (ex.response && (status === 401 || status === 400 || status === 404)) {
-        const errors = { ...this.state.errors };
-        errors.fullname = ex.response.data;
-        this.setState({ errors });
+      if (ex.response) {
+        const { status } = ex.response;
+        if (status === 401 || status === 400 || status === 404) {
+          const errors = { ...this.state.errors };
+          errors.fullname = ex.response.data;
+          this.setState({ errors });
+        }
       }
     }
   };
@@ -135,17 +135,15 @@ class ProfileForm extends Form {
       <React.Fragment>
         <div className="form-signin">
           <h3 className="font-weight-normal text-center mb-4">Profile</h3>
-          {this.state.data.avatar ? (
-            <img
-              src={this.state.data.avatar}
-              className="image-preview rounded-circle"
-            ></img>
-          ) : (
-            <img
-              src="https://efrs.s3-ap-southeast-1.amazonaws.com/common-assets/profile-avatar/male-avatar.png"
-              className="image-preview rounded-circle"
-            ></img>
-          )}
+          <img
+            src={
+              this.state.data.avatar
+                ? this.state.data.avatar
+                : "https://efrs.s3-ap-southeast-1.amazonaws.com/common-assets/profile-avatar/male-avatar.png"
+            }
+            className="image-preview rounded-circle img-thumbnail mx-auto d-block"
+            alt="avatar"
+          ></img>
           <form onSubmit={this.handleSubmit}>
             {this.renderInput("fullname", "Full Name", "text")}
             {this.renderInput("phone", "Phone", "text")}
