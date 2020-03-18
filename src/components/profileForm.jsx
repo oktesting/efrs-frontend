@@ -10,6 +10,7 @@ import {
   editSupervisor
 } from "../services/supervisorService";
 import { toast } from "react-toastify";
+import ImageCrop from "../components/avatar";
 
 class ProfileForm extends Form {
   state = {
@@ -17,7 +18,8 @@ class ProfileForm extends Form {
       fullname: "",
       phone: "",
       gender: "",
-      location: ""
+      location: "",
+      avatar: ""
     },
     genders: [
       {
@@ -85,7 +87,7 @@ class ProfileForm extends Form {
     gender: Joi.string()
       .required()
       .label("Gender"),
-    avatar: Joi.string()
+    avatar: Joi.any()
   };
 
   doSubmit = async () => {
@@ -133,6 +135,17 @@ class ProfileForm extends Form {
       <React.Fragment>
         <div className="form-signin">
           <h3 className="font-weight-normal text-center mb-4">Profile</h3>
+          {this.state.data.avatar ? (
+            <img
+              src={this.state.data.avatar}
+              className="image-preview rounded-circle"
+            ></img>
+          ) : (
+            <img
+              src="https://efrs.s3-ap-southeast-1.amazonaws.com/common-assets/profile-avatar/male-avatar.png"
+              className="image-preview rounded-circle"
+            ></img>
+          )}
           <form onSubmit={this.handleSubmit}>
             {this.renderInput("fullname", "Full Name", "text")}
             {this.renderInput("phone", "Phone", "text")}
