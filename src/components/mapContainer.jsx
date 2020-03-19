@@ -55,6 +55,37 @@ class MapContainer extends Component {
     this.eventSource.close();
   }
 
+  handleDeleteFire = async fireId => {
+    const originalFires = this.state.fires;
+    let fires;
+    try {
+      fires = originalFires.filter(fire => fireId !== fire._id);
+      console.log(fireId);
+      // gọi tới server
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        // toast.error("fire is already deleted");
+        // fires = originalFires;
+      }
+    }
+    this.setState({ fires });
+  };
+
+  handleChangeStatusFire = async fireId => {
+    // const originalFires = this.state.fires;
+    // let fires = [...originalFires];
+    try {
+      console.log(fireId);
+      // gọi tới server
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        // toast.error("fire is already deleted");
+        // fires = originalFires;
+      }
+    }
+    // this.setState({ fires });
+  };
+
   render() {
     return (
       <div>
@@ -66,6 +97,8 @@ class MapContainer extends Component {
           containerElement={<div style={{ height: `100vh` }} />}
           mapElement={<div style={{ height: `100%` }} />}
           fires={this.state.fires}
+          handleDeleteFire={this.handleDeleteFire}
+          handleChangeStatusFire={this.handleChangeStatusFire}
         ></WrappedMap>
       </div>
     );

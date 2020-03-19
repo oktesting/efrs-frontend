@@ -78,8 +78,8 @@ class ProfileForm extends Form {
       .required()
       .label("Full Name"),
     phone: Joi.string()
-      .min(10)
-      .max(11)
+      .trim()
+      .regex(/^[0-9]{10}$/)
       .required()
       .label("Phone"),
     gender: Joi.string()

@@ -20,7 +20,7 @@ const defaultMapOptions = {
 };
 
 function Map(props) {
-  const [selectedPlace, setSelectedPlace] = useState(null);
+  const [selectedFire, setSelectedFire] = useState(null);
   const [images, setImages] = useState(null);
   const [videos, setVideos] = useState(null);
 
@@ -29,7 +29,7 @@ function Map(props) {
       defaultCenter={defaultCenter}
       defaultZoom={15}
       defaultOptions={defaultMapOptions}
-      onClick={() => setSelectedPlace(null)}
+      onClick={() => setSelectedFire(null)}
     >
       <Marker
         animation={window.google.maps.Animation.DROP}
@@ -58,7 +58,7 @@ function Map(props) {
                 : tickMarker
           }}
           onClick={() => {
-            setSelectedPlace(item);
+            setSelectedFire(item);
             setImages(
               item.evidences.filter(
                 evidence => evidence.mimetype !== "video/mp4"
@@ -72,16 +72,18 @@ function Map(props) {
           }}
           onRightClick={e => {
             console.log(e["tb"]);
-            setSelectedPlace(item);
+            setSelectedFire(item);
           }}
         />
       ))}
-      {selectedPlace && (
+      {selectedFire && (
         <CustomInfoWindow
-          selectedPlace={selectedPlace}
+          selectedFire={selectedFire}
           images={images}
           videos={videos}
-          onCloseInfoWindow={() => setSelectedPlace(null)}
+          onCloseInfoWindow={() => setSelectedFire(null)}
+          handleDeleteFire={props.handleDeleteFire}
+          handleChangeStatusFire={props.handleChangeStatusFire}
         />
       )}
     </GoogleMap>
