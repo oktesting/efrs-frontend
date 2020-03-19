@@ -9,6 +9,7 @@ import Logout from "./components/logout";
 import ProfileForm from "./components/profileForm";
 import Homepage from "./components/homepage.jsx";
 import Users from "./components/users.jsx";
+import UserInfo from "./components/userInfo";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -36,6 +37,7 @@ class App extends Component {
             <Route path="/signout" exact component={Logout} />
             <ProtectedRoute path="/map" exact component={MapContainer} />
             <ProtectedRoute path="/profile" exact component={ProfileForm} />
+            <ProtectedRoute path="/users/:id" exact component={UserInfo} />
             <ProtectedRoute path="/users" exact component={Users} />
             <Route path="/not-found" component={NotFound} />
             <Redirect from="/" exact to="/homepage" />

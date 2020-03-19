@@ -15,20 +15,31 @@ class UserInfo extends Component {
       avatar: ""
     }
   };
+  async populatingUser() {
+    try {
+      const accountId = this.props.match.params.id;
+      const { data: acc } = await getUser(accountId);
+      this.setState({ data: this.mapToViewModel(acc) });
+    } catch (error) {
+      if (error.response && error.response.status === 404)
+        return this.props.history.replace("/not-found");
+    }
+  }
+  async componentDidMount() {
+    await this.populatingUser();
+  }
 
-  async componentDidMount() {}
-
-  mapToViewModel(user) {
+  mapToViewModel(acc) {
     return {
-      isVerified: user.isVerified,
-      name: user.name,
-      email: user.email,
-      isActivated: user.isActivated,
-      fullname: user.fullname,
-      phone: user.phone,
-      gender: user.gender,
-      age: user.age,
-      avatar: user.avatar
+      isVerified: acc.isVerified,
+      name: acc.name,
+      email: acc.email,
+      isActivated: acc.user.isActivated,
+      fullname: acc.user.fullname,
+      phone: acc.user.phone,
+      gender: acc.user.gender,
+      age: acc.user.age,
+      avatar: acc.user.avatar
     };
   }
 
