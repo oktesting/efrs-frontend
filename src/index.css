@@ -129,3 +129,14 @@ span.displayInline {
   display: none;
   width: 100%;
 }
+.userInfo {
+  width: 55vw;
+  margin: auto;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
+.shadow {
+  box-shadow: 0 12px 18px 2px rgba(34, 0, 51, 0.02),
+    0 6px 22px 4px rgba(7, 48, 114, 0.12),
+    0 6px 10px -4px rgba(14, 13, 26, 0.12);
+}

@@ -31,7 +31,7 @@ class ProfileForm extends Form {
     ],
     fireStations: [],
     errors: {},
-    user: {}
+    account: {}
   };
 
   async populateFireStation() {
@@ -41,12 +41,12 @@ class ProfileForm extends Form {
   }
   async populatingSupervisor() {
     try {
-      const { user } = this.state;
+      const { account } = this.state;
       //create new super case
-      if (!user.supervisor) return;
+      if (!account.supervisor) return;
       //edit super case
-      const { data: supervisor } = await getSupervisor();
-      this.setState({ data: this.mapToViewModel(supervisor) });
+      const { data } = await getSupervisor(account._id);
+      this.setState({ data: this.mapToViewModel(data.supervisor) });
     } catch (error) {
       if (error.response && error.response.status === 404)
         return this.props.history.replace("/not-found");
@@ -64,7 +64,7 @@ class ProfileForm extends Form {
     };
   }
   async componentDidMount() {
-    this.setState({ user: auth.getCurrentUser() });
+    this.setState({ account: auth.getCurrentUser() });
     await this.populateFireStation();
     await this.populatingSupervisor();
   }
@@ -78,8 +78,8 @@ class ProfileForm extends Form {
       .required()
       .label("Full Name"),
     phone: Joi.string()
-      .min(10)
-      .max(11)
+      .trim()
+      .regex(/^[0-9]{10}$/)
       .required()
       .label("Phone"),
     gender: Joi.string()
@@ -91,9 +91,9 @@ class ProfileForm extends Form {
   doSubmit = async () => {
     //call the server
     try {
-      const { user } = this.state;
+      const { account } = this.state;
       //create new super case
-      if (!user.supervisor) {
+      if (!account.supervisor) {
         await createSupervisor(this.state.data);
         toast("Your profile is created. Please sign in again.", {
           type: toast.TYPE.SUCCESS,

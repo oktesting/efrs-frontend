@@ -12,6 +12,7 @@
     "font-awesome": "^4.7.0",
     "joi-browser": "^13.4.0",
     "jwt-decode": "^2.2.0",
+    "lodash": "^4.17.15",
     "node-sass": "^4.13.1",
     "react": "^16.12.0",
     "react-avatar-editor": "^12.0.0-beta.0",

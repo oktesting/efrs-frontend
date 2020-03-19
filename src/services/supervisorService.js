@@ -22,7 +22,7 @@ function editSupervisor(supervisor) {
   return http.put(apiEndpoint, data);
 }
 
-function getSupervisor() {
-  return http.get(apiEndpoint);
+function getSupervisor(id) {
+  return http.get(`${apiEndpoint}/${id}`);
 }
 export { getSupervisor, createSupervisor, editSupervisor };
