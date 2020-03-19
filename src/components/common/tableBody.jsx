@@ -13,7 +13,7 @@ class TableBody extends Component {
   render() {
     const { data, columns } = this.props;
     return (
-      <tbody>
+      <tbody className="text-center">
         {data.map(item => (
           <tr key={item._id}>
             {columns.map(column => (

@@ -33,9 +33,14 @@ const NavBar = ({ user }) => {
           {user && (
             <React.Fragment>
               {user.supervisor && (
-                <NavLink className="nav-item nav-link" to="/map">
-                  Google Map
-                </NavLink>
+                <React.Fragment>
+                  <NavLink className="nav-item nav-link" to="/map">
+                    Supervise Map
+                  </NavLink>
+                  <NavLink className="nav-item nav-link" to="/users">
+                    Manage Users
+                  </NavLink>
+                </React.Fragment>
               )}
               <NavLink className="nav-item nav-link pull-right" to="/profile">
                 {user.name}
