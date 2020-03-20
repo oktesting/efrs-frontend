@@ -22,11 +22,15 @@ class EmergencyAlertForm extends Form {
     _id: Joi.string(),
     lat: Joi.number()
       .min(-90)
-      .max(90),
+      .max(90)
+      .label("latitude"),
     lng: Joi.number()
       .min(-180)
-      .max(180),
-    radius: Joi.string().required(),
+      .max(180)
+      .label("Longtitude"),
+    radius: Joi.number()
+      .required()
+      .label("Radius"),
     title: Joi.string().required(),
     message: Joi.string().required()
   };
