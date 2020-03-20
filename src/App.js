@@ -4,7 +4,7 @@ import auth from "./services/authService";
 import LoginForm from "./components/loginForm";
 import MapContainer from "./components/mapContainer";
 import RegisterForm from "./components/registerForm";
-import EmergencyReportForm from "./components/emergencyReport";
+import EmergencyAlertForm from "./components/emergencyAlertForm";
 import NotFound from "./components/notFound";
 import Logout from "./components/logout";
 import ProfileForm from "./components/profileForm";
@@ -39,9 +39,9 @@ class App extends Component {
             <ProtectedRoute path="/map" exact component={MapContainer} />
             <ProtectedRoute path="/profile" exact component={ProfileForm} />
             <ProtectedRoute
-              path="/emergency"
+              path="/emergency-alert"
               exact
-              component={EmergencyReportForm}
+              component={EmergencyAlertForm}
             />
             <ProtectedRoute path="/users/:id" exact component={UserInfo} />
             <ProtectedRoute path="/users" exact component={Users} />

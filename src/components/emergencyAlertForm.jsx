@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { getSupervisor } from "../services/supervisorService";
 import { issueEmergencyAlert } from "../services/emergencyAlertService";
 
-class EmergencyReportForm extends Form {
+class EmergencyAlertForm extends Form {
   state = {
     data: {
       lat: "",
@@ -39,6 +39,7 @@ class EmergencyReportForm extends Form {
     //call the server
     try {
       const alert = { ...this.state.data };
+      // @todo đoạn này sẽ tạch nếu acc vừa đc tạo từ signup và chưa tạo supervisor
       alert.supervisor = this.state.account.supervisor._id;
       await issueEmergencyAlert(alert);
       toast.success("Emergency Alert submitted");
@@ -55,8 +56,6 @@ class EmergencyReportForm extends Form {
   };
 
   render() {
-    //in case of user already logged in => redirect them to homepage
-
     return (
       <React.Fragment>
         <div className="form-signin">
@@ -77,4 +76,4 @@ class EmergencyReportForm extends Form {
   }
 }
 
-export default EmergencyReportForm;
+export default EmergencyAlertForm;
