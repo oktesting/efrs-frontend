@@ -29,6 +29,23 @@ class UserInfo extends Component {
     await this.populatingUser();
   }
 
+  renderUserInfo(label, data) {
+    return (
+      <div className="form-group row">
+        <label className="col-4 col-form-label">{label}</label>
+        <div className="col-8">
+          <input
+            placeholder="Email"
+            value={data}
+            className="form-control here"
+            type="text"
+            disabled
+          />
+        </div>
+      </div>
+    );
+  }
+
   mapToViewModel(acc) {
     return {
       isVerified: acc.isVerified,
@@ -44,6 +61,18 @@ class UserInfo extends Component {
   }
 
   render() {
+    const {
+      avatar,
+      age,
+      gender,
+      phone,
+      fullname,
+      isActivated,
+      email,
+      name,
+      isVerified
+    } = this.state.data;
+
     return (
       <div className="userInfo">
         <div className="row">
@@ -82,119 +111,19 @@ class UserInfo extends Component {
                 <form>
                   <div className="form-group row">
                     <img
-                      src={
-                        this.state.data.avatar
-                          ? this.state.data.avatar
-                          : "https://efrs.s3-ap-southeast-1.amazonaws.com/common-assets/profile-avatar/male-avatar.png"
-                      }
+                      src={avatar}
                       className="image-preview rounded-circle img-thumbnail mx-auto d-block"
                       alt="avatar"
                     />
                   </div>
-
-                  <div className="form-group row">
-                    <label className="col-4 col-form-label">Email</label>
-                    <div className="col-8">
-                      <input
-                        placeholder="Email"
-                        value={this.state.data.email}
-                        className="form-control here"
-                        type="text"
-                        disabled
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-group row">
-                    <label className="col-4 col-form-label">Username</label>
-                    <div className="col-8">
-                      <input
-                        placeholder="Name"
-                        value={this.state.data.name}
-                        className="form-control here"
-                        type="text"
-                        disabled
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-group row">
-                    <label className="col-4 col-form-label">Full Name</label>
-                    <div className="col-8">
-                      <input
-                        placeholder="Full Name"
-                        value={this.state.data.fullname}
-                        className="form-control here"
-                        type="text"
-                        disabled
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-group row">
-                    <label className="col-4 col-form-label">Gender</label>
-                    <div className="col-8">
-                      <input
-                        placeholder="Gender"
-                        value={this.state.data.gender}
-                        className="form-control here"
-                        type="text"
-                        disabled
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-group row">
-                    <label className="col-4 col-form-label">Phone</label>
-                    <div className="col-8">
-                      <input
-                        placeholder="Phone"
-                        value={this.state.data.phone}
-                        className="form-control here"
-                        type="number"
-                        disabled
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-group row">
-                    <label className="col-4 col-form-label">Age</label>
-                    <div className="col-8">
-                      <input
-                        placeholder="Age"
-                        value={this.state.data.age}
-                        className="form-control here"
-                        type="number"
-                        disabled
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-group row">
-                    <label className="col-4 col-form-label">Is Verified</label>
-                    <div className="col-8">
-                      <input
-                        placeholder="True"
-                        value={this.state.data.isVerified}
-                        className="form-control here"
-                        type="text"
-                        disabled
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-group row">
-                    <label className="col-4 col-form-label">Is Activated</label>
-                    <div className="col-8">
-                      <input
-                        placeholder="True"
-                        value={this.state.data.isActivated}
-                        className="form-control here"
-                        type="text"
-                        disabled
-                      />
-                    </div>
-                  </div>
+                  {this.renderUserInfo("Email", email)}
+                  {this.renderUserInfo("Username", name)}
+                  {this.renderUserInfo("Full Name", fullname)}
+                  {this.renderUserInfo("Phone", phone)}
+                  {this.renderUserInfo("Gender", gender)}
+                  {this.renderUserInfo("Age", age)}
+                  {this.renderUserInfo("Is Verified", isVerified)}
+                  {this.renderUserInfo("Is Activated", isActivated)}
                 </form>
               </div>
             </div>
