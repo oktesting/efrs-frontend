@@ -104,18 +104,19 @@ class ProfileForm extends Form {
             return this.props.history.replace("/signout");
           }
         });
+        //edit super case
+      } else {
+        await editSupervisor(this.state.data);
+        toast("Your profile is modified.", {
+          type: toast.TYPE.SUCCESS,
+          onClose: () => {
+            return this.props.history.replace("/");
+          },
+          onClick: () => {
+            return this.props.history.replace("/");
+          }
+        });
       }
-      //edit super case
-      await editSupervisor(this.state.data);
-      toast("Your profile is modified.", {
-        type: toast.TYPE.SUCCESS,
-        onClose: () => {
-          return this.props.history.replace("/");
-        },
-        onClick: () => {
-          return this.props.history.replace("/");
-        }
-      });
     } catch (ex) {
       if (ex.response) {
         const { status } = ex.response;

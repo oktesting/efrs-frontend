@@ -40,6 +40,9 @@ const NavBar = ({ user }) => {
                   <NavLink className="nav-item nav-link" to="/users">
                     Manage Users
                   </NavLink>
+                  <NavLink className="nav-item nav-link" to="/emergency-alert">
+                    Emergency Alert
+                  </NavLink>
                 </React.Fragment>
               )}
               <NavLink className="nav-item nav-link pull-right" to="/profile">

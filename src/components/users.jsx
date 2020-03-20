@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import SearchBox from "./common/searchBox";
 import UsersTable from "./usersTable";
 import Pagination from "./common/pagination";
-import { getAllUsers, getUser } from "../services/userService";
+import { getAllUsers } from "../services/userService";
 import { paginate } from "../utils/paginate";
 import _ from "lodash";
 
