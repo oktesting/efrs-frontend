@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Table from "./common/table";
+import Table from "../common/table";
 import { Link } from "react-router-dom";
 
 class UsersTable extends Component {
@@ -32,11 +32,11 @@ class UsersTable extends Component {
         )
     }
   ];
-  constructor() {
-    super();
-    // const user = auth.getCurrentUser();
-    // if (user && user.isAdmin) this.columns.push(this.deleteColum);
-  }
+  // constructor() {
+  //   super();
+  // const user = auth.getCurrentUser();
+  // if (user && user.isAdmin) this.columns.push(this.deleteColum);
+  // }
   render() {
     const { users, sortColumn, onSort } = this.props;
     return (

@@ -1,20 +1,20 @@
 import React, { Component } from "react";
-import NavBar from "./components/navBar.jsx";
 import auth from "./services/authService";
-import LoginForm from "./components/loginForm";
-import MapContainer from "./components/mapContainer";
-import RegisterForm from "./components/registerForm";
-import EmergencyAlertForm from "./components/emergencyAlertForm";
+import NavBar from "./components/navBar.jsx";
+import LoginForm from "./components/account/loginForm";
+import MapContainer from "./components/superviseMap/mapContainer";
+import RegisterForm from "./components/account/registerForm";
+import EmergencyAlertForm from "./components/emergencyAlert/emergencyAlertForm";
 import NotFound from "./components/notFound";
-import Logout from "./components/logout";
-import ProfileForm from "./components/profileForm";
+import Logout from "./components/account/logout";
+import ProfileForm from "./components/account/profileForm";
 import Homepage from "./components/homepage.jsx";
-import Users from "./components/users.jsx";
-import UserInfo from "./components/userInfo";
+import Users from "./components/manageUsers/users.jsx";
+import UserInfo from "./components/manageUsers/userInfo";
+import ProtectedRoute from "./components/common/protectedRoute";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ProtectedRoute from "./components/common/protectedRoute";
 
 class App extends Component {
   state = {};

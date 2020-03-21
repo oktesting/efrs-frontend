@@ -1,9 +1,9 @@
 import React from "react";
-import Form from "./common/form";
+import Form from "../common/form";
 import Joi from "joi-browser";
-import auth from "../services/authService";
+import auth from "../../services/authService";
 import { Redirect } from "react-router-dom";
-import logo_pccc from "../media/logo_pccc.svg";
+import logo_pccc from "../../media/logo_pccc.svg";
 
 class LoginForm extends Form {
   state = {
