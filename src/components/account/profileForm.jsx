@@ -1,13 +1,13 @@
 import React from "react";
-import Form from "./common/form";
+import Form from "../common/form";
 import Joi from "joi-browser";
-import auth from "../services/authService";
-import { getAllFireStation } from "../services/locationService";
+import auth from "../../services/authService";
+import { getAllFireStation } from "../../services/locationService";
 import {
   createSupervisor,
   getSupervisor,
   editSupervisor
-} from "../services/supervisorService";
+} from "../../services/supervisorService";
 import { toast } from "react-toastify";
 
 class ProfileForm extends Form {

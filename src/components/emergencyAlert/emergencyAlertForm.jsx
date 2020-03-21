@@ -1,10 +1,10 @@
 import React from "react";
-import Form from "./common/form";
+import Form from "../common/form";
 import Joi from "joi-browser";
-import auth from "../services/authService";
+import auth from "../../services/authService";
 import { toast } from "react-toastify";
-import { getSupervisor } from "../services/supervisorService";
-import { issueEmergencyAlert } from "../services/emergencyAlertService";
+// import { getSupervisor } from "../../services/supervisorService";
+import { issueEmergencyAlert } from "../../services/emergencyAlertService";
 
 class EmergencyAlertForm extends Form {
   state = {

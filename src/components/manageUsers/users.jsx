@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import SearchBox from "./common/searchBox";
+import SearchBox from "../common/searchBox";
 import UsersTable from "./usersTable";
-import Pagination from "./common/pagination";
-import { getAllUsers } from "../services/userService";
-import { paginate } from "../utils/paginate";
+import { getAllUsers } from "../../services/userService";
+import Pagination from "../common/pagination";
+import { paginate } from "../../utils/paginate";
 import _ from "lodash";
 
 class Users extends Component {
@@ -72,7 +72,7 @@ class Users extends Component {
     const { users, itemsCount } = this.getPagedData();
     return (
       <div className="container mt-3">
-        <h5>showing {itemsCount} users in the database</h5>
+        <h4>Showing {itemsCount} users in the database</h4>
         <SearchBox value={searchQuery} onChange={this.handleSearch} />
         <UsersTable
           users={users}

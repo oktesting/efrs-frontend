@@ -1,8 +1,8 @@
 import React from "react";
-import Form from "./common/form";
+import Form from "../common/form";
 import Joi from "joi-browser";
-import { register } from "../services/accountsService";
-import logo_pccc from "../media/logo_pccc.svg";
+import { register } from "../../services/accountsService";
+import logo_pccc from "../../media/logo_pccc.svg";
 import { toast } from "react-toastify";
 
 class RegisterForm extends Form {

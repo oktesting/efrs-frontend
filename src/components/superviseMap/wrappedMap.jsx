@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import tickMarker from "../media/tick.svg";
-import fireMarker from "../media/fire.svg";
-import extinguisherMarker from "../media/fire-extinguisher.svg";
-import stationMarker from "../media/fire-station.svg";
-import { mapStyles, defaultCenter } from "../config.json";
+import tickMarker from "../../media/tick.svg";
+import fireMarker from "../../media/fire.svg";
+import extinguisherMarker from "../../media/fire-extinguisher.svg";
+import stationMarker from "../../media/fire-station.svg";
+import { mapStyles, defaultCenter } from "../../config.json";
 
 import CustomInfoWindow from "./customInfoWindow";
 import {
