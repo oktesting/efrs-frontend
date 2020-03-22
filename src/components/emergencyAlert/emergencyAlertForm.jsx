@@ -23,7 +23,7 @@ class EmergencyAlertForm extends Form {
     lat: Joi.number()
       .min(-90)
       .max(90)
-      .label("latitude"),
+      .label("Latitude"),
     lng: Joi.number()
       .min(-180)
       .max(180)
@@ -31,8 +31,12 @@ class EmergencyAlertForm extends Form {
     radius: Joi.number()
       .required()
       .label("Radius"),
-    title: Joi.string().required(),
-    message: Joi.string().required()
+    title: Joi.string()
+      .required()
+      .label("Title"),
+    message: Joi.string()
+      .required()
+      .label("Message")
   };
 
   async componentDidMount() {

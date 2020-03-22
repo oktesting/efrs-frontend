@@ -19,16 +19,20 @@ class UsersTable extends Component {
       path: "isVerified",
       label: "Is Verified",
       content: acc =>
-        acc.isVerified ? <i class="fa fa-check" /> : <i class="fa fa-times" />
+        acc.isVerified ? (
+          <i className="fa fa-check" />
+        ) : (
+          <i className="fa fa-times" />
+        )
     },
     {
       path: "user.isActivated",
       label: "Is Activated",
       content: acc =>
         acc.user.isActivated ? (
-          <i class="fa fa-check" />
+          <i className="fa fa-check" />
         ) : (
-          <i class="fa fa-times" />
+          <i className="fa fa-times" />
         )
     }
   ];

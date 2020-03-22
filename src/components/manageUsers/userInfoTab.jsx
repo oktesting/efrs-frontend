@@ -40,8 +40,13 @@ class UserInfoTab extends Component {
                 <h4>User Information</h4>
               </div>
               <div className="col-3">
-                <button name="submit" type="submit" className="btn btn-danger">
-                  Deactivate user
+                <button
+                  name="submit"
+                  type="submit"
+                  className={isActivated ? "btn btn-danger" : "btn btn-success"}
+                  onClick={this.props.handleChangeActivation}
+                >
+                  {isActivated ? "Deactivate User" : "Activate User"}
                 </button>
               </div>
             </div>
