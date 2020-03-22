@@ -9,4 +9,9 @@ function getUser(id) {
 function getAllUsers() {
   return http.get(apiEndpoint);
 }
-export { getAllUsers, getUser };
+
+function changeUserActivation(userId) {
+  return http.get(`${apiEndpoint}/change-activation/${userId}`);
+}
+
+export { getAllUsers, getUser, changeUserActivation };

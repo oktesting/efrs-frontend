@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { getUser } from "../../services/userService";
+import { getUser, changeUserActivation } from "../../services/userService";
 import { getFiresByUserId } from "../../services/fireService";
 import ListGroup from "../common/listGroup";
 import UserInfoTab from "./userInfoTab";
 import FiresHistoryTab from "./firesHistoryTab";
 import LocationsTab from "./locationsTab";
+import { toast } from "react-toastify";
 
 class UserInfo extends Component {
   constructor() {
@@ -20,6 +21,7 @@ class UserInfo extends Component {
 
   state = {
     user: {
+      userId: "",
       isVerified: "",
       name: "",
       email: "",
@@ -46,7 +48,10 @@ class UserInfo extends Component {
 
   async populatingFiresHistory() {
     try {
-      this.setState({ firesHistory: getFiresByUserId(1) });
+      const { data: firesHistory } = await getFiresByUserId(
+        this.state.user.userId
+      );
+      this.setState({ firesHistory });
     } catch (error) {
       if (error.response && error.response.status === 404)
         return this.props.history.replace("/not-found");
@@ -55,6 +60,7 @@ class UserInfo extends Component {
 
   mapToViewModel(acc) {
     return {
+      userId: acc.user._id,
       isVerified: acc.isVerified,
       name: acc.name,
       email: acc.email,
@@ -76,6 +82,20 @@ class UserInfo extends Component {
     this.setState({ selectedTab: tab });
   };
 
+  handleChangeActivation = async () => {
+    try {
+      const { userId, isActivated } = this.state.user;
+      const newUser = { ...this.state.user };
+      newUser.isActivated = !isActivated;
+      await changeUserActivation(userId);
+      toast.success(isActivated ? "Deactivated User" : "Activated User");
+      this.setState({ user: newUser });
+    } catch (error) {
+      if (error.response && error.response.status === 404)
+        return this.props.history.replace("/not-found");
+    }
+  };
+
   render() {
     const { selectedTab, user, firesHistory } = this.state;
     return (
@@ -89,7 +109,10 @@ class UserInfo extends Component {
             />
           </div>
           {selectedTab._id === 1 ? (
-            <UserInfoTab user={user} />
+            <UserInfoTab
+              user={user}
+              handleChangeActivation={this.handleChangeActivation}
+            />
           ) : selectedTab._id === 2 ? (
             <FiresHistoryTab firesHistory={firesHistory} />
           ) : (
