@@ -50,15 +50,14 @@ class EmergencyAlertForm extends Form {
       // @todo đoạn này sẽ tạch nếu acc vừa đc tạo từ signup và chưa tạo supervisor
       alert.supervisor = this.state.account.supervisor._id;
       await issueEmergencyAlert(alert);
-      toast.success("Emergency Alert submitted");
+      toast("Emergency Alert Submitted.", {
+        type: toast.TYPE.SUCCESS,
+        onClose: () => {
+          return this.props.history.push("/homepage");
+        }
+      });
     } catch (ex) {
       if (ex.response) {
-        const { status } = ex.response;
-        if (status === 401 || status === 400 || status === 404) {
-          const errors = { ...this.state.errors };
-          errors.fullname = ex.response.data;
-          this.setState({ errors });
-        }
       }
     }
   };

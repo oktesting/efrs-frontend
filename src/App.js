@@ -5,7 +5,7 @@ import LoginForm from "./components/account/loginForm";
 import MapContainer from "./components/superviseMap/mapContainer";
 import RegisterForm from "./components/account/registerForm";
 import EmergencyAlertForm from "./components/emergencyAlert/emergencyAlertForm";
-import FireStationForm from "./components/fire-station/fireStationForm";
+import FireStationForm from "./components/admin/fireStationForm";
 import NotFound from "./components/notFound";
 import Logout from "./components/account/logout";
 import ProfileForm from "./components/account/profileForm";

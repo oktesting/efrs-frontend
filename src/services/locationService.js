@@ -3,7 +3,11 @@ import http from "./httpService";
 const apiEndpoint = "/locations";
 
 function getAllFireStation() {
-  return http.get(apiEndpoint + "/fire-station");
+  return http.get(`${apiEndpoint}/fire-station`);
 }
 
-export { getAllFireStation };
+function addNewFireStation(fireStation) {
+  return http.post(`${apiEndpoint}/fire-station`, fireStation);
+}
+
+export { getAllFireStation, addNewFireStation };

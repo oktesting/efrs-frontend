@@ -9,9 +9,6 @@ const CustomMarker = ({ item }) => {
         lat: item.latitude,
         lng: item.longtitude
       }}
-      onClick={() => {
-        console.log("clicked");
-      }}
     ></Marker>
   );
 };

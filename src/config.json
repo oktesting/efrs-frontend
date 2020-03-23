@@ -1,4 +1,180 @@
 {
+  "region": {
+    "provinces": [
+      {
+        "_id": "Hà Nội"
+      },
+      {
+        "_id": "TP Hồ Chí Minh"
+      }
+    ],
+    "districtHN": [
+      {
+        "_id": "Hoàn Kiếm"
+      },
+      {
+        "_id": "Đống Đa"
+      },
+      {
+        "_id": "Ba Đình"
+      },
+      {
+        "_id": "Bắc Từ Liêm"
+      },
+      {
+        "_id": "Cầu Giấy"
+      },
+      {
+        "_id": "Hà Đông"
+      },
+      {
+        "_id": "Hai Bà Trưng"
+      },
+      {
+        "_id": "Hoàng Mai"
+      },
+      {
+        "_id": "Long Biên"
+      },
+      {
+        "_id": "Nam Từ Liêm"
+      },
+      {
+        "_id": "Tây Hồ"
+      },
+      {
+        "_id": "Thanh Xuân"
+      },
+      {
+        "_id": "Sơn Tây"
+      },
+      {
+        "_id": "Ba Vì"
+      },
+      {
+        "_id": "Chương Mỹ"
+      },
+      {
+        "_id": "Đan Phượng"
+      },
+      {
+        "_id": "Đông Anh"
+      },
+      {
+        "_id": "Gia Lâm"
+      },
+      {
+        "_id": "Hoài Đức"
+      },
+      {
+        "_id": "Mê Linh"
+      },
+      {
+        "_id": "Mỹ Đức"
+      },
+      {
+        "_id": "Phú Xuyên"
+      },
+      {
+        "_id": "Phúc Thọ"
+      },
+      {
+        "_id": "Quốc Oai"
+      },
+      {
+        "_id": "Sóc Sơn"
+      },
+      {
+        "_id": "Thạch Thất"
+      },
+      {
+        "_id": "Thanh Oai"
+      },
+      {
+        "_id": "Thanh Trì"
+      },
+      {
+        "_id": "Thường Tín"
+      },
+      {
+        "_id": "Ứng Hòa"
+      }
+    ],
+    "districtHCM": [
+      {
+        "_id": "Quận 1"
+      },
+      {
+        "_id": "Quận 2"
+      },
+      {
+        "_id": "Quận 3"
+      },
+      {
+        "_id": "Quận 4"
+      },
+      {
+        "_id": "Quận 5"
+      },
+      {
+        "_id": "Quận 6"
+      },
+      {
+        "_id": "Quận 7"
+      },
+      {
+        "_id": "Quận 8"
+      },
+      {
+        "_id": "Quận 9"
+      },
+      {
+        "_id": "Quận 10"
+      },
+      {
+        "_id": "Quận 11"
+      },
+      {
+        "_id": "Quận 12"
+      },
+      {
+        "_id": "Quận Thủ Đức"
+      },
+      {
+        "_id": "Quận Gò Vấp"
+      },
+      {
+        "_id": "Quận Bình Thạnh"
+      },
+      {
+        "_id": "Quận Tân Bình"
+      },
+      {
+        "_id": "Quận Tân Phú"
+      },
+      {
+        "_id": "Quận Phú Nhuận"
+      },
+      {
+        "_id": "Quận Bình Tân"
+      },
+      {
+        "_id": "Huyện Củ Chi"
+      },
+      {
+        "_id": "Huyện Hóc Môn"
+      },
+      {
+        "_id": "Huyện Bình Chánh"
+      },
+      {
+        "_id": "Huyện Nhà Bè"
+      },
+      {
+        "_id": "Huyện Cần Giờ"
+      }
+    ]
+  },
   "defaultCenter": { "lat": 21.018412, "lng": 105.527138 },
   "mapStyles": [
     {

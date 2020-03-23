@@ -42,8 +42,7 @@ class RegisterForm extends Form {
           "Your account is created. Please check your email inbox to verify then sign in",
           {
             type: toast.TYPE.INFO,
-            onClose: () => (window.location = "/signin"),
-            onClick: () => (window.location = "/signin")
+            onClose: () => (window.location = "/signin")
           }
         );
       }
