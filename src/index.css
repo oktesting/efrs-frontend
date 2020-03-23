@@ -140,3 +140,8 @@ span.displayInline {
     0 6px 22px 4px rgba(7, 48, 114, 0.12),
     0 6px 10px -4px rgba(14, 13, 26, 0.12);
 }
+.evidenceVideo {
+  width: 65vw;
+  margin: auto;
+  margin-bottom: 2vh;
+}
