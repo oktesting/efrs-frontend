@@ -18,7 +18,7 @@ class FiresTable extends Component {
       path: "evidences",
       label: "Evidences",
       content: fire => (
-        <Link to={`/fires/${fire._id}`}>
+        <Link to={`/evidences/${fire._id}`}>
           {fire.evidences.length} evidence(s)
         </Link>
       )
