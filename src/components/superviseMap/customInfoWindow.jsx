@@ -88,6 +88,14 @@ const CustomInfoWindow = ({
           <div>
             <h6> Pick action&nbsp;&nbsp;</h6>
             <button
+              className="btn btn-primary btn-sm btn-block mr-1"
+              onClick={() => {
+                window.open("/evidences/" + selectedFire._id);
+              }}
+            >
+              View Evidences In New Tab
+            </button>
+            <button
               className="btn btn-warning btn-sm btn-block mr-1"
               onClick={() => {
                 selectedFire.status = "processing";

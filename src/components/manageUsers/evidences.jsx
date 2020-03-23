@@ -1,36 +1,25 @@
 import React, { Component } from "react";
-import { getFire } from "../../services/fireService";
+import { getFireId } from "../../services/fireService";
 import AwesomeSlider from "react-awesome-slider";
 import AwesomeSliderStyles from "react-awesome-slider/src/styles";
 
 class Evidences extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   state = {
     images: [],
     videos: []
   };
 
-  async populatingFire() {
+  async populatingEvidences() {
     try {
       const fireId = this.props.match.params.id;
-      const { data: fire } = await getFire(fireId);
+      const { data: fire } = await getFireId(fireId);
       this.setState({
-        images: [
-          "https://efrs.s3.ap-southeast-1.amazonaws.com/evidences/5e610874c4959c177043e4ec/5e6e612f5c3aec29801a4c11/1584292252411_2020_02_27_18_00_IMG_2169.jpg",
-          "https://efrs.s3.ap-southeast-1.amazonaws.com/evidences/5e610874c4959c177043e4ec/5e6e612f5c3aec29801a4c11/1584292252450_83583323_2283073611991988_6147780539265843200_n.jpg",
-          "https://efrs.s3.ap-southeast-1.amazonaws.com/evidences/5e610874c4959c177043e4ec/5e6e612f5c3aec29801a4c11/1584292252454_89785922_1499526216878195_1872107176957313024_n.jpg",
-          "https://efrs.s3.ap-southeast-1.amazonaws.com/evidences/5e610874c4959c177043e4ec/5e6e612f5c3aec29801a4c11/1584292322247_dbd82792f851fdd9f28e7ea10a7f2f41.jpg"
-        ]
-      });
-      this.setState({
-        videos: [
-          "https://efrs.s3.ap-southeast-1.amazonaws.com/evidences/5e610874c4959c177043e4ec/5e6e612f5c3aec29801a4c11/1584292322253_demo.mp4",
-          "https://efrs.s3.ap-southeast-1.amazonaws.com/evidences/5e610874c4959c177043e4ec/5e6e612f5c3aec29801a4c11/1584292322262_demo2.mp4"
-        ]
+        images: fire.evidences.filter(
+          evidence => evidence.mimetype !== "video/mp4"
+        ),
+        videos: fire.evidences.filter(
+          evidence => evidence.mimetype === "video/mp4"
+        )
       });
     } catch (error) {
       if (error.response && error.response.status === 404)
@@ -39,12 +28,8 @@ class Evidences extends Component {
   }
 
   async componentDidMount() {
-    await this.populatingFire();
+    await this.populatingEvidences();
   }
-
-  // mapToViewModel(fire) {
-  //   evidences: fire.evidences;
-  // }
 
   render() {
     const { images, videos } = this.state;
@@ -55,7 +40,7 @@ class Evidences extends Component {
           {images != null && images.length !== 0 ? (
             <AwesomeSlider cssModule={AwesomeSliderStyles}>
               {images.map((item, i) => (
-                <div key={i} data-src={item} />
+                <div key={i} data-src={item.location} />
               ))}
             </AwesomeSlider>
           ) : (
@@ -67,7 +52,12 @@ class Evidences extends Component {
           {videos != null && videos.length !== 0 ? (
             <div>
               {videos.map((item, i) => (
-                <video className="evidenceVideo" key={i} src={item} controls />
+                <video
+                  className="evidenceVideo"
+                  key={i}
+                  src={item.location}
+                  controls
+                />
               ))}
             </div>
           ) : (
