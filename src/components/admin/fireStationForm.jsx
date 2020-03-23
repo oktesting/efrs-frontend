@@ -1,7 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import Form from "../common/form";
 import Joi from "joi-browser";
-import auth from "../../services/authService";
+import { region } from "../../config.json";
+import { addNewFireStation } from "../../services/locationService";
+import { toast } from "react-toastify";
+// import auth from "../../services/authService";
 
 class FireStationForm extends Form {
   state = {
@@ -12,57 +15,9 @@ class FireStationForm extends Form {
       province: "",
       district: ""
     },
-    provinces: [
-      {
-        name: "Hà Nội"
-      },
-      {
-        name: "TP Hồ Chí Minh"
-      }
-    ],
-    districtHN: [
-      {
-        name: "Hoàn Kiếm"
-      },
-      {
-        name: "Đống Đa"
-      }
-    ],
-    districtHCM: [
-      {
-        name: "Quận 1"
-      },
-      {
-        name: "Quận 2"
-      },
-      {
-        name: "Quận 2"
-      },
-      {
-        name: "Quận 3"
-      },
-      {
-        name: "Quận 4"
-      },
-      {
-        name: "Quận 5"
-      },
-      {
-        name: "Quận 6"
-      },
-      {
-        name: "Quận 7"
-      },
-      {
-        name: "Quận 8"
-      },
-      {
-        name: "Quận 9"
-      },
-      {
-        name: "Quận 10"
-      }
-    ],
+    provinces: region.provinces,
+    districtHN: region.districtHN,
+    districtHCM: region.districtHCM,
     errors: {}
   };
 
@@ -86,6 +41,22 @@ class FireStationForm extends Form {
       .label("District")
   };
 
+  doSubmit = async () => {
+    //call the server
+    try {
+      await addNewFireStation(this.state.data);
+      toast("New Fire Station Added.", {
+        type: toast.TYPE.SUCCESS,
+        onClose: () => {
+          return this.props.history.push("/fire-station");
+        }
+      });
+    } catch (ex) {
+      if (ex.response) {
+      }
+    }
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -101,14 +72,14 @@ class FireStationForm extends Form {
               "province",
               "Province",
               this.state.provinces,
-              "name"
+              "_id"
             )}
             {this.state.data.province === "Hà Nội" ? (
               this.renderSelect(
                 "district",
                 "District",
                 this.state.districtHN,
-                "name"
+                "_id"
               )
             ) : (
               <div></div>
@@ -118,7 +89,7 @@ class FireStationForm extends Form {
                 "district",
                 "District",
                 this.state.districtHCM,
-                "name"
+                "_id"
               )
             ) : (
               <div></div>
