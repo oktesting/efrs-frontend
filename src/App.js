@@ -5,6 +5,7 @@ import LoginForm from "./components/account/loginForm";
 import MapContainer from "./components/superviseMap/mapContainer";
 import RegisterForm from "./components/account/registerForm";
 import EmergencyAlertForm from "./components/emergencyAlert/emergencyAlertForm";
+import FireStationForm from "./components/fire-station/fireStationForm";
 import NotFound from "./components/notFound";
 import Logout from "./components/account/logout";
 import ProfileForm from "./components/account/profileForm";
@@ -37,6 +38,11 @@ class App extends Component {
             <Route path="/signin" exact component={LoginForm} />
             <Route path="/signup" exact component={RegisterForm} />
             <Route path="/signout" exact component={Logout} />
+            <ProtectedRoute
+              path="/fire-station/new"
+              exact
+              component={FireStationForm}
+            />
             <ProtectedRoute path="/map" exact component={MapContainer} />
             <ProtectedRoute path="/profile" exact component={ProfileForm} />
             <ProtectedRoute
