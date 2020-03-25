@@ -1,13 +1,27 @@
 import http from "./httpService";
 
 const apiEndpoint = "/locations";
+const stationURL = `${apiEndpoint}/fire-station`;
 
 function getAllFireStation() {
-  return http.get(`${apiEndpoint}/fire-station`);
+  return http.get(stationURL);
 }
 
 function addNewFireStation(fireStation) {
-  return http.post(`${apiEndpoint}/fire-station`, fireStation);
+  return http.post(stationURL, fireStation);
 }
 
-export { getAllFireStation, addNewFireStation };
+function deleteFireStation(stationId) {
+  return http.delete(`${apiEndpoint}/${stationId}`);
+}
+
+function getAllLocationOfUser(userId) {
+  return http.get(`${apiEndpoint}/${userId}`);
+}
+
+export {
+  getAllFireStation,
+  addNewFireStation,
+  deleteFireStation,
+  getAllLocationOfUser
+};

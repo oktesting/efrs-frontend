@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { getUser, changeUserActivation } from "../../services/userService";
 import { getFiresByUserId } from "../../services/fireService";
+import { getAllLocationOfUser } from "../../services/locationService";
 import ListGroup from "../common/listGroup";
 import UserInfoTab from "./userInfoTab";
 import FiresHistoryTab from "./firesHistoryTab";
@@ -32,7 +33,8 @@ class UserInfo extends Component {
       age: "",
       avatar: ""
     },
-    firesHistory: []
+    firesHistory: [],
+    locations: []
   };
 
   async populatingUser() {
@@ -40,6 +42,17 @@ class UserInfo extends Component {
       const accountId = this.props.match.params.id;
       const { data: acc } = await getUser(accountId);
       this.setState({ user: this.mapToViewModel(acc) });
+    } catch (error) {
+      if (error.response && error.response.status === 404)
+        return this.props.history.replace("/not-found");
+    }
+  }
+  async populatingLocations() {
+    try {
+      const { data: locations } = await getAllLocationOfUser(
+        this.state.user.userId
+      );
+      this.setState({ locations });
     } catch (error) {
       if (error.response && error.response.status === 404)
         return this.props.history.replace("/not-found");
@@ -76,6 +89,7 @@ class UserInfo extends Component {
   async componentDidMount() {
     await this.populatingUser();
     await this.populatingFiresHistory();
+    await this.populatingLocations();
   }
 
   handleTabSelect = tab => {
@@ -97,7 +111,7 @@ class UserInfo extends Component {
   };
 
   render() {
-    const { selectedTab, user, firesHistory } = this.state;
+    const { selectedTab, user, firesHistory, locations } = this.state;
     return (
       <div className="userInfo">
         <div className="row">
@@ -116,7 +130,7 @@ class UserInfo extends Component {
           ) : selectedTab._id === 2 ? (
             <FiresHistoryTab firesHistory={firesHistory} />
           ) : (
-            <LocationsTab />
+            <LocationsTab locations={locations} />
           )}
         </div>
       </div>

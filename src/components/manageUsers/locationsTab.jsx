@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import { getUserLocation } from "../../services/locationService";
 
 class LocationsTab extends Component {
-  state = {
-    locations: []
-  };
-
   renderlocationInfo(label, data) {
     return (
       <div className="form-group row">
@@ -40,7 +36,7 @@ class LocationsTab extends Component {
   }
 
   render() {
-    const { locations } = this.state;
+    const { locations } = this.props;
     return (
       <div className="col shadow">
         <div className="mt-3">
@@ -50,7 +46,7 @@ class LocationsTab extends Component {
         {locations != null && locations.length !== 0 ? (
           <div>
             {locations.map((item, i) => (
-              <div>
+              <div key={i}>
                 <h4>Location {i + 1}</h4>
                 {this.renderLocationCard(item)}
                 <hr />

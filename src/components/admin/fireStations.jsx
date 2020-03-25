@@ -1,17 +1,32 @@
 import React, { Component } from "react";
+import ListGroup from "../common/listGroup";
 import SearchBox from "../common/searchBox";
 import FireStationsTable from "./fireStationsTable";
-import { getAllFireStation } from "../../services/locationService";
+import {
+  getAllFireStation,
+  deleteFireStation
+} from "../../services/locationService";
 import Pagination from "../common/pagination";
 import { paginate } from "../../utils/paginate";
 import _ from "lodash";
 import { toast } from "react-toastify";
 
 class FireStation extends Component {
+  constructor() {
+    super();
+    const tabs = [
+      { _id: "", name: "All Province" },
+      { _id: 2, name: "Hà Nội" },
+      { _id: 3, name: "TP Hồ Chí Minh" }
+    ];
+    this.state.tabs = tabs;
+    this.state.selectedTab = tabs[0];
+  }
+
   state = {
     fireStations: [],
     sortColumn: {
-      path: "name",
+      path: "address",
       order: "asc"
     },
     searchQuery: "",
@@ -34,7 +49,15 @@ class FireStation extends Component {
   };
 
   handleSearch = query => {
-    this.setState({ searchQuery: query, currentPage: 1 });
+    this.setState({
+      selectedTab: this.state.tabs[0],
+      searchQuery: query,
+      currentPage: 1
+    });
+  };
+
+  handleTabSelect = tab => {
+    this.setState({ selectedTab: tab, searchQuery: "", currentPage: 1 });
   };
 
   handleDelete = async stationId => {
@@ -44,6 +67,7 @@ class FireStation extends Component {
       stations = originalFireStations.filter(
         station => stationId !== station._id
       );
+      await deleteFireStation(stationId);
     } catch (error) {
       if (error.response && error.response.status === 404) {
         toast.error("Station is already deleted");
@@ -58,24 +82,19 @@ class FireStation extends Component {
       fireStations: allStations,
       pageSize,
       currentPage,
-      //   selectedGenre,
+      selectedTab,
       sortColumn,
       searchQuery
     } = this.state;
 
     let filtered;
-    //filter by search box only
     if (searchQuery)
       filtered = allStations.filter(m =>
-        m.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+        m.address.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
-    //filter by genre only
-    //if selected genre and its id is truthy then filter by genre
-    // else if (selectedGenre && selectedGenre._id)
-    //   filtered = allUsers.filter(m => m.genre._id === selectedGenre._id);
-    //otherwise => all genres => all movies
+    else if (selectedTab && selectedTab._id)
+      filtered = allStations.filter(m => m.province === selectedTab.name);
     else filtered = allStations;
-
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
     const fireStations = paginate(sorted, currentPage, pageSize);
     return {
@@ -88,35 +107,46 @@ class FireStation extends Component {
     const { sortColumn, pageSize, currentPage, searchQuery } = this.state;
     const { fireStations, itemsCount } = this.getPagedData();
     return (
-      <div className="container mt-3 p-3 shadow">
+      <div className="userInfo">
         <div className="row">
-          <div className="col-9">
-            <h4>Showing {itemsCount} stations in the database</h4>
-          </div>
           <div className="col-3">
-            <button
-              className="btn btn-primary float-right"
-              onClick={() => {
-                this.props.history.push("/fire-station/new");
-              }}
-            >
-              Create New Station
-            </button>
+            <ListGroup
+              items={this.state.tabs}
+              selectedItem={this.state.selectedTab}
+              onItemSelect={this.handleTabSelect}
+            />
+          </div>
+          <div className="col-9 shadow">
+            <div className="row mt-3">
+              <div className="col-8">
+                <h4>Showing {itemsCount} stations in the database</h4>
+              </div>
+              <div className="col-4">
+                <button
+                  className="btn btn-primary float-right"
+                  onClick={() => {
+                    this.props.history.push("/fire-station/new");
+                  }}
+                >
+                  Create New Station
+                </button>
+              </div>
+            </div>
+            <SearchBox value={searchQuery} onChange={this.handleSearch} />
+            <FireStationsTable
+              fireStations={fireStations}
+              sortColumn={sortColumn}
+              onSort={this.handleSort}
+              onItemDelete={this.handleDelete}
+            />
+            <Pagination
+              itemsCount={itemsCount}
+              pageSize={pageSize}
+              currentPage={currentPage}
+              onPageChange={this.handlePageChange}
+            />
           </div>
         </div>
-        <SearchBox value={searchQuery} onChange={this.handleSearch} />
-        <FireStationsTable
-          fireStations={fireStations}
-          sortColumn={sortColumn}
-          onSort={this.handleSort}
-          onItemDelete={this.handleDelete}
-        />
-        <Pagination
-          itemsCount={itemsCount}
-          pageSize={pageSize}
-          currentPage={currentPage}
-          onPageChange={this.handlePageChange}
-        />
       </div>
     );
   }

@@ -5,16 +5,11 @@ class FireStationsTable extends Component {
   columns = [
     {
       path: "address",
-      label: "Station"
+      label: "Fire Station"
     },
-    {
-      path: "lat",
-      label: "Latitude"
-    },
-    { path: "lng", label: "Longitude" },
-    { path: "province", label: "Province" },
     { path: "district", label: "District" },
     {
+      key: "delete",
       label: "Delete",
       content: station => (
         <button
@@ -26,11 +21,7 @@ class FireStationsTable extends Component {
       )
     }
   ];
-  // constructor() {
-  //   super();
-  // const user = auth.getCurrentUser();
-  // if (user && user.isAdmin) this.columns.push(this.deleteColum);
-  // }
+
   render() {
     const { fireStations, sortColumn, onSort } = this.props;
     return (
