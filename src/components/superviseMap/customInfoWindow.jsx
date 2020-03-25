@@ -96,6 +96,7 @@ const CustomInfoWindow = ({
               View Evidences In New Tab
             </button>
             <button
+              disabled={selectedFire.status === "pending" ? false : true}
               className="btn btn-warning btn-sm btn-block mr-1"
               onClick={() => {
                 selectedFire.status = "processing";
@@ -104,17 +105,17 @@ const CustomInfoWindow = ({
                 toast.success("Fire's status is changed");
               }}
             >
-              Change Status
+              Change Status To Proccesing
             </button>
             <button
               className="btn btn-danger btn-sm btn-block mr-1"
               onClick={() => {
                 handleDeleteFire(selectedFire._id);
                 onCloseInfoWindow();
-                toast.success("Fire is deleted");
+                toast.success("Fire is finished");
               }}
             >
-              Delete This Fire
+              Finish And Write Report For This Fire
             </button>
           </div>
         </Popup>
