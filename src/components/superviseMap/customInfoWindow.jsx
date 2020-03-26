@@ -113,6 +113,7 @@ const CustomInfoWindow = ({
                 handleDeleteFire(selectedFire._id);
                 onCloseInfoWindow();
                 toast.success("Fire is finished");
+                window.open("/reports/new");
               }}
             >
               Finish And Write Report For This Fire
