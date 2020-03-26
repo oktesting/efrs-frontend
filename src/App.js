@@ -46,6 +46,7 @@ class App extends Component {
             <ProtectedRoute path="/profile" exact component={ProfileForm} />
             <ProtectedRoute path="/map" exact component={MapContainer} />
             <ProtectedRoute path="/reports" exact component={Reports} />
+            <ProtectedRoute path="/reports/new" exact component={ReportForm} />
             <ProtectedRoute
               path="/emergency-alert"
               exact
@@ -70,7 +71,6 @@ class App extends Component {
               component={FireStations}
             />
             <ProtectedRoute path="/evidences/:id" exact component={Evidences} />
-            <ProtectedRoute path="/reports/new" exact component={ReportForm} />
             <Route path="/not-found" component={NotFound} />
             <Redirect from="/" exact to="/homepage" />
             <Redirect to="/not-found" />

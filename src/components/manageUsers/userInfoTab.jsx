@@ -27,8 +27,7 @@ class UserInfoTab extends Component {
       fullname,
       isActivated,
       email,
-      name,
-      isVerified
+      name
     } = this.props.user;
 
     return (

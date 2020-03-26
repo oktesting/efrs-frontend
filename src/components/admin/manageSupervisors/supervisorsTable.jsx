@@ -25,7 +25,7 @@ class SupervisorsTable extends Component {
     { path: "supervisor.fullname", label: "Full Name" },
     { path: "supervisor.gender", label: "Gender" },
     {
-      path: "supervisor.location",
+      key: "station",
       label: "Station",
       content: acc => (
         <div>

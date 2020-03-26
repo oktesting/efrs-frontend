@@ -1,10 +1,5 @@
 import React, { Component } from "react";
-import {
-  getSupervisor,
-  changeUserActivation
-} from "../../../services/supervisorService";
-import { getFiresByUserId } from "../../../services/fireService";
-import { getAllLocationOfUser } from "../../../services/locationService";
+import { getSupervisor } from "../../../services/supervisorService";
 import ListGroup from "../../common/listGroup";
 import SupervisorsInfoTab from "./supervisorsInfoTab";
 import FiresHistoryTab from "../../manageUsers/firesHistoryTab";
@@ -14,11 +9,7 @@ import { toast } from "react-toastify";
 class SupervisorInfo extends Component {
   constructor() {
     super();
-    const tabs = [
-      { _id: 1, name: "Supervisor Information" }
-      // { _id: 2, name: "Fires History" },
-      // { _id: 3, name: "Locations" }
-    ];
+    const tabs = [{ _id: 1, name: "Supervisor Information" }];
     this.state.tabs = tabs;
     this.state.selectedTab = tabs[0];
   }
@@ -48,29 +39,6 @@ class SupervisorInfo extends Component {
         return this.props.history.replace("/not-found");
     }
   }
-  // async populatingLocations() {
-  //   try {
-  //     const { data: locations } = await getAllLocationOfUser(
-  //       this.state.user.userId
-  //     );
-  //     this.setState({ locations });
-  //   } catch (error) {
-  //     if (error.response && error.response.status === 404)
-  //       return this.props.history.replace("/not-found");
-  //   }
-  // }
-
-  // async populatingFiresHistory() {
-  //   try {
-  //     const { data: firesHistory } = await getFiresByUserId(
-  //       this.state.user.userId
-  //     );
-  //     this.setState({ firesHistory });
-  //   } catch (error) {
-  //     if (error.response && error.response.status === 404)
-  //       return this.props.history.replace("/not-found");
-  //   }
-  // }
 
   mapToViewModel(acc) {
     return {
@@ -87,8 +55,6 @@ class SupervisorInfo extends Component {
 
   async componentDidMount() {
     await this.populatingSupervisor();
-    // await this.populatingFiresHistory();
-    // await this.populatingLocations();
   }
 
   handleTabSelect = tab => {
