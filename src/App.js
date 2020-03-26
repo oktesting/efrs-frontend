@@ -6,14 +6,15 @@ import MapContainer from "./components/superviseMap/mapContainer";
 import RegisterForm from "./components/account/registerForm";
 import EmergencyAlertForm from "./components/emergencyAlert/emergencyAlertForm";
 import FireStationForm from "./components/admin/fireStationForm";
+import FireStations from "./components/admin/fireStations";
 import NotFound from "./components/notFound";
 import Logout from "./components/account/logout";
 import ProfileForm from "./components/account/profileForm";
 import Homepage from "./components/homepage.jsx";
 import Users from "./components/manageUsers/users.jsx";
-import FireStations from "./components/admin/fireStations";
 import UserInfo from "./components/manageUsers/userInfo";
 import Evidences from "./components/manageUsers/evidences";
+import Reports from "./components/manageReports/reports";
 import ProtectedRoute from "./components/common/protectedRoute";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -39,13 +40,9 @@ class App extends Component {
             <Route path="/signin" exact component={LoginForm} />
             <Route path="/signup" exact component={RegisterForm} />
             <Route path="/signout" exact component={Logout} />
-            <ProtectedRoute
-              path="/fire-station/new"
-              exact
-              component={FireStationForm}
-            />
-            <ProtectedRoute path="/map" exact component={MapContainer} />
             <ProtectedRoute path="/profile" exact component={ProfileForm} />
+            <ProtectedRoute path="/map" exact component={MapContainer} />
+            <ProtectedRoute path="/reports" exact component={Reports} />
             <ProtectedRoute
               path="/emergency-alert"
               exact
@@ -53,6 +50,11 @@ class App extends Component {
             />
             <ProtectedRoute path="/users/:id" exact component={UserInfo} />
             <ProtectedRoute path="/users" exact component={Users} />
+            <ProtectedRoute
+              path="/fire-station/new"
+              exact
+              component={FireStationForm}
+            />
             <ProtectedRoute
               path="/fire-station"
               exact

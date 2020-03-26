@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getFireId } from "../../services/fireService";
+import { getFireById } from "../../services/fireService";
 import AwesomeSlider from "react-awesome-slider";
 import AwesomeSliderStyles from "react-awesome-slider/src/styles";
 
@@ -12,7 +12,7 @@ class Evidences extends Component {
   async populatingEvidences() {
     try {
       const fireId = this.props.match.params.id;
-      const { data: fire } = await getFireId(fireId);
+      const { data: fire } = await getFireById(fireId);
       this.setState({
         images: fire.evidences.filter(
           evidence => evidence.mimetype !== "video/mp4"
