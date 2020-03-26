@@ -74,7 +74,7 @@ class EmergencyAlertForm extends Form {
             {this.renderInput("lng", "Longitute", "text")}
             {this.renderInput("radius", "Radius", "text")}
             {this.renderInput("title", "Title", "text")}
-            {this.renderTextArea("message", "Message")}
+            {this.renderTextArea("message", "Message", 2)}
             {this.renderButton("Save")}
           </form>
         </div>

@@ -25,4 +25,8 @@ function editSupervisor(supervisor) {
 function getSupervisor(id) {
   return http.get(`${apiEndpoint}/${id}`);
 }
-export { getSupervisor, createSupervisor, editSupervisor };
+
+function getAllSupervisors() {
+  return http.get(apiEndpoint);
+}
+export { getSupervisor, createSupervisor, editSupervisor, getAllSupervisors };

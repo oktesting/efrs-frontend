@@ -7,8 +7,8 @@ function getFiresByUserId(userId) {
   return http.get(`${apiEndpoint}/user/${userId}`);
 }
 //get one fire
-function getFireId(fireId) {
+function getFireById(fireId) {
   return http.get(`${apiEndpoint}/${fireId}`);
 }
 
-export { getFiresByUserId, getFireId };
+export { getFiresByUserId, getFireById };

@@ -1,9 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import logo from "../media/fire-station1.svg";
 
 const NavBar = ({ user }) => {
   return (
     <nav className="navbar navbar-expand-md navbar-light bg-light">
+      <NavLink className="navbar-brand" to="/homepage">
+        <img src={logo} alt="logo" height="40" />
+      </NavLink>
       <button
         className="navbar-toggler"
         type="button"
@@ -17,9 +21,6 @@ const NavBar = ({ user }) => {
       </button>
       <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div className="navbar-nav">
-          <NavLink className="nav-item nav-link" to="/homepage">
-            EFRS
-          </NavLink>
           {!user && (
             <React.Fragment>
               <NavLink className="nav-item nav-link" to="/signin">
@@ -42,6 +43,15 @@ const NavBar = ({ user }) => {
                   </NavLink>
                   <NavLink className="nav-item nav-link" to="/emergency-alert">
                     Emergency Alert
+                  </NavLink>
+                  <NavLink className="nav-item nav-link" to="/reports">
+                    Fire Reports
+                  </NavLink>
+                  <NavLink className="nav-item nav-link" to="/fire-station">
+                    Fire Station
+                  </NavLink>
+                  <NavLink className="nav-item nav-link" to="/supervisors">
+                    Manage Supervisors
                   </NavLink>
                 </React.Fragment>
               )}

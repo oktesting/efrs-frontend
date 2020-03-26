@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { getUserLocation } from "../../services/locationService";
 
 class LocationsTab extends Component {
   renderlocationInfo(label, data) {
