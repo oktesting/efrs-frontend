@@ -11,6 +11,8 @@ import Logout from "./components/account/logout";
 import ProfileForm from "./components/account/profileForm";
 import Homepage from "./components/homepage.jsx";
 import Users from "./components/manageUsers/users.jsx";
+import Supervisors from "./components/admin/manageSupervisors/supervisors.jsx";
+import SupervisorsInfo from "./components/admin/manageSupervisors/supervisorsInfo.jsx";
 import FireStations from "./components/admin/fireStations";
 import UserInfo from "./components/manageUsers/userInfo";
 import Evidences from "./components/manageUsers/evidences";
@@ -53,6 +55,12 @@ class App extends Component {
             />
             <ProtectedRoute path="/users/:id" exact component={UserInfo} />
             <ProtectedRoute path="/users" exact component={Users} />
+            <ProtectedRoute path="/supervisors" exact component={Supervisors} />
+            <ProtectedRoute
+              path="/supervisors/:id"
+              exact
+              component={SupervisorsInfo}
+            />
             <ProtectedRoute
               path="/fire-station"
               exact

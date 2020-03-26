@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class UserInfoTab extends Component {
+class SupervisorInfoTab extends Component {
   renderUserInfo(label, data) {
     return (
       <div className="form-group row">
@@ -21,15 +21,13 @@ class UserInfoTab extends Component {
   render() {
     const {
       avatar,
-      age,
       gender,
       phone,
       fullname,
       isActivated,
       email,
-      name,
-      isVerified
-    } = this.props.user;
+      name
+    } = this.props.supervisor;
 
     return (
       <div className="col shadow">
@@ -37,7 +35,7 @@ class UserInfoTab extends Component {
           <div className="col">
             <div className="row">
               <div className="col-8">
-                <h4>User Information</h4>
+                <h4>Supervisor Information</h4>
               </div>
               <div className="col-4">
                 <button
@@ -51,11 +49,11 @@ class UserInfoTab extends Component {
                 >
                   {isActivated ? (
                     <span>
-                      Deactivate User <i className="fa fa-times" />
+                      Deactivate Supervisor <i className="fa fa-times" />
                     </span>
                   ) : (
                     <span>
-                      Activate User <i className="fa fa-check" />
+                      Activate Supervisor <i className="fa fa-check" />
                     </span>
                   )}
                 </button>
@@ -79,7 +77,6 @@ class UserInfoTab extends Component {
               {this.renderUserInfo("Full Name", fullname)}
               {this.renderUserInfo("Phone", phone)}
               {this.renderUserInfo("Gender", gender)}
-              {this.renderUserInfo("Age", age)}
             </form>
           </div>
         </div>
@@ -88,4 +85,4 @@ class UserInfoTab extends Component {
   }
 }
 
-export default UserInfoTab;
+export default SupervisorInfoTab;
