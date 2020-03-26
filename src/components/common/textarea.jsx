@@ -1,6 +1,6 @@
 import React from "react";
 
-const TextArea = ({ name, label, value, error, onChange }) => {
+const TextArea = ({ name, label, value, error, onChange, rows }) => {
   return (
     <div className="form-label-group">
       <textarea
@@ -9,6 +9,7 @@ const TextArea = ({ name, label, value, error, onChange }) => {
         onChange={onChange}
         placeholder={label}
         className="form-control"
+        rows={rows}
       />
       {/* if error is truthy => display alert */}
       {error && <div className="alert alert-danger">{error}</div>}

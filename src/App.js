@@ -18,6 +18,7 @@ import ProtectedRoute from "./components/common/protectedRoute";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ReportForm from "./components/manageReports/reportForm";
 
 class App extends Component {
   state = {};
@@ -59,6 +60,7 @@ class App extends Component {
               component={FireStations}
             />
             <ProtectedRoute path="/evidences/:id" exact component={Evidences} />
+            <ProtectedRoute path="/reports/new" exact component={ReportForm} />
             <Route path="/not-found" component={NotFound} />
             <Redirect from="/" exact to="/homepage" />
             <Redirect to="/not-found" />
