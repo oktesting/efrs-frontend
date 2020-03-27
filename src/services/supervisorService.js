@@ -29,4 +29,16 @@ function getSupervisor(id) {
 function getAllSupervisors() {
   return http.get(apiEndpoint);
 }
-export { getSupervisor, createSupervisor, editSupervisor, getAllSupervisors };
+
+//change supervisor activation
+function changeSupervisorActivation(supervisorId) {
+  return http.get(`${apiEndpoint}/change-activation/${supervisorId}`);
+}
+
+export {
+  getSupervisor,
+  createSupervisor,
+  editSupervisor,
+  getAllSupervisors,
+  changeSupervisorActivation
+};

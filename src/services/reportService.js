@@ -11,4 +11,9 @@ function getReportById(reportId) {
   return http.get(`${apiEndpoint}/${reportId}`);
 }
 
-export { getAllReports, getReportById };
+//submit new report
+function submitNewReport(report) {
+  return http.post(apiEndpoint, report);
+}
+
+export { getAllReports, getReportById, submitNewReport };

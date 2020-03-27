@@ -5,6 +5,7 @@ import "@github/time-elements";
 import { InfoWindow } from "react-google-maps";
 import Popup from "reactjs-popup";
 import { toast } from "react-toastify";
+import { changeFireStatus } from "../../services/fireService";
 
 const CustomInfoWindow = ({
   onCloseInfoWindow,
@@ -98,22 +99,34 @@ const CustomInfoWindow = ({
             <button
               disabled={selectedFire.status === "pending" ? false : true}
               className="btn btn-warning btn-sm btn-block mr-1"
-              onClick={() => {
-                selectedFire.status = "processing";
-                handleChangeStatusFire(selectedFire._id);
-                onCloseInfoWindow();
-                toast.success("Fire's status is changed");
+              onClick={async () => {
+                try {
+                  await changeFireStatus(1, selectedFire._id);
+                  selectedFire.status = "processing";
+                  handleChangeStatusFire(selectedFire._id);
+                  onCloseInfoWindow();
+                  toast.success("Fire's status is processing");
+                } catch (error) {}
               }}
             >
               Change Status To Proccesing
             </button>
             <button
               className="btn btn-danger btn-sm btn-block mr-1"
-              onClick={() => {
-                handleDeleteFire(selectedFire._id);
-                onCloseInfoWindow();
-                toast.success("Fire is finished");
-                window.open("/reports/new");
+              onClick={async () => {
+                try {
+                  await changeFireStatus(2, selectedFire._id);
+                  handleDeleteFire(selectedFire._id);
+                  onCloseInfoWindow();
+                  toast.success("Fire is finished");
+                  //open tab for writing report
+                  window.open(
+                    "/reports/new/" +
+                      selectedFire._id +
+                      "/" +
+                      selectedFire.createdAt
+                  );
+                } catch (error) {}
               }}
             >
               Finish And Write Report For This Fire

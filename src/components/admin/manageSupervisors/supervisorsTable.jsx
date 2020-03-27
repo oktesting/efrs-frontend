@@ -1,16 +1,8 @@
 import React, { Component } from "react";
 import Table from "../../common/table";
 import { Link } from "react-router-dom";
-import { getAllFireStation } from "../../../services/locationService";
-class SupervisorsTable extends Component {
-  async componentDidMount() {
-    await this.populateStation();
-  }
-  populateStation = async () => {
-    const { data: stations } = await getAllFireStation();
-    this.setState({ stations });
-  };
 
+class SupervisorsTable extends Component {
   columns = [
     {
       path: "name",
@@ -30,7 +22,7 @@ class SupervisorsTable extends Component {
       content: acc => (
         <div>
           {
-            this.state.stations.find(
+            this.props.stations.find(
               station => station._id === acc.supervisor.location
             )["address"]
           }
