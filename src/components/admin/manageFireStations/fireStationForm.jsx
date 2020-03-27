@@ -1,8 +1,8 @@
 import React from "react";
-import Form from "../common/form";
+import Form from "../../common/form";
 import Joi from "joi-browser";
-import { region } from "../../config.json";
-import { addNewFireStation } from "../../services/locationService";
+import { region } from "../../../config.json";
+import { addNewFireStation } from "../../../services/locationService";
 import { toast } from "react-toastify";
 // import auth from "../../services/authService";
 
