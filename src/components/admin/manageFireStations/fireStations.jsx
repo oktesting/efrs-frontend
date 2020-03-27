@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import ListGroup from "../common/listGroup";
-import SearchBox from "../common/searchBox";
+import ListGroup from "../../common/listGroup";
+import SearchBox from "../../common/searchBox";
 import FireStationsTable from "./fireStationsTable";
 import {
   getAllFireStation,
   deleteFireStation
-} from "../../services/locationService";
-import Pagination from "../common/pagination";
-import { paginate } from "../../utils/paginate";
+} from "../../../services/locationService";
+import Pagination from "../../common/pagination";
+import { paginate } from "../../../utils/paginate";
 import _ from "lodash";
 import { toast } from "react-toastify";
 
