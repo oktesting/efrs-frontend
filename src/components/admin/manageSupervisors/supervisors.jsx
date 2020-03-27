@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import SearchBox from "../../common/searchBox";
 import { getAllSupervisors } from "../../../services/supervisorService";
+import { getAllFireStation } from "../../../services/locationService";
 import Pagination from "../../common/pagination";
 import { paginate } from "../../../utils/paginate";
 import _ from "lodash";
@@ -9,6 +10,7 @@ import SupervisorsTable from "./supervisorsTable";
 class Supervisors extends Component {
   state = {
     supervisors: [],
+    stations: [],
     sortColumn: {
       path: "username",
       order: "asc"
@@ -20,7 +22,8 @@ class Supervisors extends Component {
 
   async componentDidMount() {
     const { data: supervisors } = await getAllSupervisors();
-    this.setState({ supervisors });
+    const { data: stations } = await getAllFireStation();
+    this.setState({ supervisors, stations });
   }
 
   handlePageChange = newPage => {
@@ -68,7 +71,13 @@ class Supervisors extends Component {
   };
 
   render() {
-    const { sortColumn, pageSize, currentPage, searchQuery } = this.state;
+    const {
+      sortColumn,
+      pageSize,
+      currentPage,
+      searchQuery,
+      stations
+    } = this.state;
     const { supervisors, itemsCount } = this.getPagedData();
     return (
       <div className="container mt-3">
@@ -76,6 +85,7 @@ class Supervisors extends Component {
         <SearchBox value={searchQuery} onChange={this.handleSearch} />
         <SupervisorsTable
           supervisors={supervisors}
+          stations={stations}
           sortColumn={sortColumn}
           onSort={this.handleSort}
         />

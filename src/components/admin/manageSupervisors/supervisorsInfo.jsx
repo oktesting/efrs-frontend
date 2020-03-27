@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import { getSupervisor } from "../../../services/supervisorService";
+import {
+  getSupervisor,
+  changeSupervisorActivation
+} from "../../../services/supervisorService";
 import ListGroup from "../../common/listGroup";
 import SupervisorsInfoTab from "./supervisorsInfoTab";
 import FiresHistoryTab from "../../manageUsers/firesHistoryTab";
@@ -66,8 +69,7 @@ class SupervisorInfo extends Component {
       const { supervisorId, isActivated } = this.state.supervisor;
       const newSupervisor = { ...this.state.supervisor };
       newSupervisor.isActivated = !isActivated;
-      // await changeUserActivation(supervisorId);
-
+      await changeSupervisorActivation(supervisorId);
       toast.success(
         isActivated ? "Deactivated Supervisor" : "Activated Supervisor"
       );
