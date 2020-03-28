@@ -51,10 +51,6 @@ class ReportForm extends Form {
     finishedTime: Joi.string()
   };
 
-  async componentDidMount() {
-    // this.setState({ account: auth.getCurrentUser() });
-  }
-
   doSubmit = async () => {
     //call the server
     try {

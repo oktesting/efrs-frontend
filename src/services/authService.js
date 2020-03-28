@@ -30,8 +30,48 @@ function getCurrentUser() {
   }
 }
 
+function isAuthenticated() {
+  const user = getCurrentUser();
+  return user === undefined || user === null ? false : true;
+}
+
+function isAdmin() {
+  const user = getCurrentUser();
+  if (user === undefined || user === null) return false;
+  else if (
+    user.isAdmin === undefined ||
+    user.isAdmin === null ||
+    user.isAdmin === false
+  ) {
+    return false;
+  }
+  return true;
+}
+
+function isSupervisor() {
+  const user = getCurrentUser();
+  if (user === undefined || user === null) return false;
+  else if (
+    user.supervisor === undefined ||
+    user.supervisor === null ||
+    user.supervisor.isActivated === false
+  ) {
+    return false;
+  }
+  return true;
+}
+
 function loginWithJwt(jwt) {
   localStorage.setItem(tokenKey, jwt);
 }
 
-export default { login, logout, getCurrentUser, loginWithJwt, getJwt };
+export default {
+  login,
+  logout,
+  getCurrentUser,
+  loginWithJwt,
+  getJwt,
+  isAuthenticated,
+  isAdmin,
+  isSupervisor
+};

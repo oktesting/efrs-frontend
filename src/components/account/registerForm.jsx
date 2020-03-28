@@ -2,8 +2,10 @@ import React from "react";
 import Form from "../common/form";
 import Joi from "joi-browser";
 import { register } from "../../services/accountsService";
+import auth from "../../services/authService";
 import logo_pccc from "../../media/logo_pccc.svg";
 import { toast } from "react-toastify";
+import { Redirect } from "react-router-dom";
 
 class RegisterForm extends Form {
   state = {
@@ -55,6 +57,8 @@ class RegisterForm extends Form {
     }
   };
   render() {
+    //in case of user already logged in => redirect them to homepage
+    if (auth.isAuthenticated()) return <Redirect to="/" />;
     return (
       <React.Fragment>
         <div className="form-signin">

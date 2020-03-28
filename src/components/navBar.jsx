@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../media/fire-station1.svg";
+import auth from "../services/authService";
 
 const NavBar = ({ user }) => {
   return (
@@ -33,10 +34,13 @@ const NavBar = ({ user }) => {
           )}
           {user && (
             <React.Fragment>
-              {user.supervisor && (
+              {auth.isSupervisor() && (
                 <React.Fragment>
                   <NavLink className="nav-item nav-link" to="/map">
                     Supervise Map
+                  </NavLink>
+                  <NavLink className="nav-item nav-link" to="/reports">
+                    Fire Reports
                   </NavLink>
                   <NavLink className="nav-item nav-link" to="/users">
                     Manage Users
@@ -44,9 +48,10 @@ const NavBar = ({ user }) => {
                   <NavLink className="nav-item nav-link" to="/emergency-alert">
                     Emergency Alert
                   </NavLink>
-                  <NavLink className="nav-item nav-link" to="/reports">
-                    Fire Reports
-                  </NavLink>
+                </React.Fragment>
+              )}
+              {auth.isAdmin() && (
+                <React.Fragment>
                   <NavLink className="nav-item nav-link" to="/fire-station">
                     Fire Station
                   </NavLink>

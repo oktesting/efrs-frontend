@@ -40,11 +40,7 @@ class SupervisorsTable extends Component {
         )
     }
   ];
-  // constructor() {
-  //   super();
-  // const user = auth.getCurrentUser();
-  // if (user && user.isAdmin) this.columns.push(this.deleteColum);
-  // }
+
   render() {
     const { supervisors, sortColumn, onSort } = this.props;
     return (

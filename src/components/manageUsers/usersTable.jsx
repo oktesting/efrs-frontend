@@ -36,11 +36,7 @@ class UsersTable extends Component {
         )
     }
   ];
-  // constructor() {
-  //   super();
-  // const user = auth.getCurrentUser();
-  // if (user && user.isAdmin) this.columns.push(this.deleteColum);
-  // }
+
   render() {
     const { users, sortColumn, onSort } = this.props;
     return (
