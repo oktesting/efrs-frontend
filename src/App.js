@@ -18,6 +18,8 @@ import UserInfo from "./components/manageUsers/userInfo";
 import Evidences from "./components/manageUsers/evidences";
 import Reports from "./components/manageReports/reports";
 import ProtectedRoute from "./components/common/protectedRoute";
+import AdminRoute from "./components/common/adminRoute";
+import SupervisorRoute from "./components/common/supervisorRoute";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -44,37 +46,37 @@ class App extends Component {
             <Route path="/signup" exact component={RegisterForm} />
             <Route path="/signout" exact component={Logout} />
             <ProtectedRoute path="/profile" exact component={ProfileForm} />
-            <ProtectedRoute path="/map" exact component={MapContainer} />
-            <ProtectedRoute path="/reports" exact component={Reports} />
-            <ProtectedRoute
+            <SupervisorRoute path="/map" exact component={MapContainer} />
+            <SupervisorRoute path="/reports" exact component={Reports} />
+            <SupervisorRoute
               path="/reports/new/:fireId/:receivedTime"
               exact
               component={ReportForm}
             />
-            <ProtectedRoute
+            <SupervisorRoute
               path="/emergency-alert"
               exact
               component={EmergencyAlertForm}
             />
-            <ProtectedRoute path="/users/:id" exact component={UserInfo} />
-            <ProtectedRoute path="/users" exact component={Users} />
-            <ProtectedRoute path="/supervisors" exact component={Supervisors} />
-            <ProtectedRoute
+            <SupervisorRoute path="/users/:id" exact component={UserInfo} />
+            <SupervisorRoute path="/users" exact component={Users} />
+            <SupervisorRoute
+              path="/evidences/:id"
+              exact
+              component={Evidences}
+            />
+            <AdminRoute path="/supervisors" exact component={Supervisors} />
+            <AdminRoute
               path="/supervisors/:id"
               exact
               component={SupervisorsInfo}
             />
-            <ProtectedRoute
+            <AdminRoute
               path="/fire-station/new"
               exact
               component={FireStationForm}
             />
-            <ProtectedRoute
-              path="/fire-station"
-              exact
-              component={FireStations}
-            />
-            <ProtectedRoute path="/evidences/:id" exact component={Evidences} />
+            <AdminRoute path="/fire-station" exact component={FireStations} />
             <Route path="/not-found" component={NotFound} />
             <Redirect from="/" exact to="/homepage" />
             <Redirect to="/not-found" />

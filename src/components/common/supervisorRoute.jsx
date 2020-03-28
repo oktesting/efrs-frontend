@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import auth from "../../services/authService";
 
-const ProtectedRoute = ({ path, component: Component, render, ...rest }) => {
+const SupervisorRoute = ({ path, component: Component, render, ...rest }) => {
   return (
     <Route
       {...rest}
@@ -13,10 +13,12 @@ const ProtectedRoute = ({ path, component: Component, render, ...rest }) => {
               to={{ pathname: "/signin", state: { from: props.location } }}
             />
           );
+        else if (!auth.isSupervisor())
+          return <Redirect to={{ pathname: "/not-found" }} />;
         return Component ? <Component {...props} /> : render(props);
       }}
     />
   );
 };
 
-export default ProtectedRoute;
+export default SupervisorRoute;

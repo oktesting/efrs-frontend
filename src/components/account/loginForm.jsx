@@ -29,8 +29,7 @@ class LoginForm extends Form {
     try {
       const { email, password } = this.state.data;
       await auth.login(email, password);
-      const acc = auth.getCurrentUser();
-      if (acc && !acc["supervisor"]) window.location = "/profile";
+      if (!auth.isSupervisor() && !auth.isAdmin()) window.location = "/profile";
       else {
         //get the previous page before redirected to /login
         const { state } = this.props.location;
@@ -51,7 +50,7 @@ class LoginForm extends Form {
 
   render() {
     //in case of user already logged in => redirect them to homepage
-    if (auth.getCurrentUser()) return <Redirect to="/" />;
+    if (auth.isAuthenticated()) return <Redirect to="/" />;
     return (
       <React.Fragment>
         <div className="form-signin">
