@@ -9,6 +9,7 @@ import {
   editSupervisor
 } from "../../services/supervisorService";
 import { toast } from "react-toastify";
+import { getSquareImage } from "../../utils/getImage";
 
 class ProfileForm extends Form {
   state = {
@@ -31,7 +32,8 @@ class ProfileForm extends Form {
     ],
     fireStations: [],
     errors: {},
-    account: {}
+    account: {},
+    avatarInput: null
   };
 
   async populateFireStation() {
@@ -52,6 +54,7 @@ class ProfileForm extends Form {
         return this.props.history.replace("/not-found");
     }
   }
+
   mapToViewModel(supervisor) {
     return {
       _id: supervisor._id,
@@ -63,11 +66,17 @@ class ProfileForm extends Form {
       avatar: supervisor.avatar
     };
   }
+
+  fileSelectedHandler = event => {
+    this.setState({ avatarInput: event.target.files[0] });
+  };
+
   async componentDidMount() {
     this.setState({ account: auth.getCurrentUser() });
     await this.populateFireStation();
     await this.populatingSupervisor();
   }
+
   schema = {
     _id: Joi.string(),
     isActivated: Joi.boolean(),
@@ -103,7 +112,7 @@ class ProfileForm extends Form {
         });
         //edit super case
       } else {
-        await editSupervisor(this.state.data);
+        await editSupervisor(this.state.data, this.state.avatarInput);
         toast("Your profile is modified.", {
           type: toast.TYPE.SUCCESS,
           onClose: () => {
@@ -133,7 +142,7 @@ class ProfileForm extends Form {
           <img
             src={
               this.state.data.avatar
-                ? this.state.data.avatar
+                ? getSquareImage(this.state.data.avatar, 300)
                 : "https://efrs.s3-ap-southeast-1.amazonaws.com/common-assets/profile-avatar/male-avatar.png"
             }
             className="image-preview rounded-circle img-thumbnail mx-auto d-block"
@@ -149,6 +158,29 @@ class ProfileForm extends Form {
               this.state.fireStations,
               "address"
             )}
+            {!this.state.account.supervisor ? (
+              <div />
+            ) : (
+              <div className="mb-4">
+                <label>New Avatar</label>
+                <div className="custom-file ">
+                  <label htmlFor="avatarInput" className="custom-file-label">
+                    {this.state.avatarInput
+                      ? this.state.avatarInput.name
+                      : "Choose your file..."}
+                  </label>
+                  <input
+                    id="avatarInput"
+                    className="custom-file-input"
+                    type="file"
+                    name="avatar"
+                    accept="image/jpeg,image/png"
+                    onChange={e => this.fileSelectedHandler(e)}
+                  />
+                </div>
+              </div>
+            )}
+
             {this.renderButton("Save")}
           </form>
         </div>
