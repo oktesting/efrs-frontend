@@ -12,13 +12,13 @@ function createSupervisor(supervisor) {
   });
 }
 //update super
-function editSupervisor(supervisor) {
+function editSupervisor(supervisor, avatarInput) {
   let data = new FormData();
   data.append("fullname", supervisor.fullname);
   data.append("phone", supervisor.phone);
   data.append("location", supervisor.location);
   data.append("gender", supervisor.gender);
-  // data.append('avatar', ?)
+  if (avatarInput !== null) data.append("avatar", avatarInput);
   return http.put(apiEndpoint, data);
 }
 
