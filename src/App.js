@@ -29,16 +29,16 @@ class App extends Component {
   state = {};
 
   componentDidMount() {
-    const user = auth.getCurrentUser();
-    this.setState({ user });
+    const acc = auth.getCurrentUser();
+    this.setState({ acc });
   }
 
   render() {
-    const { user } = this.state;
+    const { acc } = this.state;
     return (
       <React.Fragment>
         <ToastContainer />
-        <NavBar user={user} />
+        <NavBar acc={acc} />
         <main>
           <Switch>
             <Route path="/homepage" exact component={Homepage} />
