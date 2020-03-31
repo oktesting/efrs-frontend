@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { getSquareImage } from "./../../../utils/getImage";
 
 class SupervisorInfoTab extends Component {
   renderUserInfo(label, data) {
@@ -67,7 +68,7 @@ class SupervisorInfoTab extends Component {
             <form>
               <div className="form-group row">
                 <img
-                  src={avatar}
+                  src={getSquareImage(avatar, 300)}
                   className="image-preview rounded-circle img-thumbnail mx-auto d-block"
                   alt="avatar"
                 />

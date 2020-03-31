@@ -103,20 +103,28 @@ class ProfileForm extends Form {
       const { account } = this.state;
       //create new super case
       if (!account.supervisor) {
-        await createSupervisor(this.state.data);
-        toast("Your profile is created. Please sign in again.", {
-          type: toast.TYPE.SUCCESS,
-          onClose: () => {
-            return this.props.history.replace("/signout");
+        const { headers } = await createSupervisor(this.state.data);
+        auth.loginWithJwt(headers["x-auth-token"]);
+        toast(
+          "Your profile is created. Please wait for administrator to approve.",
+          {
+            type: toast.TYPE.SUCCESS,
+            onClose: () => {
+              return (window.location = "/profile");
+            }
           }
-        });
+        );
         //edit super case
       } else {
-        await editSupervisor(this.state.data, this.state.avatarInput);
+        const { headers } = await editSupervisor(
+          this.state.data,
+          this.state.avatarInput
+        );
+        auth.loginWithJwt(headers["x-auth-token"]);
         toast("Your profile is modified.", {
           type: toast.TYPE.SUCCESS,
           onClose: () => {
-            return this.props.history.replace("/");
+            return (window.location = "/profile");
           }
         });
       }
