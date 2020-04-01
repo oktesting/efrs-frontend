@@ -1,7 +1,11 @@
 import React from "react";
 import Form from "../common/form";
 import Joi from "joi-browser";
-import { submitNewReport } from "../../services/reportService";
+import {
+  getReportById,
+  submitNewReport,
+  editReport
+} from "../../services/reportService";
 import { toast } from "react-toastify";
 
 class ReportForm extends Form {
@@ -15,7 +19,6 @@ class ReportForm extends Form {
       totalDeath: "",
       totalInjury: "",
       summary: "",
-
       listDamageProperty: "",
       investigation: "",
       fireResult: "",
@@ -28,10 +31,12 @@ class ReportForm extends Form {
       travelDistance: "",
       supervisorName: "",
       waterSource: "",
-      assessmentAndClassifiacation: ""
+      assessmentAndClassification: ""
     },
-    errors: {}
+    errors: {},
+    didSubmittedNewReport: false
   };
+
   schema = {
     location: Joi.string().label("Địa điểm"),
     area: Joi.number()
@@ -63,7 +68,6 @@ class ReportForm extends Form {
     duration: Joi.string(),
     receivedTime: Joi.string(),
     finishedTime: Joi.string(),
-
     listDamageProperty: Joi.string().label("Danh sách thiệt hại"),
     investigation: Joi.string().label("Điều tra, xử lý"),
     fireResult: Joi.string().label("Kết quả cứu chữa"),
@@ -76,27 +80,63 @@ class ReportForm extends Form {
     travelDistance: Joi.string().label("Khoảng cách"),
     supervisorName: Joi.string().label("Cán bộ phụ trách địa bàn"),
     waterSource: Joi.string().label("Nguồn nước"),
-    assessmentAndClassifiacation: Joi.string().label(
+    assessmentAndClassification: Joi.string().label(
       "Nhận xét, đánh giá và phân loại"
     )
   };
 
+  async populatingReport() {
+    try {
+      const reportId = this.props.match.params.reportId;
+      let { data: report } = await getReportById(reportId);
+      report["fire"] = report.fire._id;
+      this.setState({ data: report });
+    } catch (error) {
+      if (error.response && error.response.status === 404)
+        return this.props.history.replace("/not-found");
+    }
+  }
+
+  async componentDidMount() {
+    if (this.props.match.path === "/reports/edit/:reportId") {
+      await this.populatingReport();
+    }
+  }
+
   doSubmit = async () => {
     //call the server
     try {
-      const report = {
-        ...this.state.data,
-        receivedTime: this.props.match.params.receivedTime,
-        fire: this.props.match.params.fireId,
-        finishedTime: new Date().toISOString()
-      };
-      await submitNewReport(report);
-      toast("Fire Report is Submitted", {
-        type: toast.TYPE.SUCCESS,
-        onClose: () => {
-          return this.props.history.push("/reports");
-        }
-      });
+      //add new case
+      if (this.props.match.path === "/reports/new/:fireId/:receivedTime") {
+        const report = {
+          ...this.state.data,
+          receivedTime: this.props.match.params.receivedTime,
+          fire: this.props.match.params.fireId,
+          finishedTime: new Date().toISOString()
+        };
+        await submitNewReport(report);
+        toast("Fire Report is Submitted", {
+          type: toast.TYPE.SUCCESS,
+          onClose: () => {
+            return this.props.history.push("/reports");
+          }
+        });
+        this.setState({ didSubmittedNewReport: true });
+      }
+      //edit case
+      else {
+        const report = { ...this.state.data };
+        delete report._id;
+        delete report.createdAt;
+        delete report.duration;
+        await editReport(this.state.data._id, report);
+        toast("Fire Report is Modified", {
+          type: toast.TYPE.SUCCESS,
+          onClose: () => {
+            return window.close();
+          }
+        });
+      }
     } catch (ex) {
       if (ex.response) {
         if (ex.response.status === 400)
@@ -209,7 +249,7 @@ class ReportForm extends Form {
               V. Nhận xét, đánh giá và phân loại
             </h4>
             {this.renderTextArea(
-              "assessmentAndClassifiacation",
+              "assessmentAndClassification",
               "Nhận xét, đánh giá và phân loại",
               8
             )}

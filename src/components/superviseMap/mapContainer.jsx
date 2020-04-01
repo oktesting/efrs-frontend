@@ -40,7 +40,7 @@ class MapContainer extends Component {
     this.setState({ fires: updatedFires });
     toast(
       <div>
-        <i class="fa fa-exclamation-triangle" /> Received new fire.
+        <i className="fa fa-exclamation-triangle" /> Received new fire.
       </div>,
       {
         type: toast.TYPE.WARNING,

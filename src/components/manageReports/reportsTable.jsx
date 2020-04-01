@@ -39,6 +39,18 @@ class ReportsTable extends Component {
       )
     },
     {
+      label: "Edit",
+      key: "edit",
+      content: report => (
+        <button
+          className="btn btn-primary"
+          onClick={() => this.props.onItemEdit(report._id)}
+        >
+          <i className="fa fa-pencil"></i>
+        </button>
+      )
+    },
+    {
       label: "Delete",
       key: "delete",
       content: report => (
