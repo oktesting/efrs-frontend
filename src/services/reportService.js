@@ -16,4 +16,20 @@ function submitNewReport(report) {
   return http.post(apiEndpoint, report);
 }
 
-export { getAllReports, getReportById, submitNewReport };
+//delete 1 report and its fire
+function deleteReportAndItsFire(reportId) {
+  return http.delete(`${apiEndpoint}/${reportId}`);
+}
+
+//edit 1 report
+function editReport(reportId, report) {
+  return http.put(`${apiEndpoint}/${reportId}`, report);
+}
+
+export {
+  getAllReports,
+  getReportById,
+  submitNewReport,
+  deleteReportAndItsFire,
+  editReport
+};

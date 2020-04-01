@@ -55,6 +55,11 @@ class App extends Component {
               component={ReportForm}
             />
             <SupervisorRoute
+              path="/reports/edit/:reportId"
+              exact
+              component={ReportForm}
+            />
+            <SupervisorRoute
               path="/reports/:reportId"
               exact
               component={Report}

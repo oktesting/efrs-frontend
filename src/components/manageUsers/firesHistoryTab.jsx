@@ -42,7 +42,7 @@ class FiresHistoryTab extends Component {
     const { sortColumn, pageSize, currentPage } = this.state;
     const { fires, itemsCount } = this.getPagedData();
     return (
-      <div className="col shadow pt-3">
+      <div className="col myShadow pt-3">
         <h4>Showing {itemsCount} fires in the database</h4>
         <FiresTable
           fires={fires}

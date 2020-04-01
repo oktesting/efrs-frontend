@@ -49,6 +49,7 @@ class SupervisorsTable extends Component {
         data={supervisors}
         onSort={onSort}
         sortColumn={sortColumn}
+        shadow={true}
       />
     );
   }

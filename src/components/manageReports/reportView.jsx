@@ -76,8 +76,8 @@ class Report extends Component {
     } = this.state.report;
 
     return (
-      <div className="userInfo shadow mt-3 pb-3 pl-2 pr-2">
-        <div className="row pt-2">
+      <div className="userInfo myShadow mt-5 pb-3 mb-5 pl-2 pr-2">
+        <div className="row pt-4">
           <span className="col-5 text-center">BỘ CÔNG AN</span>
           <span className="col-7 text-center">
             CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
@@ -97,7 +97,7 @@ class Report extends Component {
             <hr />
           </div>
         </div>
-        <div className="pl-5 pr-5">
+        <div className="pl-5 pr-5 pb-4">
           <span className="font-weight-bold">
             I. KHÁI QUÁT TÌNH HÌNH VỤ CHÁY
           </span>

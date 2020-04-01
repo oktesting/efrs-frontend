@@ -4,9 +4,12 @@ import TableBody from "./tableBody";
 
 class Table extends Component {
   render() {
-    const { columns, data, onSort, sortColumn } = this.props;
+    const { columns, data, onSort, sortColumn, shadow } = this.props;
     return (
-      <table className="table">
+      <table
+        className={"table " + (shadow ? "myShadow" : "")}
+        style={{ backgroundColor: "#ffffff" }}
+      >
         <TableHeader
           onSort={onSort}
           columns={columns}

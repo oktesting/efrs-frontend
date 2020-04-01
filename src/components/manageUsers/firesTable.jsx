@@ -50,6 +50,7 @@ class FiresTable extends Component {
         data={fires}
         onSort={onSort}
         sortColumn={sortColumn}
+        shadow={false}
       />
     );
   }

@@ -37,7 +37,7 @@ class LocationsTab extends Component {
   render() {
     const { locations } = this.props;
     return (
-      <div className="col shadow">
+      <div className="col myShadow">
         <div className="mt-3">
           <h4>User Locations</h4>
         </div>

@@ -31,7 +31,7 @@ class SupervisorInfoTab extends Component {
     } = this.props.supervisor;
 
     return (
-      <div className="col shadow">
+      <div className="col myShadow">
         <div className="row mt-3">
           <div className="col">
             <div className="row">
