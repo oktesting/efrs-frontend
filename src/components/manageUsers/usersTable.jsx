@@ -45,6 +45,7 @@ class UsersTable extends Component {
         data={users}
         onSort={onSort}
         sortColumn={sortColumn}
+        shadow={true}
       />
     );
   }

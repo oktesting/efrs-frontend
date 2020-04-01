@@ -33,6 +33,7 @@ span.displayInline {
   height: 100vh;
 }
 .form-signin {
+  background-color: #ffffff;
   border-radius: 15px;
   box-shadow: 0 12px 18px 2px rgba(34, 0, 51, 0.02),
     0 6px 22px 4px rgba(7, 48, 114, 0.12),
@@ -130,15 +131,17 @@ span.displayInline {
   width: 100%;
 }
 .userInfo {
+  background-color: #ffffff;
   width: 65vw;
   margin: auto;
   margin-top: 2vh;
   margin-bottom: 2vh;
 }
-.shadow {
-  box-shadow: 0 12px 18px 2px rgba(34, 0, 51, 0.02),
+.myShadow {
+  box-shadow: 0 12px 18px 2px rgba(34, 0, 51, 0.04),
     0 6px 22px 4px rgba(7, 48, 114, 0.12),
-    0 6px 10px -4px rgba(14, 13, 26, 0.12);
+    0 6px 10px -4px rgba(14, 13, 26, 0.12) !important;
+  border-radius: 15px;
 }
 .evidenceVideo {
   width: 65vw;

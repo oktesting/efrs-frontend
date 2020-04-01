@@ -60,6 +60,7 @@ class ReportsTable extends Component {
         data={reports}
         onSort={onSort}
         sortColumn={sortColumn}
+        shadow={true}
       />
     );
   }

@@ -113,7 +113,7 @@ class ReportForm extends Form {
   render() {
     return (
       <React.Fragment>
-        <div className="userInfo shadow mt-3 pb-3 pl-2 pr-2">
+        <div className="userInfo myShadow mt-3 pb-3 pl-2 pr-2">
           <h3 className="font-weight-normal text-center mb-2 pt-2">
             Báo cáo đám cháy
           </h3>

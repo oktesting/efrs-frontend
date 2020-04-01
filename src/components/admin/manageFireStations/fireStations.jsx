@@ -116,7 +116,7 @@ class FireStation extends Component {
               onItemSelect={this.handleTabSelect}
             />
           </div>
-          <div className="col-9 shadow">
+          <div className="col-9 myShadow">
             <div className="row mt-3">
               <div className="col-8">
                 <h4>Showing {itemsCount} stations in the database</h4>

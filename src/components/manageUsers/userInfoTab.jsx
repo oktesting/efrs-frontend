@@ -32,7 +32,7 @@ class UserInfoTab extends Component {
     } = this.props.user;
 
     return (
-      <div className="col shadow">
+      <div className="col myShadow">
         <div className="row mt-3">
           <div className="col">
             <div className="row">

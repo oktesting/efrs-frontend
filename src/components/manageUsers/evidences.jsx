@@ -34,7 +34,7 @@ class Evidences extends Component {
   render() {
     const { images, videos } = this.state;
     return (
-      <div className="userInfo shadow text-center pt-4 pb-4">
+      <div className="userInfo myShadow text-center pt-4 pb-4">
         <h4 className="mb-4 mt-2">Images</h4>
         <div>
           {images != null && images.length !== 0 ? (

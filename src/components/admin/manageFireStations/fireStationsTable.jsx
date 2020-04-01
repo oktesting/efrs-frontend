@@ -30,6 +30,7 @@ class FireStationsTable extends Component {
         data={fireStations}
         onSort={onSort}
         sortColumn={sortColumn}
+        shadow={false}
       />
     );
   }
