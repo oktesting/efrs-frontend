@@ -14,41 +14,71 @@ class ReportForm extends Form {
       totalDamageProperty: "",
       totalDeath: "",
       totalInjury: "",
-      summary: ""
+      summary: "",
+
+      listDamageProperty: "",
+      investigation: "",
+      fireResult: "",
+      fireCause: "",
+      owner: "",
+      fireType: "",
+      usageType: "",
+      cadastral: "",
+      fireStationManagement: "",
+      travelDistance: "",
+      supervisorName: "",
+      waterSource: "",
+      assessmentAndClassifiacation: ""
     },
     errors: {}
   };
   schema = {
-    location: Joi.string().label("Location"),
+    location: Joi.string().label("Địa điểm"),
     area: Joi.number()
       .min(0)
-      .label("Area"),
+      .label("Diện tích"),
     totalVehicle: Joi.number()
       .min(0)
       .integer()
-      .label("totalVehicle"),
+      .label("Tổng số phương tiện"),
     totalFireman: Joi.number()
       .min(0)
       .integer()
-      .label("totalFireman"),
+      .label("Tổng số lính cứu hỏa"),
     totalDamageProperty: Joi.number()
       .min(0)
-      .label("totalDamageProperty"),
+      .label("Tổng thiệt hại"),
     totalDeath: Joi.number()
       .min(0)
       .integer()
-      .label("totalDeath"),
+      .label("Số người chết"),
     totalInjury: Joi.number()
       .min(0)
       .integer()
-      .label("totalInjury"),
-    summary: Joi.string().label("Summary"),
+      .label("Số người bị thương"),
+    summary: Joi.string().label("Diễn biến và kết quả"),
     _id: Joi.string(),
     createdAt: Joi.string(),
     fire: Joi.string(),
     duration: Joi.string(),
     receivedTime: Joi.string(),
-    finishedTime: Joi.string()
+    finishedTime: Joi.string(),
+
+    listDamageProperty: Joi.string().label("Danh sách thiệt hại"),
+    investigation: Joi.string().label("Điều tra, xử lý"),
+    fireResult: Joi.string().label("Kết quả cứu chữa"),
+    fireCause: Joi.string().label("Nguyên nhân cháy"),
+    owner: Joi.string().label("Cơ quan chủ quản"),
+    fireType: Joi.string().label("Thuộc loại PCCC"),
+    usageType: Joi.string().label("Tính chất sử dụng"),
+    cadastral: Joi.string().label("Thuộc địa bàn"),
+    fireStationManagement: Joi.string().label("Đơn vị PCCC quản lý"),
+    travelDistance: Joi.string().label("Khoảng cách"),
+    supervisorName: Joi.string().label("Cán bộ phụ trách địa bàn"),
+    waterSource: Joi.string().label("Nguồn nước"),
+    assessmentAndClassifiacation: Joi.string().label(
+      "Nhận xét, đánh giá và phân loại"
+    )
   };
 
   doSubmit = async () => {
@@ -85,39 +115,105 @@ class ReportForm extends Form {
       <React.Fragment>
         <div className="userInfo shadow mt-3 pb-3 pl-2 pr-2">
           <h3 className="font-weight-normal text-center mb-2 pt-2">
-            Fire Report
+            Báo cáo đám cháy
           </h3>
           <hr />
           <form onSubmit={this.handleSubmit}>
-            {this.renderInput("location", "Location", "text")}
+            <h4 className="font-weight-normal">
+              I. Khái quát tình hình vụ cháy
+            </h4>
+            {this.renderInput("location", "Địa điểm", "text")}
             <div className="row">
               <div className="col-4">
-                {this.renderInput("area", "Area (m2)", "text")}
+                {this.renderInput("area", "Diện tích (m2)", "text")}
               </div>
               <div className="col-4">
-                {this.renderInput("totalVehicle", "Total Vehicle", "text")}
+                {this.renderInput(
+                  "totalVehicle",
+                  "Tổng số phương tiện",
+                  "text"
+                )}
               </div>
               <div className="col-4">
-                {this.renderInput("totalFireman", "Total Fireman", "text")}
+                {this.renderInput(
+                  "totalFireman",
+                  "Tổng số lính cứu hỏa",
+                  "text"
+                )}
               </div>
             </div>
             <div className="row">
               <div className="col-4">
                 {this.renderInput(
                   "totalDamageProperty",
-                  "Damaged Property (billion dong)",
+                  "Tổng thiệt hại (triệu đồng)",
                   "text"
                 )}
               </div>
               <div className="col-4">
-                {this.renderInput("totalDeath", "Death", "text")}
+                {this.renderInput("totalDeath", "Số người chết", "text")}
               </div>
               <div className="col-4">
-                {this.renderInput("totalInjury", "Injury", "text")}
+                {this.renderInput("totalInjury", "Số người bị thương", "text")}
               </div>
             </div>
 
-            {this.renderTextArea("summary", "Summary", 10)}
+            {this.renderTextArea(
+              "listDamageProperty",
+              "Danh sách thiệt hại",
+              4
+            )}
+            {this.renderInput("fireResult", "Kết quả cứu chữa", "text")}
+            {this.renderInput("fireCause", "Nguyên nhân cháy", "text")}
+            <hr />
+
+            <h4 className="font-weight-normal">
+              II. Công tác quản lý và phòng cháy chữa cháy của cơ sở
+            </h4>
+
+            {this.renderInput("owner", "Cơ quan chủ quản", "text")}
+            <div className="row">
+              <div className="col-6">
+                {this.renderInput("fireType", "Thuộc loại PCCC", "text")}
+              </div>
+              <div className="col-6">
+                {this.renderInput("usageType", "Tính chất sử dụng", "text")}
+              </div>
+            </div>
+            {this.renderInput("cadastral", "Thuộc địa bàn", "text")}
+            {this.renderInput(
+              "fireStationManagement",
+              "Đơn vị PCCC quản lý",
+              "text"
+            )}
+            {this.renderInput("travelDistance", "Khoảng cách", "text")}
+            {this.renderInput(
+              "supervisorName",
+              "Cán bộ phụ trách địa bàn",
+              "text"
+            )}
+            {this.renderInput("waterSource", "Nguồn nước", "text")}
+            <hr />
+
+            <h4 className="font-weight-normal">
+              III. Diễn biến cháy và kết quả cứu chữa
+            </h4>
+            {this.renderTextArea("summary", "Diễn biến và kết quả", 10)}
+            <hr />
+
+            <h4 className="font-weight-normal">IV. Công tác điều tra xử lý</h4>
+            {this.renderTextArea("investigation", "Điều tra, xử lý", 2)}
+            <hr />
+
+            <h4 className="font-weight-normal">
+              V. Nhận xét, đánh giá và phân loại
+            </h4>
+            {this.renderTextArea(
+              "assessmentAndClassifiacation",
+              "Nhận xét, đánh giá và phân loại",
+              8
+            )}
+
             {this.renderButton("Save")}
           </form>
         </div>

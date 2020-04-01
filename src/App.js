@@ -17,6 +17,7 @@ import FireStations from "./components/admin/manageFireStations/fireStations";
 import UserInfo from "./components/manageUsers/userInfo";
 import Evidences from "./components/manageUsers/evidences";
 import Reports from "./components/manageReports/reports";
+import Report from "./components/manageReports/reportView";
 import ProtectedRoute from "./components/common/protectedRoute";
 import AdminRoute from "./components/common/adminRoute";
 import SupervisorRoute from "./components/common/supervisorRoute";
@@ -52,6 +53,11 @@ class App extends Component {
               path="/reports/new/:fireId/:receivedTime"
               exact
               component={ReportForm}
+            />
+            <SupervisorRoute
+              path="/reports/:reportId"
+              exact
+              component={Report}
             />
             <SupervisorRoute
               path="/emergency-alert"
