@@ -13,11 +13,11 @@ class Supervisors extends Component {
     stations: [],
     sortColumn: {
       path: "username",
-      order: "asc"
+      order: "asc",
     },
     searchQuery: "",
     pageSize: 10,
-    currentPage: 1
+    currentPage: 1,
   };
 
   async componentDidMount() {
@@ -26,16 +26,16 @@ class Supervisors extends Component {
     this.setState({ supervisors, stations });
   }
 
-  handlePageChange = newPage => {
+  handlePageChange = (newPage) => {
     const currentPage = newPage;
     this.setState({ currentPage });
   };
 
-  handleSort = sortColumn => {
+  handleSort = (sortColumn) => {
     this.setState({ sortColumn });
   };
 
-  handleSearch = query => {
+  handleSearch = (query) => {
     this.setState({ searchQuery: query, currentPage: 1 });
   };
 
@@ -46,13 +46,13 @@ class Supervisors extends Component {
       currentPage,
       //   selectedGenre,
       sortColumn,
-      searchQuery
+      searchQuery,
     } = this.state;
 
     let filtered;
     //filter by search box only
     if (searchQuery)
-      filtered = allSupervisors.filter(m =>
+      filtered = allSupervisors.filter((m) =>
         m.name.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
     //filter by genre only
@@ -66,7 +66,7 @@ class Supervisors extends Component {
     const supervisors = paginate(sorted, currentPage, pageSize);
     return {
       itemsCount: filtered.length,
-      supervisors
+      supervisors,
     };
   };
 
@@ -76,12 +76,12 @@ class Supervisors extends Component {
       pageSize,
       currentPage,
       searchQuery,
-      stations
+      stations,
     } = this.state;
     const { supervisors, itemsCount } = this.getPagedData();
     return (
       <div className="container mt-3">
-        <h4>Showing {itemsCount} supervisors in the database</h4>
+        <h4>Có {itemsCount} cán bộ trong hệ thống</h4>
         <SearchBox value={searchQuery} onChange={this.handleSearch} />
         <SupervisorsTable
           supervisors={supervisors}

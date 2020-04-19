@@ -2,7 +2,7 @@ export function getSquareImage(url, size) {
   if (url === undefined || url === null || url.trim() === "") return url;
   const a = "https://efrs.s3-ap-southeast-1.amazonaws.com/",
     b = "https://efrs.s3.ap-southeast-1.amazonaws.com/";
-  let newUrl = url.trim().toLowerCase();
+  let newUrl = url.trim();
   if (!newUrl.includes(a) && !newUrl.includes(b)) return url;
   else {
     if (newUrl.includes(a)) newUrl = newUrl.replace(a, "");

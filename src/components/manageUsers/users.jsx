@@ -11,11 +11,11 @@ class Users extends Component {
     users: [],
     sortColumn: {
       path: "username",
-      order: "asc"
+      order: "asc",
     },
     searchQuery: "",
     pageSize: 10,
-    currentPage: 1
+    currentPage: 1,
   };
 
   async componentDidMount() {
@@ -23,16 +23,16 @@ class Users extends Component {
     this.setState({ users });
   }
 
-  handlePageChange = newPage => {
+  handlePageChange = (newPage) => {
     const currentPage = newPage;
     this.setState({ currentPage });
   };
 
-  handleSort = sortColumn => {
+  handleSort = (sortColumn) => {
     this.setState({ sortColumn });
   };
 
-  handleSearch = query => {
+  handleSearch = (query) => {
     this.setState({ searchQuery: query, currentPage: 1 });
   };
 
@@ -43,13 +43,13 @@ class Users extends Component {
       currentPage,
       //   selectedGenre,
       sortColumn,
-      searchQuery
+      searchQuery,
     } = this.state;
 
     let filtered;
     //filter by search box only
     if (searchQuery)
-      filtered = allUsers.filter(m =>
+      filtered = allUsers.filter((m) =>
         m.name.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
     //filter by genre only
@@ -63,7 +63,7 @@ class Users extends Component {
     const users = paginate(sorted, currentPage, pageSize);
     return {
       itemsCount: filtered.length,
-      users
+      users,
     };
   };
 
@@ -72,7 +72,7 @@ class Users extends Component {
     const { users, itemsCount } = this.getPagedData();
     return (
       <div className="container mt-3">
-        <h4>Showing {itemsCount} users in the database</h4>
+        <h4>Có {itemsCount} người dùng trong hệ thống</h4>
         <SearchBox value={searchQuery} onChange={this.handleSearch} />
         <UsersTable
           users={users}

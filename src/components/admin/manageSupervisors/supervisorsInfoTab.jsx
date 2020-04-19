@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { getSquareImage } from "./../../../utils/getImage";
+import Popup from "reactjs-popup";
 
 class SupervisorInfoTab extends Component {
   renderUserInfo(label, data) {
@@ -27,7 +28,7 @@ class SupervisorInfoTab extends Component {
       fullname,
       isActivated,
       email,
-      name
+      name,
     } = this.props.supervisor;
 
     return (
@@ -36,28 +37,60 @@ class SupervisorInfoTab extends Component {
           <div className="col">
             <div className="row">
               <div className="col-8">
-                <h4>Supervisor Information</h4>
+                <h4>Thông Tin Cán Bộ PCCC</h4>
               </div>
               <div className="col-4">
-                <button
-                  name="submit"
-                  type="submit"
-                  className={
-                    (isActivated ? "btn btn-danger" : "btn btn-success") +
-                    " float-right"
+                <Popup
+                  trigger={
+                    <button
+                      className={
+                        (isActivated ? "btn btn-danger" : "btn btn-success") +
+                        " float-right"
+                      }
+                    >
+                      {isActivated ? (
+                        <span>
+                          Chặn&nbsp;
+                          <i className="fa fa-times" />
+                        </span>
+                      ) : (
+                        <span>
+                          Chấp Thuận&nbsp;
+                          <i className="fa fa-check" />
+                        </span>
+                      )}
+                    </button>
                   }
-                  onClick={this.props.handleChangeActivation}
+                  modal
+                  closeOnDocumentClick
                 >
-                  {isActivated ? (
-                    <span>
-                      Deactivate Supervisor <i className="fa fa-times" />
-                    </span>
-                  ) : (
-                    <span>
-                      Activate Supervisor <i className="fa fa-check" />
-                    </span>
+                  {(close) => (
+                    <div className="text-center">
+                      <br />
+                      <h5>Bạn Có Chắc Chắn Muốn Thực Hiện Hành Động Này?</h5>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => {
+                          this.props.handleChangeActivation();
+                          close();
+                        }}
+                      >
+                        Có, Tôi Chắc Chắn
+                      </button>
+                      &nbsp;&nbsp;
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => {
+                          close();
+                        }}
+                      >
+                        Hủy Bỏ
+                      </button>
+                      <br />
+                      <br />
+                    </div>
                   )}
-                </button>
+                </Popup>
               </div>
             </div>
             <hr />
@@ -75,9 +108,9 @@ class SupervisorInfoTab extends Component {
               </div>
               {this.renderUserInfo("Email", email)}
               {this.renderUserInfo("Username", name)}
-              {this.renderUserInfo("Full Name", fullname)}
-              {this.renderUserInfo("Phone", phone)}
-              {this.renderUserInfo("Gender", gender)}
+              {this.renderUserInfo("Họ Và Tên", fullname)}
+              {this.renderUserInfo("Số Điện Thoại", phone)}
+              {this.renderUserInfo("Giới Tính", gender)}
             </form>
           </div>
         </div>

@@ -13,29 +13,29 @@ const CustomInfoWindow = ({
   images,
   videos,
   handleDeleteFire,
-  handleChangeStatusFire
+  handleChangeStatusFire,
 }) => {
   return (
     <InfoWindow
       onCloseClick={onCloseInfoWindow}
       position={{
         lat: selectedFire.latitude,
-        lng: selectedFire.longtitude
+        lng: selectedFire.longtitude,
       }}
     >
-      <div className="infoWindow text-center">
-        <h3>User infomation</h3>
+      <div className="text-center">
+        <h3>Thông Tin Người Báo Cháy</h3>
         <div
           className="alert alert-danger row"
           style={{ marginRight: "0px" }}
           role="alert"
         >
           <div className="col align-self-center">
-            <h6>Name: {selectedFire.user.fullname}</h6>
-            <h6>Phone: {selectedFire.user.phone}</h6>
-            <h6>Status: {selectedFire.status}</h6>
+            <h6>Tên: {selectedFire.user.fullname}</h6>
+            <h6>Số Điện Thoại: {selectedFire.user.phone}</h6>
+            <h6>Trạng Thái Đám Cháy: {selectedFire.status}</h6>
             <h6>
-              Created at:&nbsp;
+              Báo Lúc:&nbsp;
               <time-ago datetime={selectedFire.createdAt}>
                 {selectedFire.createdAt}
               </time-ago>
@@ -49,7 +49,7 @@ const CustomInfoWindow = ({
             />
           </div>
         </div>
-        <h3>Image</h3>
+        <h3>Ảnh</h3>
         <div>
           {images != null && images.length !== 0 ? (
             <AwesomeSlider cssModule={AwesomeSliderStyles}>
@@ -58,7 +58,7 @@ const CustomInfoWindow = ({
               ))}
             </AwesomeSlider>
           ) : (
-            <h6> There is no provided image </h6>
+            <h6> Không có bằng chứng ảnh nào cho vụ cháy này </h6>
           )}
         </div>
         <h3 className="mt-5">Video</h3>
@@ -74,27 +74,27 @@ const CustomInfoWindow = ({
               </span>
             ))
           ) : (
-            <h6>There is no provided video</h6>
+            <h6>Không có bằng chứng video nào cho vụ cháy này</h6>
           )}
         </div>
         <Popup
           trigger={
             <button className="btn btn-lg btn-primary btn-block mt-3">
-              Actions
+              Hành Động
             </button>
           }
           modal
           closeOnDocumentClick
         >
           <div>
-            <h6> Pick action&nbsp;&nbsp;</h6>
+            <h6> Hành Động</h6>
             <button
               className="btn btn-primary btn-sm btn-block mr-1"
               onClick={() => {
                 window.open("/evidences/" + selectedFire._id);
               }}
             >
-              View Evidences In New Tab
+              Xem Các Bằng Chứng Trong Tab Mới
             </button>
             <button
               disabled={selectedFire.status === "pending" ? false : true}
@@ -105,11 +105,11 @@ const CustomInfoWindow = ({
                   selectedFire.status = "processing";
                   handleChangeStatusFire(selectedFire._id);
                   onCloseInfoWindow();
-                  toast.success("Fire's status is processing");
+                  toast.success("Đã chuyển trạng thái sang đang xử lý");
                 } catch (error) {}
               }}
             >
-              Change Status To Proccesing
+              Chuyển Trạng Thái Sang Đang Xử Lý
             </button>
             <button
               className="btn btn-danger btn-sm btn-block mr-1"
@@ -118,7 +118,7 @@ const CustomInfoWindow = ({
                   await changeFireStatus(2, selectedFire._id);
                   handleDeleteFire(selectedFire._id);
                   onCloseInfoWindow();
-                  toast.success("Fire is finished");
+                  toast.success("Đã kết thúc xử lý đám cháy");
                   //open tab for writing report
                   window.open(
                     "/reports/new/" +
@@ -129,7 +129,7 @@ const CustomInfoWindow = ({
                 } catch (error) {}
               }}
             >
-              Finish And Write Report For This Fire
+              Kết Thúc Và Viết Báo Cáo Vụ Việc
             </button>
           </div>
         </Popup>

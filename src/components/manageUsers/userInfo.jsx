@@ -12,9 +12,9 @@ class UserInfo extends Component {
   constructor() {
     super();
     const tabs = [
-      { _id: 1, name: "User Information" },
-      { _id: 2, name: "Fires History" },
-      { _id: 3, name: "Locations" }
+      { _id: 1, name: "Thông Tin Cá Nhân" },
+      { _id: 2, name: "Lịch Sử Báo Cháy" },
+      { _id: 3, name: "Địa Điểm" },
     ];
     this.state.tabs = tabs;
     this.state.selectedTab = tabs[0];
@@ -31,10 +31,10 @@ class UserInfo extends Component {
       fullname: "",
       phone: "",
       age: "",
-      avatar: ""
+      avatar: "",
     },
     firesHistory: [],
-    locations: []
+    locations: [],
   };
 
   async populatingUser() {
@@ -82,7 +82,7 @@ class UserInfo extends Component {
       phone: acc.user.phone,
       gender: acc.user.gender,
       age: acc.user.age,
-      avatar: acc.user.avatar
+      avatar: acc.user.avatar,
     };
   }
 
@@ -92,22 +92,26 @@ class UserInfo extends Component {
     await this.populatingLocations();
   }
 
-  handleTabSelect = tab => {
+  handleTabSelect = (tab) => {
     this.setState({ selectedTab: tab });
   };
 
   handleChangeActivation = async () => {
+    let newUser = { ...this.state.user };
+    const { userId, isActivated } = this.state.user;
     try {
-      const { userId, isActivated } = this.state.user;
-      const newUser = { ...this.state.user };
       newUser.isActivated = !isActivated;
       await changeUserActivation(userId);
-      toast.success(isActivated ? "Deactivated User" : "Activated User");
-      this.setState({ user: newUser });
+      toast.success(
+        isActivated
+          ? "Chặn người dùng thành công"
+          : "Bỏ chặc người dùng thành công"
+      );
     } catch (error) {
       if (error.response && error.response.status === 404)
         return this.props.history.replace("/not-found");
     }
+    this.setState({ user: newUser });
   };
 
   render() {

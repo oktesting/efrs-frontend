@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { getSquareImage } from "./../../utils/getImage";
+import Popup from "reactjs-popup";
 
 class UserInfoTab extends Component {
   renderUserInfo(label, data) {
@@ -28,7 +29,7 @@ class UserInfoTab extends Component {
       fullname,
       isActivated,
       email,
-      name
+      name,
     } = this.props.user;
 
     return (
@@ -37,28 +38,60 @@ class UserInfoTab extends Component {
           <div className="col">
             <div className="row">
               <div className="col-8">
-                <h4>User Information</h4>
+                <h4>Thông Tin Về Người Dùng</h4>
               </div>
               <div className="col-4">
-                <button
-                  name="submit"
-                  type="submit"
-                  className={
-                    (isActivated ? "btn btn-danger" : "btn btn-success") +
-                    " float-right"
+                <Popup
+                  trigger={
+                    <button
+                      className={
+                        (isActivated ? "btn btn-danger" : "btn btn-success") +
+                        " float-right"
+                      }
+                    >
+                      {isActivated ? (
+                        <span>
+                          Chặn&nbsp;
+                          <i className="fa fa-times" />
+                        </span>
+                      ) : (
+                        <span>
+                          Bỏ Chặn&nbsp;
+                          <i className="fa fa-check" />
+                        </span>
+                      )}
+                    </button>
                   }
-                  onClick={this.props.handleChangeActivation}
+                  modal
+                  closeOnDocumentClick
                 >
-                  {isActivated ? (
-                    <span>
-                      Deactivate User <i className="fa fa-times" />
-                    </span>
-                  ) : (
-                    <span>
-                      Activate User <i className="fa fa-check" />
-                    </span>
+                  {(close) => (
+                    <div className="text-center">
+                      <br />
+                      <h5>Bạn Có Chắc Chắn Muốn Thực Hiện Hành Động Này?</h5>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => {
+                          this.props.handleChangeActivation();
+                          close();
+                        }}
+                      >
+                        Có, Tôi Chắc Chắn
+                      </button>
+                      &nbsp;&nbsp;
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => {
+                          close();
+                        }}
+                      >
+                        Hủy Bỏ
+                      </button>
+                      <br />
+                      <br />
+                    </div>
                   )}
-                </button>
+                </Popup>
               </div>
             </div>
             <hr />
@@ -74,12 +107,12 @@ class UserInfoTab extends Component {
                   alt="avatar"
                 />
               </div>
-              {this.renderUserInfo("Email", email)}
+              {this.renderUserInfo("Địa Chỉ Email", email)}
               {this.renderUserInfo("Username", name)}
-              {this.renderUserInfo("Full Name", fullname)}
-              {this.renderUserInfo("Phone", phone)}
-              {this.renderUserInfo("Gender", gender)}
-              {this.renderUserInfo("Age", age)}
+              {this.renderUserInfo("Họ Và Tên", fullname)}
+              {this.renderUserInfo("Số Điện Thoại", phone)}
+              {this.renderUserInfo("Giới Tính", gender)}
+              {this.renderUserInfo("Tuổi", age)}
             </form>
           </div>
         </div>

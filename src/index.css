@@ -17,10 +17,10 @@ code {
   width: 17vw;
   height: auto;
 }
-.infoWindow {
-  width: 40vw;
-  height: 80vh;
-}
+/* .infoWindow { */
+/* width: 40vw;
+  height: 80vh; */
+/* } */
 .infoVideo {
   width: 40vw;
   height: 70vh;
@@ -152,4 +152,11 @@ span.displayInline {
 .navbar {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
+}
+
+.preTag {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  font-size: 100%;
 }

@@ -11,12 +11,12 @@ import {
   withGoogleMap,
   GoogleMap,
   Marker,
-  withScriptjs
+  withScriptjs,
 } from "react-google-maps";
 
 const defaultMapOptions = {
   styles: mapStyles,
-  gestureHandling: "greedy"
+  gestureHandling: "greedy",
 };
 
 function Map(props) {
@@ -26,20 +26,20 @@ function Map(props) {
 
   return (
     <GoogleMap
-      defaultCenter={defaultCenter}
+      defaultCenter={props.stationCenter}
       defaultZoom={15}
       defaultOptions={defaultMapOptions}
       onClick={() => setSelectedFire(null)}
     >
       <Marker
         animation={window.google.maps.Animation.DROP}
-        position={defaultCenter}
+        position={props.stationCenter}
         icon={{
           scaledSize: new window.google.maps.Size(35, 35),
-          url: stationMarker
+          url: stationMarker,
         }}
       />
-      {props.fires.map(item => (
+      {props.fires.map((item) => (
         <Marker
           animation={
             item.status === "pending"
@@ -55,23 +55,22 @@ function Map(props) {
                 ? fireMarker
                 : item.status === "processing"
                 ? extinguisherMarker
-                : tickMarker
+                : tickMarker,
           }}
           onClick={() => {
             setSelectedFire(item);
             setImages(
               item.evidences.filter(
-                evidence => evidence.mimetype !== "video/mp4"
+                (evidence) => evidence.mimetype !== "video/mp4"
               )
             );
             setVideos(
               item.evidences.filter(
-                evidence => evidence.mimetype === "video/mp4"
+                (evidence) => evidence.mimetype === "video/mp4"
               )
             );
           }}
-          onRightClick={e => {
-            console.log(e["tb"]);
+          onRightClick={(e) => {
             setSelectedFire(item);
           }}
         />

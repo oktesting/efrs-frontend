@@ -1,13 +1,19 @@
 import React, { Component } from "react";
 import WrappedMap from "./wrappedMap";
 import { toast } from "react-toastify";
+import auth from "../../services/authService";
 
 class MapContainer extends Component {
   constructor(props) {
     super(props);
+    const acc = auth.getCurrentUser();
     this.state = {
       //duccm4
-      fires: []
+      fires: [],
+      stationCenter: {
+        lat: acc.supervisor.location.lat,
+        lng: acc.supervisor.location.lng,
+      },
     };
 
     //duccm4
@@ -18,10 +24,10 @@ class MapContainer extends Component {
 
   componentDidMount() {
     //duccm4
-    this.eventSource.addEventListener("realtimeEvent", e => {
+    this.eventSource.addEventListener("realtimeEvent", (e) => {
       this.getDataFromRealtimeEvent(JSON.parse(e.data));
     });
-    this.eventSource.addEventListener("firstEvent", e => {
+    this.eventSource.addEventListener("firstEvent", (e) => {
       this.getDataFromTheFistEvent(JSON.parse(e.data));
     });
   }
@@ -34,19 +40,20 @@ class MapContainer extends Component {
   }
   getDataFromRealtimeEvent(newFire) {
     let updatedFires = [...this.state.fires];
-    const id = updatedFires.findIndex(fire => fire._id === newFire._id);
+    const id = updatedFires.findIndex((fire) => fire._id === newFire._id);
     if (id === -1) updatedFires.push(newFire);
     else updatedFires[id] = newFire;
     this.setState({ fires: updatedFires });
     toast(
-      <div>
-        <i className="fa fa-exclamation-triangle" /> Received new fire.
+      <div className="text-dark">
+        <i className="fa fa-exclamation-triangle" /> Tiếp nhận 1 thông báo cháy
+        mới
       </div>,
       {
         type: toast.TYPE.WARNING,
         hideProgressBar: true,
         newestOnTop: true,
-        autoClose: false
+        autoClose: false,
       }
     );
   }
@@ -55,11 +62,11 @@ class MapContainer extends Component {
     this.eventSource.close();
   }
 
-  handleDeleteFire = async fireId => {
+  handleDeleteFire = async (fireId) => {
     const originalFires = this.state.fires;
     let fires;
     try {
-      fires = originalFires.filter(fire => fireId !== fire._id);
+      fires = originalFires.filter((fire) => fireId !== fire._id);
       console.log(fireId);
       // gọi tới server
     } catch (error) {
@@ -71,7 +78,7 @@ class MapContainer extends Component {
     this.setState({ fires });
   };
 
-  handleChangeStatusFire = async fireId => {
+  handleChangeStatusFire = async (fireId) => {
     // const originalFires = this.state.fires;
     // let fires = [...originalFires];
     try {
@@ -99,6 +106,7 @@ class MapContainer extends Component {
           fires={this.state.fires}
           handleDeleteFire={this.handleDeleteFire}
           handleChangeStatusFire={this.handleChangeStatusFire}
+          stationCenter={this.state.stationCenter}
         ></WrappedMap>
       </div>
     );
