@@ -1,25 +1,53 @@
 import React, { Component } from "react";
 import Table from "../../common/table";
+import Popup from "reactjs-popup";
 
 class FireStationsTable extends Component {
   columns = [
     {
       path: "address",
-      label: "Fire Station"
+      label: "Địa Chỉ",
     },
-    { path: "district", label: "District" },
+    { path: "district", label: "Quận/Huyện" },
     {
       key: "delete",
-      label: "Delete",
-      content: station => (
-        <button
-          className="btn btn-danger"
-          onClick={() => this.props.onItemDelete(station._id)}
+      label: "Xóa",
+      content: (station) => (
+        <Popup
+          trigger={
+            <button className="btn btn-danger">
+              <i className="fa fa-trash"></i>
+            </button>
+          }
+          modal
+          closeOnDocumentClick
         >
-          <i className="fa fa-trash"></i>
-        </button>
-      )
-    }
+          {(close) => (
+            <div>
+              <br />
+              <h5>Bạn Có Chắc Chắn Muốn Xóa Cơ Sở PCCC Này?</h5>
+              <button
+                className="btn btn-danger"
+                onClick={() => this.props.onItemDelete(station._id)}
+              >
+                Có, Tôi Chắc Chắn
+              </button>
+              &nbsp;&nbsp;
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  close();
+                }}
+              >
+                Hủy Bỏ
+              </button>
+              <br />
+              <br />
+            </div>
+          )}
+        </Popup>
+      ),
+    },
   ];
 
   render() {

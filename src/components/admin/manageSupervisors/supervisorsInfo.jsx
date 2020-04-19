@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {
   getSupervisor,
-  changeSupervisorActivation
+  changeSupervisorActivation,
 } from "../../../services/supervisorService";
 import ListGroup from "../../common/listGroup";
 import SupervisorsInfoTab from "./supervisorsInfoTab";
@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 class SupervisorInfo extends Component {
   constructor() {
     super();
-    const tabs = [{ _id: 1, name: "Supervisor Information" }];
+    const tabs = [{ _id: 1, name: "Thông Tin Cán Bộ" }];
     this.state.tabs = tabs;
     this.state.selectedTab = tabs[0];
   }
@@ -26,10 +26,10 @@ class SupervisorInfo extends Component {
       gender: "",
       fullname: "",
       phone: "",
-      avatar: ""
+      avatar: "",
     },
     firesHistory: [],
-    locations: []
+    locations: [],
   };
 
   async populatingSupervisor() {
@@ -52,7 +52,7 @@ class SupervisorInfo extends Component {
       fullname: acc.supervisor.fullname,
       phone: acc.supervisor.phone,
       gender: acc.supervisor.gender,
-      avatar: acc.supervisor.avatar
+      avatar: acc.supervisor.avatar,
     };
   }
 
@@ -60,24 +60,24 @@ class SupervisorInfo extends Component {
     await this.populatingSupervisor();
   }
 
-  handleTabSelect = tab => {
+  handleTabSelect = (tab) => {
     this.setState({ selectedTab: tab });
   };
 
   handleChangeActivation = async () => {
+    let newSupervisor = { ...this.state.supervisor };
+    const { supervisorId, isActivated } = this.state.supervisor;
     try {
-      const { supervisorId, isActivated } = this.state.supervisor;
-      const newSupervisor = { ...this.state.supervisor };
       newSupervisor.isActivated = !isActivated;
       await changeSupervisorActivation(supervisorId);
       toast.success(
-        isActivated ? "Deactivated Supervisor" : "Activated Supervisor"
+        isActivated ? "Chặn Cán Bộ Thành Công" : "Chấp Thuận Cán Bộ Thành Công"
       );
-      this.setState({ supervisor: newSupervisor });
     } catch (error) {
       if (error.response && error.response.status === 404)
         return this.props.history.replace("/not-found");
     }
+    this.setState({ supervisor: newSupervisor });
   };
 
   render() {

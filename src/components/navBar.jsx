@@ -23,16 +23,18 @@ const NavBar = ({ acc }) => {
       </button>
       <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
         {!acc && (
-          <ul className="navbar-nav ml-auto nav-flex-icons pr-4">
+          <ul className="navbar-nav nav-flex-icons pr-4">
             <li className="nav-item active row">
-              <React.Fragment>
-                <NavLink className="nav-link btn btn-info" to="/signin">
-                  Sign In
-                </NavLink>
-                <NavLink className="nav-link btn btn-info" to="/signup">
-                  Sign Up
-                </NavLink>
-              </React.Fragment>
+              <span className="nav-link">
+                Hệ Thống Tiếp Nhận Báo Cháy Khẩn Cấp&nbsp;&nbsp;
+              </span>
+              <NavLink className="nav-link btn btn-info" to="/signin">
+                <span>Đăng Nhập</span>
+              </NavLink>
+              &nbsp;
+              <NavLink className="nav-link btn btn-warning" to="/signup">
+                <span className="text-dark">&nbsp;Đăng Ký&nbsp;</span>
+              </NavLink>
             </li>
           </ul>
         )}
@@ -42,30 +44,33 @@ const NavBar = ({ acc }) => {
               <ul className="navbar-nav mr-4">
                 <li className="nav-item active row">
                   <React.Fragment>
+                    &nbsp;
                     <NavLink
                       className="nav-item nav-link btn btn-info"
                       to="/map"
                     >
-                      Supervise Map
+                      Giám Sát Bản Đồ
                     </NavLink>
+                    &nbsp;
                     <NavLink
                       className="nav-item nav-link btn btn-info"
                       to="/reports"
                     >
-                      Fire Reports
+                      Quản Lý Báo Cáo
                     </NavLink>
+                    &nbsp;
                     <NavLink
                       className="nav-item nav-link btn btn-info"
                       to="/users"
                     >
-                      Manage Users
+                      Quản Lý Người Dùng
                     </NavLink>
-                    <NavLink
+                    {/* <NavLink
                       className="nav-item nav-link btn btn-info"
                       to="/emergency-alert"
                     >
                       Emergency Alert
-                    </NavLink>
+                    </NavLink> */}
                   </React.Fragment>
                 </li>
               </ul>
@@ -74,17 +79,19 @@ const NavBar = ({ acc }) => {
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item active row">
                   <React.Fragment>
+                    &nbsp;
                     <NavLink
                       className="nav-item nav-link btn btn-info"
                       to="/fire-station"
                     >
-                      Fire Station
+                      Cơ Sở PCCC
                     </NavLink>
+                    &nbsp;
                     <NavLink
                       className="nav-item nav-link btn btn-info"
                       to="/supervisors"
                     >
-                      Manage Supervisors
+                      Quản Lý Cán Bộ PCCC
                     </NavLink>
                   </React.Fragment>
                 </li>
@@ -99,12 +106,14 @@ const NavBar = ({ acc }) => {
                     alt="avatar"
                     style={{ width: "40px" }}
                   ></img>
+                  &nbsp;
                   <NavLink
                     className="nav-item nav-link btn btn-info"
                     to="/profile"
                   >
                     {acc.name}
                   </NavLink>
+                  &nbsp;
                 </li>
               ) : (
                 <li className="nav-item active row mr-3">
@@ -114,20 +123,22 @@ const NavBar = ({ acc }) => {
                     alt="avatar"
                     style={{ width: "40px" }}
                   ></img>
+                  &nbsp;
                   <span
                     className="nav-item nav-link btn btn-info"
                     to="/profile"
                   >
                     {acc.name}
                   </span>
+                  &nbsp;
                 </li>
               )}
               <li className="nav-item active row">
                 <NavLink
-                  className="nav-item nav-link btn btn-info"
+                  className="nav-item nav-link btn btn-warning mr-2"
                   to="/signout"
                 >
-                  Sign out
+                  <span className="text-dark">Đăng Xuất</span>
                 </NavLink>
               </li>
             </ul>

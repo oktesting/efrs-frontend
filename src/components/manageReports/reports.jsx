@@ -3,7 +3,7 @@ import SearchBox from "../common/searchBox";
 import ReportsTable from "./reportsTable";
 import {
   getAllReports,
-  deleteReportAndItsFire
+  deleteReportAndItsFire,
 } from "../../services/reportService";
 import Pagination from "../common/pagination";
 import { paginate } from "../../utils/paginate";
@@ -15,11 +15,11 @@ class Reports extends Component {
     reports: [],
     sortColumn: {
       path: "createdAt",
-      order: "desc"
+      order: "desc",
     },
     searchQuery: "",
     pageSize: 10,
-    currentPage: 1
+    currentPage: 1,
   };
 
   async componentDidMount() {
@@ -27,38 +27,38 @@ class Reports extends Component {
     this.setState({ reports });
   }
 
-  handlePageChange = newPage => {
+  handlePageChange = (newPage) => {
     const currentPage = newPage;
     this.setState({ currentPage });
   };
 
-  handleSort = sortColumn => {
+  handleSort = (sortColumn) => {
     this.setState({ sortColumn });
   };
 
-  handleSearch = query => {
+  handleSearch = (query) => {
     this.setState({ searchQuery: query, currentPage: 1 });
   };
 
-  handleDelete = async reportId => {
+  handleDelete = async (reportId) => {
     const originalReports = this.state.reports;
     let reports;
     try {
-      reports = originalReports.filter(report => reportId !== report._id);
+      reports = originalReports.filter((report) => reportId !== report._id);
       await deleteReportAndItsFire(reportId);
-      toast("Report and its fire is deleted.", {
-        type: toast.TYPE.SUCCESS
+      toast("Báo cáo về vụ cháy đã xóa thành công", {
+        type: toast.TYPE.SUCCESS,
       });
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        toast.error("Station is already deleted");
+        toast.error("Báo cáo về vụ cháy không tồn tại");
         reports = originalReports;
       }
     }
     this.setState({ reports });
   };
 
-  handleEdit = reportId => {
+  handleEdit = (reportId) => {
     return window.open("/reports/edit/" + reportId);
   };
 
@@ -68,13 +68,13 @@ class Reports extends Component {
       pageSize,
       currentPage,
       sortColumn,
-      searchQuery
+      searchQuery,
     } = this.state;
 
     let filtered;
     //filter by search box only
     if (searchQuery)
-      filtered = allReports.filter(m =>
+      filtered = allReports.filter((m) =>
         m.location.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
     else filtered = allReports;
@@ -83,7 +83,7 @@ class Reports extends Component {
     const reports = paginate(sorted, currentPage, pageSize);
     return {
       itemsCount: filtered.length,
-      reports
+      reports,
     };
   };
 
@@ -92,7 +92,7 @@ class Reports extends Component {
     const { reports, itemsCount } = this.getPagedData();
     return (
       <div className="container mt-3">
-        <h4>Showing {itemsCount} fire reports in the database</h4>
+        <h4>Có {itemsCount} báo cáo cháy trong hệ thống</h4>
         <SearchBox value={searchQuery} onChange={this.handleSearch} />
         <ReportsTable
           onItemDelete={this.handleDelete}

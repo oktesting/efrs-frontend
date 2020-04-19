@@ -4,7 +4,7 @@ import SearchBox from "../../common/searchBox";
 import FireStationsTable from "./fireStationsTable";
 import {
   getAllFireStation,
-  deleteFireStation
+  deleteFireStation,
 } from "../../../services/locationService";
 import Pagination from "../../common/pagination";
 import { paginate } from "../../../utils/paginate";
@@ -15,9 +15,9 @@ class FireStation extends Component {
   constructor() {
     super();
     const tabs = [
-      { _id: "", name: "All Province" },
+      { _id: "", name: "Toàn Bộ Các Cơ Sở" },
       { _id: 2, name: "Hà Nội" },
-      { _id: 3, name: "TP Hồ Chí Minh" }
+      { _id: 3, name: "TP Hồ Chí Minh" },
     ];
     this.state.tabs = tabs;
     this.state.selectedTab = tabs[0];
@@ -27,11 +27,11 @@ class FireStation extends Component {
     fireStations: [],
     sortColumn: {
       path: "address",
-      order: "asc"
+      order: "asc",
     },
     searchQuery: "",
     pageSize: 10,
-    currentPage: 1
+    currentPage: 1,
   };
 
   async componentDidMount() {
@@ -39,38 +39,39 @@ class FireStation extends Component {
     this.setState({ fireStations });
   }
 
-  handlePageChange = newPage => {
+  handlePageChange = (newPage) => {
     const currentPage = newPage;
     this.setState({ currentPage });
   };
 
-  handleSort = sortColumn => {
+  handleSort = (sortColumn) => {
     this.setState({ sortColumn });
   };
 
-  handleSearch = query => {
+  handleSearch = (query) => {
     this.setState({
       selectedTab: this.state.tabs[0],
       searchQuery: query,
-      currentPage: 1
+      currentPage: 1,
     });
   };
 
-  handleTabSelect = tab => {
+  handleTabSelect = (tab) => {
     this.setState({ selectedTab: tab, searchQuery: "", currentPage: 1 });
   };
 
-  handleDelete = async stationId => {
+  handleDelete = async (stationId) => {
     const originalFireStations = this.state.fireStations;
     let stations;
     try {
       stations = originalFireStations.filter(
-        station => stationId !== station._id
+        (station) => stationId !== station._id
       );
       await deleteFireStation(stationId);
+      toast.success("Đã xóa cơ sở PCCC thành công");
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        toast.error("Station is already deleted");
+        toast.error("Không tồn tại");
         stations = originalFireStations;
       }
     }
@@ -84,22 +85,22 @@ class FireStation extends Component {
       currentPage,
       selectedTab,
       sortColumn,
-      searchQuery
+      searchQuery,
     } = this.state;
 
     let filtered;
     if (searchQuery)
-      filtered = allStations.filter(m =>
+      filtered = allStations.filter((m) =>
         m.address.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
     else if (selectedTab && selectedTab._id)
-      filtered = allStations.filter(m => m.province === selectedTab.name);
+      filtered = allStations.filter((m) => m.province === selectedTab.name);
     else filtered = allStations;
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
     const fireStations = paginate(sorted, currentPage, pageSize);
     return {
       itemsCount: filtered.length,
-      fireStations
+      fireStations,
     };
   };
 
@@ -119,7 +120,7 @@ class FireStation extends Component {
           <div className="col-9 myShadow">
             <div className="row mt-3">
               <div className="col-8">
-                <h4>Showing {itemsCount} stations in the database</h4>
+                <h4>Có {itemsCount} cơ sở PCCC trong hệ thống</h4>
               </div>
               <div className="col-4">
                 <button
@@ -128,7 +129,7 @@ class FireStation extends Component {
                     this.props.history.push("/fire-station/new");
                   }}
                 >
-                  Create New Station
+                  Tạo Mới
                 </button>
               </div>
             </div>

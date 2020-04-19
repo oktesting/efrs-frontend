@@ -6,7 +6,7 @@ import { getAllFireStation } from "../../services/locationService";
 import {
   createSupervisor,
   getSupervisor,
-  editSupervisor
+  editSupervisor,
 } from "../../services/supervisorService";
 import { toast } from "react-toastify";
 import { getSquareImage } from "../../utils/getImage";
@@ -18,22 +18,22 @@ class ProfileForm extends Form {
       phone: "",
       gender: "",
       location: "",
-      avatar: ""
+      avatar: "",
     },
     genders: [
       {
         _id: "male",
-        name: "Male"
+        name: "Nam",
       },
       {
         _id: "female",
-        name: "Female"
-      }
+        name: "Nữ",
+      },
     ],
     fireStations: [],
     errors: {},
     account: {},
-    avatarInput: null
+    avatarInput: null,
   };
 
   async populateFireStation() {
@@ -63,11 +63,11 @@ class ProfileForm extends Form {
       phone: supervisor.phone,
       gender: supervisor.gender,
       location: supervisor.location,
-      avatar: supervisor.avatar
+      avatar: supervisor.avatar,
     };
   }
 
-  fileSelectedHandler = event => {
+  fileSelectedHandler = (event) => {
     this.setState({ avatarInput: event.target.files[0] });
   };
 
@@ -80,21 +80,15 @@ class ProfileForm extends Form {
   schema = {
     _id: Joi.string(),
     isActivated: Joi.boolean(),
-    location: Joi.string()
-      .required()
-      .label("Fire Station"),
-    fullname: Joi.string()
-      .required()
-      .label("Full Name"),
+    location: Joi.string().required().label("Cơ Sở PCCC"),
+    fullname: Joi.string().required().label("Họ Và Tên"),
     phone: Joi.string()
       .trim()
       .regex(/^[0-9]{10}$/)
       .required()
-      .label("Phone"),
-    gender: Joi.string()
-      .required()
-      .label("Gender"),
-    avatar: Joi.any()
+      .label("Số Điện Thoại"),
+    gender: Joi.string().required().label("Giới Tính"),
+    avatar: Joi.any(),
   };
 
   doSubmit = async () => {
@@ -106,12 +100,12 @@ class ProfileForm extends Form {
         const { headers } = await createSupervisor(this.state.data);
         auth.loginWithJwt(headers["x-auth-token"]);
         toast(
-          "Your profile is created. Please wait for administrator to approve.",
+          "Tài khoản của bạn đã được tạo thành công, hãy chờ quản trị viên chấp thuận.",
           {
             type: toast.TYPE.SUCCESS,
             onClose: () => {
-              return (window.location = "/profile");
-            }
+              return (window.location = "/homepage");
+            },
           }
         );
         //edit super case
@@ -121,11 +115,11 @@ class ProfileForm extends Form {
           this.state.avatarInput
         );
         auth.loginWithJwt(headers["x-auth-token"]);
-        toast("Your profile is modified.", {
+        toast("Cập nhật thông tin cá nhân thành công", {
           type: toast.TYPE.SUCCESS,
           onClose: () => {
-            return (window.location = "/profile");
-          }
+            return (window.location = "/homepage");
+          },
         });
       }
     } catch (ex) {
@@ -146,7 +140,9 @@ class ProfileForm extends Form {
     return (
       <React.Fragment>
         <div className="form-signin">
-          <h3 className="font-weight-normal text-center mb-4">Profile</h3>
+          <h3 className="font-weight-normal text-center mb-4">
+            Thông Tin Cá Nhân
+          </h3>
           <img
             src={
               this.state.data.avatar
@@ -157,12 +153,17 @@ class ProfileForm extends Form {
             alt="avatar"
           ></img>
           <form onSubmit={this.handleSubmit}>
-            {this.renderInput("fullname", "Full Name", "text")}
-            {this.renderInput("phone", "Phone", "text")}
-            {this.renderSelect("gender", "Gender", this.state.genders, "name")}
+            {this.renderInput("fullname", "Họ Và Tên", "text")}
+            {this.renderInput("phone", "Số Điện Thoại", "text")}
+            {this.renderSelect(
+              "gender",
+              "Giới Tính",
+              this.state.genders,
+              "name"
+            )}
             {this.renderSelect(
               "location",
-              "Fire Station",
+              "Địa Chỉ Làm Việc",
               this.state.fireStations,
               "address"
             )}
@@ -170,12 +171,12 @@ class ProfileForm extends Form {
               <div />
             ) : (
               <div className="mb-4">
-                <label>New Avatar</label>
+                <label>Ảnh Đại Diện</label>
                 <div className="custom-file ">
                   <label htmlFor="avatarInput" className="custom-file-label">
                     {this.state.avatarInput
                       ? this.state.avatarInput.name
-                      : "Choose your file..."}
+                      : "Chọn ảnh..."}
                   </label>
                   <input
                     id="avatarInput"
@@ -183,13 +184,13 @@ class ProfileForm extends Form {
                     type="file"
                     name="avatar"
                     accept="image/jpeg,image/png"
-                    onChange={e => this.fileSelectedHandler(e)}
+                    onChange={(e) => this.fileSelectedHandler(e)}
                   />
                 </div>
               </div>
             )}
 
-            {this.renderButton("Save")}
+            {this.renderButton("Lưu Thông Tin Cá Nhân")}
           </form>
         </div>
       </React.Fragment>

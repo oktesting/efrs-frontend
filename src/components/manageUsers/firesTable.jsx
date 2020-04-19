@@ -7,26 +7,24 @@ class FiresTable extends Component {
   columns = [
     {
       path: "status",
-      label: "Status"
+      label: "Trạng Thái",
     },
     {
       path: "longtitude",
-      label: "Longtitude"
+      label: "Kinh Độ",
     },
-    { path: "latitude", label: "Latitude" },
+    { path: "latitude", label: "Vĩ Độ" },
     {
       path: "evidences",
-      label: "Evidences",
-      content: fire => (
-        <Link to={`/evidences/${fire._id}`}>
-          {fire.evidences.length} evidence(s)
-        </Link>
-      )
+      label: "Bằng Chứng",
+      content: (fire) => (
+        <Link to={`/evidences/${fire._id}`}>Có {fire.evidences.length}</Link>
+      ),
     },
     {
       path: "createdAt",
-      label: "Created At",
-      content: fire => (
+      label: "Thời Điểm Cháy",
+      content: (fire) => (
         <local-time
           month="long"
           day="numeric"
@@ -38,8 +36,8 @@ class FiresTable extends Component {
         >
           {fire.createdAt}>
         </local-time>
-      )
-    }
+      ),
+    },
   ];
 
   render() {

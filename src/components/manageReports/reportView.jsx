@@ -28,8 +28,8 @@ class Report extends Component {
       assessmentAndClassification: "",
       receivedTime: "",
       finishedTime: "",
-      duration: ""
-    }
+      duration: "",
+    },
   };
 
   async populatingReport() {
@@ -71,8 +71,7 @@ class Report extends Component {
       summary,
       assessmentAndClassification,
       receivedTime,
-      finishedTime,
-      duration
+      duration,
     } = this.state.report;
 
     return (
@@ -160,17 +159,17 @@ class Report extends Component {
             III. DIỄN BIẾN CHÁY VÀ KẾT QUẢ CỨU CHỮA
           </span>
           <br />
-          <p>{summary}</p>
+          <pre className="preTag">{summary}</pre>
           <br />
           <span className="font-weight-bold">IV. CÔNG TÁC ĐIỀU TRA XỬ LÝ</span>
           <br />
-          <p>{investigation}</p>
+          <pre className="preTag">{investigation}</pre>
           <br />
           <span className="font-weight-bold">
             V. NHẬN XÉT ĐÁNH GIÁ, RÚT KINH NGHIỆM TOÀN DIỆN VÀ PHÂN LOẠI
           </span>
           <br />
-          <p>{assessmentAndClassification}</p>
+          <pre className="preTag">{assessmentAndClassification}</pre>
         </div>
       </div>
     );

@@ -7,34 +7,34 @@ class UsersTable extends Component {
     {
       path: "name",
       label: "Username",
-      content: acc => <Link to={`/users/${acc._id}`}>{acc.name}</Link>
+      content: (acc) => <Link to={`/users/${acc._id}`}>{acc.name}</Link>,
     },
     {
       path: "email",
       label: "Email",
-      content: acc => <a href={"mailto:" + acc.email}>{acc.email}</a>
+      content: (acc) => <a href={"mailto:" + acc.email}>{acc.email}</a>,
     },
-    { path: "user.fullname", label: "Full Name" },
+    { path: "user.fullname", label: "Họ Và Tên" },
     {
       path: "isVerified",
-      label: "Is Verified",
-      content: acc =>
+      label: "Đã Xác Minh",
+      content: (acc) =>
         acc.isVerified ? (
           <i className="fa fa-check" />
         ) : (
           <i className="fa fa-times" />
-        )
+        ),
     },
     {
       path: "user.isActivated",
-      label: "Is Activated",
-      content: acc =>
+      label: "Trạng Thái Tài Khoản",
+      content: (acc) =>
         acc.user.isActivated ? (
           <i className="fa fa-check" />
         ) : (
           <i className="fa fa-times" />
-        )
-    }
+        ),
+    },
   ];
 
   render() {

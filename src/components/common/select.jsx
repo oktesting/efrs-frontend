@@ -11,8 +11,8 @@ const Select = ({ name, label, options, error, onChange, value, field }) => {
         value={value}
         className="form-control"
       >
-        <option value="">Pick {label}</option>
-        {options.map(option => (
+        <option value="">Chọn {label}</option>
+        {options.map((option) => (
           <option key={option._id} value={option._id}>
             {option[field]}
           </option>

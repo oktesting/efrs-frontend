@@ -7,38 +7,42 @@ class SupervisorsTable extends Component {
     {
       path: "name",
       label: "Username",
-      content: acc => <Link to={`/supervisors/${acc._id}`}>{acc.name}</Link>
+      content: (acc) => <Link to={`/supervisors/${acc._id}`}>{acc.name}</Link>,
     },
     {
       path: "email",
       label: "Email",
-      content: acc => <a href={"mailto:" + acc.email}>{acc.email}</a>
+      content: (acc) => <a href={"mailto:" + acc.email}>{acc.email}</a>,
     },
-    { path: "supervisor.fullname", label: "Full Name" },
-    { path: "supervisor.gender", label: "Gender" },
+    { path: "supervisor.fullname", label: "Họ và tên" },
+    {
+      path: "supervisor.gender",
+      label: "Giới tính",
+      content: (acc) => (acc.supervisor.gender === "male" ? "Nam" : "Nữ"),
+    },
     {
       key: "station",
-      label: "Station",
-      content: acc => (
+      label: "Nơi làm việc",
+      content: (acc) => (
         <div>
           {
             this.props.stations.find(
-              station => station._id === acc.supervisor.location
+              (station) => station._id === acc.supervisor.location
             )["address"]
           }
         </div>
-      )
+      ),
     },
     {
       path: "supervisor.isActivated",
-      label: "Is Activated",
-      content: acc =>
+      label: "Trạng thái",
+      content: (acc) =>
         acc.supervisor.isActivated ? (
           <i className="fa fa-check" />
         ) : (
           <i className="fa fa-times" />
-        )
-    }
+        ),
+    },
   ];
 
   render() {

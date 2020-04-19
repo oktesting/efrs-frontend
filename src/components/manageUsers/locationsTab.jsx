@@ -39,7 +39,7 @@ class LocationsTab extends Component {
     return (
       <div className="col myShadow">
         <div className="mt-3">
-          <h4>User Locations</h4>
+          <h4>Địa Điểm Của Người Dùng</h4>
         </div>
         <hr />
         {locations != null && locations.length !== 0 ? (
@@ -53,7 +53,7 @@ class LocationsTab extends Component {
             ))}
           </div>
         ) : (
-          <h6> There is no provided location </h6>
+          <h6> Người dùng chưa cung cấp thông tin về địa điểm </h6>
         )}
       </div>
     );

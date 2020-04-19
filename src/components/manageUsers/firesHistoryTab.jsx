@@ -10,16 +10,16 @@ class FiresHistoryTab extends Component {
     currentPage: 1,
     sortColumn: {
       path: "createdAt",
-      order: "desc"
-    }
+      order: "desc",
+    },
   };
 
-  handlePageChange = newPage => {
+  handlePageChange = (newPage) => {
     const currentPage = newPage;
     this.setState({ currentPage });
   };
 
-  handleSort = sortColumn => {
+  handleSort = (sortColumn) => {
     this.setState({ sortColumn });
   };
 
@@ -34,7 +34,7 @@ class FiresHistoryTab extends Component {
     const fires = paginate(sorted, currentPage, pageSize);
     return {
       itemsCount: firesHistory.length,
-      fires
+      fires,
     };
   };
 
@@ -43,7 +43,7 @@ class FiresHistoryTab extends Component {
     const { fires, itemsCount } = this.getPagedData();
     return (
       <div className="col myShadow pt-3">
-        <h4>Showing {itemsCount} fires in the database</h4>
+        <h4>Có {itemsCount} vụ cháy liên quan tới người này trong hệ thống</h4>
         <FiresTable
           fires={fires}
           sortColumn={sortColumn}

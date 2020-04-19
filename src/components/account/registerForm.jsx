@@ -3,36 +3,28 @@ import Form from "../common/form";
 import Joi from "joi-browser";
 import { register } from "../../services/accountsService";
 import auth from "../../services/authService";
-import logo_pccc from "../../media/logo_pccc.svg";
+import logo_pccc from "../../media/fire-station1.svg";
 import { toast } from "react-toastify";
 import { Redirect } from "react-router-dom";
 
 class RegisterForm extends Form {
   state = {
     data: { email: "", password: "", name: "", repassword: "" },
-    errors: {}
+    errors: {},
   };
   schema = {
-    email: Joi.string()
-      .email()
-      .required()
-      .label("Email Address"),
-    password: Joi.string()
-      .min(5)
-      .required()
-      .label("Password"),
+    email: Joi.string().email().required().label("Địa Chỉ Email"),
+    password: Joi.string().min(8).required().label("Mật Khẩu"),
     repassword: Joi.valid(Joi.ref("password"))
       .options({
         language: {
           any: {
-            allowOnly: "must be matched."
-          }
-        }
+            allowOnly: "Phải Trùng Nhau",
+          },
+        },
       })
-      .label("Password Confirmation"),
-    name: Joi.string()
-      .required()
-      .label("Profile Name")
+      .label("Xác Nhận Mật Khẩu"),
+    name: Joi.string().min(5).required().label("Username"),
   };
 
   doSubmit = async () => {
@@ -41,17 +33,17 @@ class RegisterForm extends Form {
       const { data } = await register(this.state.data);
       if (data) {
         toast(
-          "Your account is created. Please check your email inbox to verify then sign in",
+          "Tài khoản đã được tạo. Hãy kiểm tra email của bạn để xác nhận trước khi đăng nhập",
           {
             type: toast.TYPE.INFO,
-            onClose: () => (window.location = "/signin")
+            onClose: () => (window.location = "/signin"),
           }
         );
       }
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
-        errors.email = ex.response.data;
+        errors.email = "Địa chỉ email đã được sử dụng";
         this.setState({ errors });
       }
     }
@@ -65,17 +57,13 @@ class RegisterForm extends Form {
           <div className="text-center">
             <img className="logo" src={logo_pccc} alt="efrs-logo" />
           </div>
-          <h3 className="font-weight-normal text-center mb-4">Sign Up</h3>
+          <h3 className="font-weight-normal text-center mb-4">Đăng Ký</h3>
           <form onSubmit={this.handleSubmit}>
-            {this.renderInput("email", "Email Address", "text")}
-            {this.renderInput("name", "Profile Name", "text")}
-            {this.renderInput("password", "Password", "password")}
-            {this.renderInput(
-              "repassword",
-              "Password Confirmation",
-              "password"
-            )}
-            {this.renderButton("Register")}
+            {this.renderInput("email", "Địa Chỉ Email", "text")}
+            {this.renderInput("name", "Username", "text")}
+            {this.renderInput("password", "Mật Khẩu", "password")}
+            {this.renderInput("repassword", "Xác Nhận Mật Khẩu", "password")}
+            {this.renderButton("Đăng Ký")}
           </form>
         </div>
       </React.Fragment>

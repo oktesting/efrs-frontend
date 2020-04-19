@@ -6,7 +6,7 @@ import AwesomeSliderStyles from "react-awesome-slider/src/styles";
 class Evidences extends Component {
   state = {
     images: [],
-    videos: []
+    videos: [],
   };
 
   async populatingEvidences() {
@@ -15,11 +15,11 @@ class Evidences extends Component {
       const { data: fire } = await getFireById(fireId);
       this.setState({
         images: fire.evidences.filter(
-          evidence => evidence.mimetype !== "video/mp4"
+          (evidence) => evidence.mimetype !== "video/mp4"
         ),
         videos: fire.evidences.filter(
-          evidence => evidence.mimetype === "video/mp4"
-        )
+          (evidence) => evidence.mimetype === "video/mp4"
+        ),
       });
     } catch (error) {
       if (error.response && error.response.status === 404)
@@ -35,7 +35,7 @@ class Evidences extends Component {
     const { images, videos } = this.state;
     return (
       <div className="userInfo myShadow text-center pt-4 pb-4">
-        <h4 className="mb-4 mt-2">Images</h4>
+        <h4 className="mb-4 mt-2">Ảnh</h4>
         <div>
           {images != null && images.length !== 0 ? (
             <AwesomeSlider cssModule={AwesomeSliderStyles}>
@@ -44,11 +44,11 @@ class Evidences extends Component {
               ))}
             </AwesomeSlider>
           ) : (
-            <h6> There is no provided image </h6>
+            <h6> Không có bằng chứng ảnh nào cho vụ cháy này </h6>
           )}
         </div>
         <div>
-          <h4 className="mb-4 mt-5">Videos</h4>
+          <h4 className="mb-4 mt-5">Video</h4>
           {videos != null && videos.length !== 0 ? (
             <div>
               {videos.map((item, i) => (
@@ -61,7 +61,7 @@ class Evidences extends Component {
               ))}
             </div>
           ) : (
-            <h6> There is no provided video </h6>
+            <h6> Không có bằng chứng video nào cho vụ cháy này </h6>
           )}
         </div>
       </div>

@@ -4,7 +4,7 @@ import Joi from "joi-browser";
 import {
   getReportById,
   submitNewReport,
-  editReport
+  editReport,
 } from "../../services/reportService";
 import { toast } from "react-toastify";
 
@@ -31,36 +31,20 @@ class ReportForm extends Form {
       travelDistance: "",
       supervisorName: "",
       waterSource: "",
-      assessmentAndClassification: ""
+      assessmentAndClassification: "",
     },
     errors: {},
-    didSubmittedNewReport: false
+    didSubmittedNewReport: false,
   };
 
   schema = {
     location: Joi.string().label("Địa điểm"),
-    area: Joi.number()
-      .min(0)
-      .label("Diện tích"),
-    totalVehicle: Joi.number()
-      .min(0)
-      .integer()
-      .label("Tổng số phương tiện"),
-    totalFireman: Joi.number()
-      .min(0)
-      .integer()
-      .label("Tổng số lính cứu hỏa"),
-    totalDamageProperty: Joi.number()
-      .min(0)
-      .label("Tổng thiệt hại"),
-    totalDeath: Joi.number()
-      .min(0)
-      .integer()
-      .label("Số người chết"),
-    totalInjury: Joi.number()
-      .min(0)
-      .integer()
-      .label("Số người bị thương"),
+    area: Joi.number().min(0).label("Diện tích"),
+    totalVehicle: Joi.number().min(0).integer().label("Tổng số phương tiện"),
+    totalFireman: Joi.number().min(0).integer().label("Tổng số lính cứu hỏa"),
+    totalDamageProperty: Joi.number().min(0).label("Tổng thiệt hại"),
+    totalDeath: Joi.number().min(0).integer().label("Số người chết"),
+    totalInjury: Joi.number().min(0).integer().label("Số người bị thương"),
     summary: Joi.string().label("Diễn biến và kết quả"),
     _id: Joi.string(),
     createdAt: Joi.string(),
@@ -82,7 +66,7 @@ class ReportForm extends Form {
     waterSource: Joi.string().label("Nguồn nước"),
     assessmentAndClassification: Joi.string().label(
       "Nhận xét, đánh giá và phân loại"
-    )
+    ),
   };
 
   async populatingReport() {
@@ -112,14 +96,14 @@ class ReportForm extends Form {
           ...this.state.data,
           receivedTime: this.props.match.params.receivedTime,
           fire: this.props.match.params.fireId,
-          finishedTime: new Date().toISOString()
+          finishedTime: new Date().toISOString(),
         };
         await submitNewReport(report);
-        toast("Fire Report is Submitted", {
+        toast("Lưu Báo Cáo Mới Thành Công", {
           type: toast.TYPE.SUCCESS,
           onClose: () => {
             return this.props.history.push("/reports");
-          }
+          },
         });
         this.setState({ didSubmittedNewReport: true });
       }
@@ -130,11 +114,11 @@ class ReportForm extends Form {
         delete report.createdAt;
         delete report.duration;
         await editReport(this.state.data._id, report);
-        toast("Fire Report is Modified", {
+        toast("Cập Nhật Nội Dung Báo Cáo Thành Công", {
           type: toast.TYPE.SUCCESS,
           onClose: () => {
             return window.close();
-          }
+          },
         });
       }
     } catch (ex) {
@@ -144,7 +128,7 @@ class ReportForm extends Form {
             type: toast.TYPE.WARNING,
             onClose: () => {
               return window.close();
-            }
+            },
           });
       }
     }
@@ -254,7 +238,7 @@ class ReportForm extends Form {
               8
             )}
 
-            {this.renderButton("Save")}
+            {this.renderButton("Lưu Báo Cáo")}
           </form>
         </div>
       </React.Fragment>
