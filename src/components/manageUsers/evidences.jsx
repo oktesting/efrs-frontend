@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { getFireById } from "../../services/fireService";
 import AwesomeSlider from "react-awesome-slider";
 import AwesomeSliderStyles from "react-awesome-slider/src/styles";
-import loadingLogo from "../../../media/fire.svg";
+import loadingLogo from "../../media/fire.svg";
 import LoadingScreen from "react-loading-screen";
 
 class Evidences extends Component {
