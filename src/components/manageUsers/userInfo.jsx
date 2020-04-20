@@ -7,6 +7,8 @@ import UserInfoTab from "./userInfoTab";
 import FiresHistoryTab from "./firesHistoryTab";
 import LocationsTab from "./locationsTab";
 import { toast } from "react-toastify";
+import loadingLogo from "../../media/profile.svg";
+import LoadingScreen from "react-loading-screen";
 
 class UserInfo extends Component {
   constructor() {
@@ -18,6 +20,7 @@ class UserInfo extends Component {
     ];
     this.state.tabs = tabs;
     this.state.selectedTab = tabs[0];
+    this.state.loading = true;
   }
 
   state = {
@@ -90,6 +93,7 @@ class UserInfo extends Component {
     await this.populatingUser();
     await this.populatingFiresHistory();
     await this.populatingLocations();
+    this.setState({ loading: false });
   }
 
   handleTabSelect = (tab) => {
@@ -115,29 +119,39 @@ class UserInfo extends Component {
   };
 
   render() {
-    const { selectedTab, user, firesHistory, locations } = this.state;
+    const { selectedTab, user, firesHistory, locations, loading } = this.state;
+    document.title = "Quản Lý Người Dùng";
     return (
-      <div className="userInfo">
-        <div className="row">
-          <div className="col-3">
-            <ListGroup
-              items={this.state.tabs}
-              selectedItem={this.state.selectedTab}
-              onItemSelect={this.handleTabSelect}
-            />
+      <LoadingScreen
+        loading={loading}
+        bgColor="#f1f1f1"
+        spinnerColor="#51c2e0"
+        textColor="#676767"
+        logoSrc={loadingLogo}
+        text="Đang Tải Người Dùng Trong Hệ Thống"
+      >
+        <div className="userInfo">
+          <div className="row">
+            <div className="col-3">
+              <ListGroup
+                items={this.state.tabs}
+                selectedItem={this.state.selectedTab}
+                onItemSelect={this.handleTabSelect}
+              />
+            </div>
+            {selectedTab._id === 1 ? (
+              <UserInfoTab
+                user={user}
+                handleChangeActivation={this.handleChangeActivation}
+              />
+            ) : selectedTab._id === 2 ? (
+              <FiresHistoryTab firesHistory={firesHistory} />
+            ) : (
+              <LocationsTab locations={locations} />
+            )}
           </div>
-          {selectedTab._id === 1 ? (
-            <UserInfoTab
-              user={user}
-              handleChangeActivation={this.handleChangeActivation}
-            />
-          ) : selectedTab._id === 2 ? (
-            <FiresHistoryTab firesHistory={firesHistory} />
-          ) : (
-            <LocationsTab locations={locations} />
-          )}
         </div>
-      </div>
+      </LoadingScreen>
     );
   }
 }

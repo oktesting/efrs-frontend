@@ -59,6 +59,7 @@ class LoginForm extends Form {
   render() {
     //in case of user already logged in => redirect them to homepage
     if (auth.isAuthenticated()) return <Redirect to="/" />;
+    document.title = "Đăng Nhập Vào Hệ Thống";
     return (
       <React.Fragment>
         <div className="form-signin">

@@ -7,6 +7,8 @@ import {
   editReport,
 } from "../../services/reportService";
 import { toast } from "react-toastify";
+import loadingLogo from "../../media/fire.svg";
+import LoadingScreen from "react-loading-screen";
 
 class ReportForm extends Form {
   state = {
@@ -35,6 +37,7 @@ class ReportForm extends Form {
     },
     errors: {},
     didSubmittedNewReport: false,
+    loading: true,
   };
 
   schema = {
@@ -85,6 +88,7 @@ class ReportForm extends Form {
     if (this.props.match.path === "/reports/edit/:reportId") {
       await this.populatingReport();
     }
+    this.setState({ loading: false });
   }
 
   doSubmit = async () => {
@@ -135,8 +139,16 @@ class ReportForm extends Form {
   };
 
   render() {
+    document.title = "Quản Lý Báo Cáo";
     return (
-      <React.Fragment>
+      <LoadingScreen
+        loading={this.state.loading}
+        bgColor="#f1f1f1"
+        spinnerColor="#51c2e0"
+        textColor="#676767"
+        logoSrc={loadingLogo}
+        text="Đang Tải Báo Cáo Trong Hệ Thống"
+      >
         <div className="userInfo myShadow mt-3 pb-3 pl-2 pr-2">
           <h3 className="font-weight-normal text-center mb-2 pt-2">
             Báo cáo đám cháy
@@ -241,7 +253,7 @@ class ReportForm extends Form {
             {this.renderButton("Lưu Báo Cáo")}
           </form>
         </div>
-      </React.Fragment>
+      </LoadingScreen>
     );
   }
 }

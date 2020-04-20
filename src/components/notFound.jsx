@@ -3,6 +3,7 @@ import notFound from "../media/page-not-found.svg";
 class NotFound extends Component {
   state = {};
   render() {
+    document.title = "Không Tồn Tại Hoặc Không Có Quyền Truy Cập";
     return (
       <React.Fragment>
         <br />

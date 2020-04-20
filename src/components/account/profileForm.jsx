@@ -10,6 +10,8 @@ import {
 } from "../../services/supervisorService";
 import { toast } from "react-toastify";
 import { getSquareImage } from "../../utils/getImage";
+import loadingLogo from "../../media/fireman-helmet.svg";
+import LoadingScreen from "react-loading-screen";
 
 class ProfileForm extends Form {
   state = {
@@ -32,8 +34,9 @@ class ProfileForm extends Form {
     ],
     fireStations: [],
     errors: {},
-    account: {},
+    account: auth.getCurrentUser(),
     avatarInput: null,
+    loading: true,
   };
 
   async populateFireStation() {
@@ -72,9 +75,9 @@ class ProfileForm extends Form {
   };
 
   async componentDidMount() {
-    this.setState({ account: auth.getCurrentUser() });
     await this.populateFireStation();
     await this.populatingSupervisor();
+    this.setState({ loading: false });
   }
 
   schema = {
@@ -136,9 +139,16 @@ class ProfileForm extends Form {
 
   render() {
     //in case of user already logged in => redirect them to homepage
-
+    document.title = "Thông Tin Cá Nhân";
     return (
-      <React.Fragment>
+      <LoadingScreen
+        loading={this.state.loading}
+        bgColor="#f1f1f1"
+        spinnerColor="#51c2e0"
+        textColor="#676767"
+        logoSrc={loadingLogo}
+        text="Đang Tải Thông Tin Cá Nhân"
+      >
         <div className="form-signin">
           <h3 className="font-weight-normal text-center mb-4">
             Thông Tin Cá Nhân
@@ -193,7 +203,7 @@ class ProfileForm extends Form {
             {this.renderButton("Lưu Thông Tin Cá Nhân")}
           </form>
         </div>
-      </React.Fragment>
+      </LoadingScreen>
     );
   }
 }

@@ -46,6 +46,7 @@ class FireStationForm extends Form {
   };
 
   render() {
+    document.title = "Quản Lý Cơ Sở PCCC";
     return (
       <React.Fragment>
         <div className="form-signin">
