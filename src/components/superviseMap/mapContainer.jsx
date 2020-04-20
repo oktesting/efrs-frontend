@@ -17,7 +17,9 @@ class MapContainer extends Component {
     };
 
     //duccm4
-    this.eventSource = new EventSource("http://localhost:3900/api/fires");
+    this.eventSource = new EventSource(
+      `${process.env.REACT_APP_API_URL}/fires`
+    );
   }
 
   state = {};
