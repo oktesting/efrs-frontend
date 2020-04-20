@@ -5,9 +5,9 @@ import {
 } from "../../../services/supervisorService";
 import ListGroup from "../../common/listGroup";
 import SupervisorsInfoTab from "./supervisorsInfoTab";
-import FiresHistoryTab from "../../manageUsers/firesHistoryTab";
-import LocationsTab from "../../manageUsers/locationsTab";
 import { toast } from "react-toastify";
+import loadingLogo from "../../../media/profile.svg";
+import LoadingScreen from "react-loading-screen";
 
 class SupervisorInfo extends Component {
   constructor() {
@@ -28,8 +28,7 @@ class SupervisorInfo extends Component {
       phone: "",
       avatar: "",
     },
-    firesHistory: [],
-    locations: [],
+    loading: true,
   };
 
   async populatingSupervisor() {
@@ -58,6 +57,7 @@ class SupervisorInfo extends Component {
 
   async componentDidMount() {
     await this.populatingSupervisor();
+    this.setState({ loading: false });
   }
 
   handleTabSelect = (tab) => {
@@ -81,29 +81,39 @@ class SupervisorInfo extends Component {
   };
 
   render() {
-    const { selectedTab, supervisor, firesHistory, locations } = this.state;
+    const { selectedTab, supervisor, loading } = this.state;
+    document.title = "Quản Lý Cán Bộ PCCC";
     return (
-      <div className="userInfo">
-        <div className="row">
-          <div className="col-3">
-            <ListGroup
-              items={this.state.tabs}
-              selectedItem={this.state.selectedTab}
-              onItemSelect={this.handleTabSelect}
-            />
+      <LoadingScreen
+        loading={loading}
+        bgColor="#f1f1f1"
+        spinnerColor="#51c2e0"
+        textColor="#676767"
+        logoSrc={loadingLogo}
+        text="Đang Tải Cán Bộ PCCC Trong Hệ Thống"
+      >
+        <div className="userInfo">
+          <div className="row">
+            <div className="col-3">
+              <ListGroup
+                items={this.state.tabs}
+                selectedItem={this.state.selectedTab}
+                onItemSelect={this.handleTabSelect}
+              />
+            </div>
+            {selectedTab._id === 1 ? (
+              <SupervisorsInfoTab
+                supervisor={supervisor}
+                handleChangeActivation={this.handleChangeActivation}
+              />
+            ) : selectedTab._id === 2 ? (
+              <div />
+            ) : (
+              <div />
+            )}
           </div>
-          {selectedTab._id === 1 ? (
-            <SupervisorsInfoTab
-              supervisor={supervisor}
-              handleChangeActivation={this.handleChangeActivation}
-            />
-          ) : selectedTab._id === 2 ? (
-            <FiresHistoryTab firesHistory={firesHistory} />
-          ) : (
-            <LocationsTab locations={locations} />
-          )}
         </div>
-      </div>
+      </LoadingScreen>
     );
   }
 }

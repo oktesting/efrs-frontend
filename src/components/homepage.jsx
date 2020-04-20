@@ -10,7 +10,7 @@ const images = [
   "https://efrs.s3-ap-southeast-1.amazonaws.com/common-assets/landing-page/anhdn3.jpg",
   "https://efrs.s3-ap-southeast-1.amazonaws.com/common-assets/landing-page/anhdn5.jpg",
   "https://efrs.s3-ap-southeast-1.amazonaws.com/common-assets/landing-page/anhdn8.jpg",
-  "https://efrs.s3-ap-southeast-1.amazonaws.com/common-assets/landing-page/hoi_thi_2015.jpg"
+  "https://efrs.s3-ap-southeast-1.amazonaws.com/common-assets/landing-page/hoi_thi_2015.jpg",
 ];
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 const slider = (
@@ -27,6 +27,7 @@ const slider = (
 
 class Homepage extends Component {
   render() {
+    document.title = "Hệ Thống Tiếp Nhận Báo Cháy Khẩn Cấp";
     return <div className="homepage">{slider}</div>;
   }
 }

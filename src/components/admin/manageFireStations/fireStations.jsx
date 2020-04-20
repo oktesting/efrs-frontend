@@ -10,6 +10,8 @@ import Pagination from "../../common/pagination";
 import { paginate } from "../../../utils/paginate";
 import _ from "lodash";
 import { toast } from "react-toastify";
+import loadingLogo from "../../../media/fire-station1.svg";
+import LoadingScreen from "react-loading-screen";
 
 class FireStation extends Component {
   constructor() {
@@ -32,11 +34,12 @@ class FireStation extends Component {
     searchQuery: "",
     pageSize: 10,
     currentPage: 1,
+    loading: true,
   };
 
   async componentDidMount() {
     const { data: fireStations } = await getAllFireStation();
-    this.setState({ fireStations });
+    this.setState({ fireStations, loading: false });
   }
 
   handlePageChange = (newPage) => {
@@ -105,50 +108,66 @@ class FireStation extends Component {
   };
 
   render() {
-    const { sortColumn, pageSize, currentPage, searchQuery } = this.state;
+    const {
+      sortColumn,
+      pageSize,
+      currentPage,
+      searchQuery,
+      loading,
+    } = this.state;
     const { fireStations, itemsCount } = this.getPagedData();
+    document.title = "Quản Lý Cơ Sở PCCC";
     return (
-      <div className="userInfo">
-        <div className="row">
-          <div className="col-3">
-            <ListGroup
-              items={this.state.tabs}
-              selectedItem={this.state.selectedTab}
-              onItemSelect={this.handleTabSelect}
-            />
-          </div>
-          <div className="col-9 myShadow">
-            <div className="row mt-3">
-              <div className="col-8">
-                <h4>Có {itemsCount} cơ sở PCCC trong hệ thống</h4>
-              </div>
-              <div className="col-4">
-                <button
-                  className="btn btn-primary float-right"
-                  onClick={() => {
-                    this.props.history.push("/fire-station/new");
-                  }}
-                >
-                  Tạo Mới
-                </button>
-              </div>
+      <LoadingScreen
+        loading={loading}
+        bgColor="#f1f1f1"
+        spinnerColor="#51c2e0"
+        textColor="#676767"
+        logoSrc={loadingLogo}
+        text="Đang Tải Cơ Sở PCCC Trong Hệ Thống"
+      >
+        <div className="userInfo">
+          <div className="row">
+            <div className="col-3">
+              <ListGroup
+                items={this.state.tabs}
+                selectedItem={this.state.selectedTab}
+                onItemSelect={this.handleTabSelect}
+              />
             </div>
-            <SearchBox value={searchQuery} onChange={this.handleSearch} />
-            <FireStationsTable
-              fireStations={fireStations}
-              sortColumn={sortColumn}
-              onSort={this.handleSort}
-              onItemDelete={this.handleDelete}
-            />
-            <Pagination
-              itemsCount={itemsCount}
-              pageSize={pageSize}
-              currentPage={currentPage}
-              onPageChange={this.handlePageChange}
-            />
+            <div className="col-9 myShadow">
+              <div className="row mt-3">
+                <div className="col-8">
+                  <h4>Có {itemsCount} cơ sở PCCC trong hệ thống</h4>
+                </div>
+                <div className="col-4">
+                  <button
+                    className="btn btn-primary float-right"
+                    onClick={() => {
+                      this.props.history.push("/fire-station/new");
+                    }}
+                  >
+                    Tạo Mới
+                  </button>
+                </div>
+              </div>
+              <SearchBox value={searchQuery} onChange={this.handleSearch} />
+              <FireStationsTable
+                fireStations={fireStations}
+                sortColumn={sortColumn}
+                onSort={this.handleSort}
+                onItemDelete={this.handleDelete}
+              />
+              <Pagination
+                itemsCount={itemsCount}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={this.handlePageChange}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </LoadingScreen>
     );
   }
 }

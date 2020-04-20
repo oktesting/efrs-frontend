@@ -9,6 +9,8 @@ import Pagination from "../common/pagination";
 import { paginate } from "../../utils/paginate";
 import _ from "lodash";
 import { toast } from "react-toastify";
+import loadingLogo from "../../media/fire.svg";
+import LoadingScreen from "react-loading-screen";
 
 class Reports extends Component {
   state = {
@@ -20,11 +22,12 @@ class Reports extends Component {
     searchQuery: "",
     pageSize: 10,
     currentPage: 1,
+    loading: true,
   };
 
   async componentDidMount() {
     const { data: reports } = await getAllReports();
-    this.setState({ reports });
+    this.setState({ reports, loading: false });
   }
 
   handlePageChange = (newPage) => {
@@ -88,26 +91,42 @@ class Reports extends Component {
   };
 
   render() {
-    const { sortColumn, pageSize, currentPage, searchQuery } = this.state;
+    const {
+      sortColumn,
+      pageSize,
+      currentPage,
+      searchQuery,
+      loading,
+    } = this.state;
     const { reports, itemsCount } = this.getPagedData();
+    document.title = "Quản Lý Báo Cáo";
     return (
-      <div className="container mt-3">
-        <h4>Có {itemsCount} báo cáo cháy trong hệ thống</h4>
-        <SearchBox value={searchQuery} onChange={this.handleSearch} />
-        <ReportsTable
-          onItemDelete={this.handleDelete}
-          onItemEdit={this.handleEdit}
-          reports={reports}
-          sortColumn={sortColumn}
-          onSort={this.handleSort}
-        />
-        <Pagination
-          itemsCount={itemsCount}
-          pageSize={pageSize}
-          currentPage={currentPage}
-          onPageChange={this.handlePageChange}
-        />
-      </div>
+      <LoadingScreen
+        loading={loading}
+        bgColor="#f1f1f1"
+        spinnerColor="#51c2e0"
+        textColor="#676767"
+        logoSrc={loadingLogo}
+        text="Đang Tải Báo Cáo Trong Hệ Thống"
+      >
+        <div className="container mt-3">
+          <h4>Có {itemsCount} báo cáo cháy trong hệ thống</h4>
+          <SearchBox value={searchQuery} onChange={this.handleSearch} />
+          <ReportsTable
+            onItemDelete={this.handleDelete}
+            onItemEdit={this.handleEdit}
+            reports={reports}
+            sortColumn={sortColumn}
+            onSort={this.handleSort}
+          />
+          <Pagination
+            itemsCount={itemsCount}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={this.handlePageChange}
+          />
+        </div>
+      </LoadingScreen>
     );
   }
 }

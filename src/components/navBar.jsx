@@ -23,20 +23,26 @@ const NavBar = ({ acc }) => {
       </button>
       <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
         {!acc && (
-          <ul className="navbar-nav nav-flex-icons pr-4">
-            <li className="nav-item active row">
-              <span className="nav-link">
-                Hệ Thống Tiếp Nhận Báo Cháy Khẩn Cấp&nbsp;&nbsp;
-              </span>
-              <NavLink className="nav-link btn btn-info" to="/signin">
-                <span>Đăng Nhập</span>
-              </NavLink>
-              &nbsp;
-              <NavLink className="nav-link btn btn-warning" to="/signup">
-                <span className="text-dark">&nbsp;Đăng Ký&nbsp;</span>
-              </NavLink>
-            </li>
-          </ul>
+          <React.Fragment>
+            <ul className="navbar-nav mr-4">
+              <li className="nav-item active row">
+                <span className="nav-link">
+                  &nbsp;Hệ Thống Tiếp Nhận Báo Cháy Khẩn Cấp
+                </span>
+              </li>
+            </ul>
+            <ul className="navbar-nav ml-auto nav-flex-icons pr-2">
+              <li className="nav-item active row">
+                <NavLink className="nav-link btn btn-info" to="/signin">
+                  <span>Đăng Nhập</span>
+                </NavLink>
+                &nbsp;
+                <NavLink className="nav-link btn btn-warning" to="/signup">
+                  <span className="text-dark">&nbsp;Đăng Ký&nbsp;</span>
+                </NavLink>
+              </li>
+            </ul>
+          </React.Fragment>
         )}
         {acc && (
           <React.Fragment>

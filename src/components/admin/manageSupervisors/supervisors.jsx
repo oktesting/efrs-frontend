@@ -6,6 +6,8 @@ import Pagination from "../../common/pagination";
 import { paginate } from "../../../utils/paginate";
 import _ from "lodash";
 import SupervisorsTable from "./supervisorsTable";
+import loadingLogo from "../../../media/profile.svg";
+import LoadingScreen from "react-loading-screen";
 
 class Supervisors extends Component {
   state = {
@@ -18,12 +20,13 @@ class Supervisors extends Component {
     searchQuery: "",
     pageSize: 10,
     currentPage: 1,
+    loading: true,
   };
 
   async componentDidMount() {
     const { data: supervisors } = await getAllSupervisors();
     const { data: stations } = await getAllFireStation();
-    this.setState({ supervisors, stations });
+    this.setState({ supervisors, stations, loading: false });
   }
 
   handlePageChange = (newPage) => {
@@ -77,25 +80,36 @@ class Supervisors extends Component {
       currentPage,
       searchQuery,
       stations,
+      loading,
     } = this.state;
     const { supervisors, itemsCount } = this.getPagedData();
+    document.title = "Quản Lý Cán Bộ PCCC";
     return (
-      <div className="container mt-3">
-        <h4>Có {itemsCount} cán bộ trong hệ thống</h4>
-        <SearchBox value={searchQuery} onChange={this.handleSearch} />
-        <SupervisorsTable
-          supervisors={supervisors}
-          stations={stations}
-          sortColumn={sortColumn}
-          onSort={this.handleSort}
-        />
-        <Pagination
-          itemsCount={itemsCount}
-          pageSize={pageSize}
-          currentPage={currentPage}
-          onPageChange={this.handlePageChange}
-        />
-      </div>
+      <LoadingScreen
+        loading={loading}
+        bgColor="#f1f1f1"
+        spinnerColor="#51c2e0"
+        textColor="#676767"
+        logoSrc={loadingLogo}
+        text="Đang Tải Cán Bộ PCCC Trong Hệ Thống"
+      >
+        <div className="container mt-3">
+          <h4>Có {itemsCount} cán bộ trong hệ thống</h4>
+          <SearchBox value={searchQuery} onChange={this.handleSearch} />
+          <SupervisorsTable
+            supervisors={supervisors}
+            stations={stations}
+            sortColumn={sortColumn}
+            onSort={this.handleSort}
+          />
+          <Pagination
+            itemsCount={itemsCount}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={this.handlePageChange}
+          />
+        </div>
+      </LoadingScreen>
     );
   }
 }

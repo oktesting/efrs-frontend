@@ -33,6 +33,7 @@ class Evidences extends Component {
 
   render() {
     const { images, videos } = this.state;
+    document.title = "Bằng Chứng Vụ Cháy";
     return (
       <div className="userInfo myShadow text-center pt-4 pb-4">
         <h4 className="mb-4 mt-2">Ảnh</h4>

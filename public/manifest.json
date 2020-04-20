@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "EFRS",
+  "name": "Hệ Thống Tiếp Nhận Báo Cháy Khẩn Cấp",
   "icons": [
     {
       "src": "favicon.ico",

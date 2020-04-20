@@ -33,7 +33,12 @@ const CustomInfoWindow = ({
           <div className="col align-self-center">
             <h6>Tên: {selectedFire.user.fullname}</h6>
             <h6>Số Điện Thoại: {selectedFire.user.phone}</h6>
-            <h6>Trạng Thái Đám Cháy: {selectedFire.status}</h6>
+            <h6>
+              Trạng Thái:{" "}
+              {selectedFire.status === "pending"
+                ? "Vừa tiếp nhận"
+                : "Đang xử lý"}
+            </h6>
             <h6>
               Báo Lúc:&nbsp;
               <time-ago datetime={selectedFire.createdAt}>

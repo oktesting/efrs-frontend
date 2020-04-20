@@ -4,7 +4,7 @@ import tickMarker from "../../media/tick.svg";
 import fireMarker from "../../media/fire.svg";
 import extinguisherMarker from "../../media/fire-extinguisher.svg";
 import stationMarker from "../../media/fire-station.svg";
-import { mapStyles, defaultCenter } from "../../config.json";
+import { mapStyles } from "../../config.json";
 
 import CustomInfoWindow from "./customInfoWindow";
 import {
@@ -23,7 +23,7 @@ function Map(props) {
   const [selectedFire, setSelectedFire] = useState(null);
   const [images, setImages] = useState(null);
   const [videos, setVideos] = useState(null);
-
+  document.title = "Giám Sát Bản Đồ";
   return (
     <GoogleMap
       defaultCenter={props.stationCenter}
@@ -69,9 +69,6 @@ function Map(props) {
                 (evidence) => evidence.mimetype === "video/mp4"
               )
             );
-          }}
-          onRightClick={(e) => {
-            setSelectedFire(item);
           }}
         />
       ))}
