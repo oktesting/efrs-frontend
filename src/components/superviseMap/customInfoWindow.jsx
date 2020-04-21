@@ -6,6 +6,7 @@ import { InfoWindow } from "react-google-maps";
 import Popup from "reactjs-popup";
 import { toast } from "react-toastify";
 import { changeFireStatus } from "../../services/fireService";
+import { getResizedImage } from "./../../utils/getImage";
 
 const CustomInfoWindow = ({
   onCloseInfoWindow,
@@ -49,7 +50,7 @@ const CustomInfoWindow = ({
           <div className="col">
             <img
               className="infoImg rounded-circle"
-              src={selectedFire.user.avatar}
+              src={getResizedImage(selectedFire.user.avatar, 200, true)}
               alt="avatar is not found"
             />
           </div>
@@ -59,7 +60,11 @@ const CustomInfoWindow = ({
           {images != null && images.length !== 0 ? (
             <AwesomeSlider cssModule={AwesomeSliderStyles}>
               {images.map((item, i) => (
-                <div key={i} data-src={item.location} href={item.location} />
+                <div
+                  key={i}
+                  data-src={getResizedImage(item.location, 600, false)}
+                  href={item.location}
+                />
               ))}
             </AwesomeSlider>
           ) : (

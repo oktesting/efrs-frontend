@@ -8,6 +8,7 @@ import EmergencyAlertForm from "./components/emergencyAlert/emergencyAlertForm";
 import NotFound from "./components/notFound";
 import Logout from "./components/account/logout";
 import ProfileForm from "./components/account/profileForm";
+import ResetPassForm from "./components/account/resetPassForm";
 import Homepage from "./components/homepage.jsx";
 import Users from "./components/manageUsers/users.jsx";
 import Supervisors from "./components/admin/manageSupervisors/supervisors.jsx";
@@ -47,6 +48,11 @@ class App extends Component {
             <Route path="/signup" exact component={RegisterForm} />
             <Route path="/signout" exact component={Logout} />
             <ProtectedRoute path="/profile" exact component={ProfileForm} />
+            <Route
+              path="/reset-password/:token"
+              exact
+              component={ResetPassForm}
+            />
             <SupervisorRoute path="/map" exact component={MapContainer} />
             <SupervisorRoute path="/reports" exact component={Reports} />
             <SupervisorRoute

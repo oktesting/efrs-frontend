@@ -36,7 +36,10 @@ class RegisterForm extends Form {
           "Tài khoản đã được tạo. Hãy kiểm tra email của bạn để xác nhận trước khi đăng nhập",
           {
             type: toast.TYPE.INFO,
-            onClose: () => (window.location = "/signin"),
+            onClose: () => {
+              localStorage.setItem("accId", data);
+              window.location = "/signin";
+            },
           }
         );
       }

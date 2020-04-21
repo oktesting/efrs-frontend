@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../media/fire-station1.svg";
 import auth from "../services/authService";
-import { getSquareImage } from "../utils/getImage";
+import { getResizedImage } from "../utils/getImage";
 
 const NavBar = ({ acc }) => {
   return (
@@ -107,7 +107,7 @@ const NavBar = ({ acc }) => {
               {acc.supervisor ? (
                 <li className="nav-item active row mr-3">
                   <img
-                    src={getSquareImage(acc.supervisor.avatar, 300)}
+                    src={getResizedImage(acc.supervisor.avatar, 70, true)}
                     className="rounded-circle d-block"
                     alt="avatar"
                     style={{ width: "40px" }}

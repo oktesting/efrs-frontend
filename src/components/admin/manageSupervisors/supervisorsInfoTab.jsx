@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getSquareImage } from "./../../../utils/getImage";
+import { getResizedImage } from "./../../../utils/getImage";
 import Popup from "reactjs-popup";
 
 class SupervisorInfoTab extends Component {
@@ -101,7 +101,7 @@ class SupervisorInfoTab extends Component {
             <form>
               <div className="form-group row">
                 <img
-                  src={getSquareImage(avatar, 300)}
+                  src={getResizedImage(avatar, 200, true)}
                   className="image-preview rounded-circle img-thumbnail mx-auto d-block"
                   alt="avatar"
                 />

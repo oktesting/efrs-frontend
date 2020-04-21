@@ -2,6 +2,7 @@ import React from "react";
 import Form from "../common/form";
 import Joi from "joi-browser";
 import auth from "../../services/authService";
+import { requestResetPassword } from "../../services/accountsService";
 import { getAllFireStation } from "../../services/locationService";
 import {
   createSupervisor,
@@ -9,7 +10,7 @@ import {
   editSupervisor,
 } from "../../services/supervisorService";
 import { toast } from "react-toastify";
-import { getSquareImage } from "../../utils/getImage";
+import { getResizedImage } from "../../utils/getImage";
 import loadingLogo from "../../media/fireman-helmet.svg";
 import LoadingScreen from "react-loading-screen";
 
@@ -156,7 +157,7 @@ class ProfileForm extends Form {
           <img
             src={
               this.state.data.avatar
-                ? getSquareImage(this.state.data.avatar, 300)
+                ? getResizedImage(this.state.data.avatar, 200, true)
                 : "https://efrs.s3-ap-southeast-1.amazonaws.com/common-assets/profile-avatar/male-avatar.png"
             }
             className="image-preview rounded-circle img-thumbnail mx-auto d-block"
@@ -202,6 +203,19 @@ class ProfileForm extends Form {
 
             {this.renderButton("Lưu Thông Tin Cá Nhân")}
           </form>
+          <div className="text-center mt-3">
+            <button
+              className="btn btn-link"
+              onClick={async () => {
+                try {
+                  await requestResetPassword(this.state.account.email);
+                  toast.info("Kiểm Tra Email Để Tiến Hành Đổi Mật Khẩu");
+                } catch (ex) {}
+              }}
+            >
+              Thay Đổi Mật Khẩu
+            </button>
+          </div>
         </div>
       </LoadingScreen>
     );
