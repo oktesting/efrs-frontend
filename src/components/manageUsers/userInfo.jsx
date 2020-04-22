@@ -33,7 +33,8 @@ class UserInfo extends Component {
       gender: "",
       fullname: "",
       phone: "",
-      age: "",
+
+      dob: "",
       avatar: "",
     },
     firesHistory: [],
@@ -84,7 +85,7 @@ class UserInfo extends Component {
       fullname: acc.user.fullname,
       phone: acc.user.phone,
       gender: acc.user.gender,
-      age: acc.user.age,
+      dob: acc.user.dob,
       avatar: acc.user.avatar,
     };
   }

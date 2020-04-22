@@ -23,7 +23,7 @@ class UserInfoTab extends Component {
   render() {
     const {
       avatar,
-      age,
+      dob,
       gender,
       phone,
       fullname,
@@ -112,7 +112,7 @@ class UserInfoTab extends Component {
               {this.renderUserInfo("Họ Và Tên", fullname)}
               {this.renderUserInfo("Số Điện Thoại", phone)}
               {this.renderUserInfo("Giới Tính", gender)}
-              {this.renderUserInfo("Tuổi", age)}
+              {this.renderUserInfo("Ngày Sinh", dob)}
             </form>
           </div>
         </div>
