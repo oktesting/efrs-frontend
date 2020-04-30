@@ -5,7 +5,7 @@ import logger from "./logService";
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 //this interceptor will be called first when get reponse with error then pass control to catch block
-axios.interceptors.response.use(null, error => {
+axios.interceptors.response.use(null, (error) => {
   const expectedError =
     error.response &&
     error.response.status >= 400 &&
@@ -14,6 +14,11 @@ axios.interceptors.response.use(null, error => {
   if (!expectedError) {
     logger.log(error);
     toast.error("Unexpected error occurred from server");
+  }
+
+  if (expectedError && error.response.data === "invalid token") {
+    localStorage.removeItem("token");
+    window.location = "/signin";
   }
 
   return Promise.reject(error);
@@ -31,5 +36,5 @@ export default {
   post: axios.post,
   delete: axios.delete,
   patch: axios.patch,
-  setJwt
+  setJwt,
 };

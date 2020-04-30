@@ -104,14 +104,23 @@ const NavBar = ({ acc }) => {
               </ul>
             )}
             <ul className="navbar-nav ml-auto nav-flex-icons">
-              {acc.supervisor ? (
+              {!acc.isAdmin ? (
                 <li className="nav-item active row mr-3">
-                  <img
-                    src={getResizedImage(acc.supervisor.avatar, 70, true)}
-                    className="rounded-circle d-block"
-                    alt="avatar"
-                    style={{ width: "40px" }}
-                  ></img>
+                  {acc.supervisor ? (
+                    <img
+                      src={getResizedImage(acc.supervisor.avatar, 70, true)}
+                      className="rounded-circle d-block"
+                      alt="avatar"
+                      style={{ width: "40px" }}
+                    ></img>
+                  ) : (
+                    <img
+                      src="https://efrs.s3-ap-southeast-1.amazonaws.com/common-assets/profile-avatar/male-avatar.png"
+                      className="rounded-circle d-block"
+                      alt="avatar"
+                      style={{ width: "40px" }}
+                    ></img>
+                  )}
                   &nbsp;
                   <NavLink
                     className="nav-item nav-link btn btn-info"
@@ -130,10 +139,7 @@ const NavBar = ({ acc }) => {
                     style={{ width: "40px" }}
                   ></img>
                   &nbsp;
-                  <span
-                    className="nav-item nav-link btn btn-info"
-                    to="/profile"
-                  >
+                  <span className="nav-item nav-link btn btn-info">
                     {acc.name}
                   </span>
                   &nbsp;

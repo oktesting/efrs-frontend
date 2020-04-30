@@ -15,7 +15,6 @@
     "lodash": "^4.17.15",
     "node-sass": "^4.13.1",
     "react": "^16.12.0",
-    "react-avatar-editor": "^12.0.0-beta.0",
     "react-awesome-slider": "^4.1.0",
     "react-dom": "^16.12.0",
     "react-google-maps": "^9.4.5",

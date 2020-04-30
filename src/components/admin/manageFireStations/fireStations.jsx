@@ -73,8 +73,12 @@ class FireStation extends Component {
       await deleteFireStation(stationId);
       toast.success("Đã xóa cơ sở PCCC thành công");
     } catch (error) {
-      if (error.response && error.response.status === 404) {
-        toast.error("Không tồn tại");
+      if (error.response) {
+        if (error.response.status === 404) toast.error("Không tồn tại");
+        else
+          toast.error(
+            "Không thể xóa được cơ sở PCCC do có cán bộ đã đăng kí tại địa điểm này."
+          );
         stations = originalFireStations;
       }
     }

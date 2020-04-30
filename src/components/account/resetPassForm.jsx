@@ -68,8 +68,12 @@ class ChangePassForm extends Form {
             Thay Đổi Mật Khẩu
           </h3>
           <form onSubmit={this.handleSubmit}>
-            {this.renderInput("password", "Mật Khẩu Mới", "text")}
-            {this.renderInput("repassword", "Xác Nhận Mật Khẩu Mới", "text")}
+            {this.renderInput("password", "Mật Khẩu Mới", "password")}
+            {this.renderInput(
+              "repassword",
+              "Xác Nhận Mật Khẩu Mới",
+              "password"
+            )}
             {this.renderButton("Thay Đổi")}
           </form>
         </div>
