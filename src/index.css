@@ -143,11 +143,11 @@ span.displayInline {
     0 6px 10px -4px rgba(14, 13, 26, 0.12) !important;
   border-radius: 15px;
 }
-.evidenceVideo {
+/* .evidenceVideo {
   width: 65vw;
   margin: auto;
   margin-bottom: 2vh;
-}
+*/
 
 .navbar {
   padding-top: 0 !important;

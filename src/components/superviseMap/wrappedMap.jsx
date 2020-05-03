@@ -35,7 +35,7 @@ function Map(props) {
         animation={window.google.maps.Animation.DROP}
         position={props.stationCenter}
         icon={{
-          scaledSize: new window.google.maps.Size(35, 35),
+          scaledSize: new window.google.maps.Size(30, 30),
           url: stationMarker,
         }}
       />
@@ -49,7 +49,7 @@ function Map(props) {
           key={item._id}
           position={{ lat: item.latitude, lng: item.longtitude }}
           icon={{
-            scaledSize: new window.google.maps.Size(35, 35),
+            scaledSize: new window.google.maps.Size(30, 30),
             url:
               item.status === "pending"
                 ? fireMarker
